@@ -1,10 +1,11 @@
-package com.example.movie_ver2.member.exception;
+package com.example.movie_ver2.member.dto;
 
 
 import lombok.Getter;
 import lombok.Setter;
 
-
+@Getter
+@Setter
 public class ApiResponse<T> {
     private int code;
     private String message;

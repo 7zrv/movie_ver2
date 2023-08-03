@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
 
@@ -19,9 +20,12 @@ public class SignupMemberRequestDto {
     private String email;
 
     @NotBlank(message = "비밀번호를 입력해주세요.")
+    @Size(min = 6, max = 20, message = "비밀번호는 6자 이상 20자 이하여야합니다.")
     private String password;
 
+
     @NotBlank(message = "휴대폰 번호를 입력해주세요.")
+
     private String phoneNumber;
 
     @NotBlank(message = "생년월일 ex) 1990-00-00 을 입력해주세요.")

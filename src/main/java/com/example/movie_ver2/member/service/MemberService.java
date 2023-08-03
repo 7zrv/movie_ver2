@@ -1,17 +1,17 @@
 package com.example.movie_ver2.member.service;
 
 
+import com.example.movie_ver2.member.dto.ModifyPasswordRequestDto;
+import com.example.movie_ver2.member.dto.ModifyPhoneNumberDto;
 import com.example.movie_ver2.member.dto.SignupMemberRequestDto;
-import com.example.movie_ver2.member.dto.UpdateMemberRequestDto;
 import com.example.movie_ver2.member.entity.Member;
 import com.example.movie_ver2.member.exception.DuplicateEmailException;
+import com.example.movie_ver2.member.exception.NoSuchMemberException;
 import com.example.movie_ver2.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.Errors;
 
 import javax.transaction.Transactional;
-import javax.validation.Valid;
 
 
 @RequiredArgsConstructor
@@ -27,13 +27,33 @@ public class MemberService {
         return memberRepository.save(requestDto.toEntity());
     }
 
-    //단건 조회
-    public Member findById(Long id){
+    public Member findById(Long id) {
         return memberRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("member not exist! : " + id));
+                .orElseThrow(() -> new NoSuchMemberException("Member not found with ID: " + id));
     }
 
-    //delete
+
+    @Transactional
+    public Member modifyPassword(Long id, ModifyPasswordRequestDto requestDto){
+        Member member = memberRepository.findById(id).
+                orElseThrow(() -> new NoSuchMemberException("Memeber not found with ID:" + id));
+
+        member.updatePassword(requestDto.getPassword());
+
+        return member;
+    }
+
+    @Transactional
+    public Member modifyPhoneNumber(Long id, ModifyPhoneNumberDto requestDto){
+        Member member = memberRepository.findById(id).
+                orElseThrow(() -> new NoSuchMemberException("Memeber not found with ID:" + id));
+
+        member.updatePhoneNumber(requestDto.getPhoneNumber());
+
+        return member;
+    }
+
+
     public void delete(Long id){
         memberRepository.deleteById(id);
     }

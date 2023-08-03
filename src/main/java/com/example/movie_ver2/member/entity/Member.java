@@ -65,7 +65,7 @@ public class Member {
         this.roletype = BASIC;
     }
 
-    public void updatePassword(String password, String phoneNumber){
+    public void updatePassword(String password){
         this.password = password;
     }
 
