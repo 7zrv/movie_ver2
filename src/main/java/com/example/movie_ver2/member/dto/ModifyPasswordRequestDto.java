@@ -13,7 +13,6 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-
 public class ModifyPasswordRequestDto {
 
     @NotBlank(message = "비밀번호를 입력해주세요.")

@@ -9,6 +9,8 @@ import com.example.movie_ver2.member.exception.DuplicateEmailException;
 import com.example.movie_ver2.member.exception.NoSuchMemberException;
 import com.example.movie_ver2.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -45,6 +47,7 @@ public class MemberService {
 
     @Transactional
     public Member modifyPhoneNumber(Long id, ModifyPhoneNumberDto requestDto){
+
         Member member = memberRepository.findById(id).
                 orElseThrow(() -> new NoSuchMemberException("Memeber not found with ID:" + id));
 
@@ -54,8 +57,12 @@ public class MemberService {
     }
 
 
-    public void delete(Long id){
-        memberRepository.deleteById(id);
+    public void deleteMember(Long id) {
+        try {
+            memberRepository.deleteById(id);
+        }  catch (Exception ex) {
+            throw new RuntimeException();
+        }
     }
 
 

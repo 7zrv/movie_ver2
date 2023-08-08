@@ -9,15 +9,23 @@ import com.example.movie_ver2.member.dto.ApiResponse;
 import com.example.movie_ver2.member.exception.DuplicateEmailException;
 import com.example.movie_ver2.member.exception.NoSuchMemberException;
 import com.example.movie_ver2.member.service.MemberService;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import net.nurigo.sdk.message.model.Message;
+import net.nurigo.sdk.message.request.SingleMessageSendingRequest;
+import net.nurigo.sdk.message.response.SingleMessageSentResponse;
+import net.nurigo.sdk.message.service.DefaultMessageService;
+import net.nurigo.sdk.message.service.MessageService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
 
 
 @RequiredArgsConstructor
@@ -25,6 +33,7 @@ import java.util.Map;
 public class MemberApiController {
 
     private final MemberService memberService;
+    private final DefaultMessageService messageService;
 
     @PostMapping("/api/member/signupMember")
     public ResponseEntity<ApiResponse<Map<String, Object>>> signupMember(@RequestBody @Valid SignupMemberRequestDto requestDto, Errors errors){
@@ -82,7 +91,6 @@ public class MemberApiController {
 
     }
 
-
     @PatchMapping("/api/member/ModifyMyPhoneNumber/{memberId}")
     public ResponseEntity<ApiResponse<Map<String, Object>>> modifyMyPhoneNumber(@PathVariable Long memberId,
                                                                              @RequestBody @Valid ModifyPhoneNumberDto requestDto,
@@ -107,8 +115,37 @@ public class MemberApiController {
 
     @DeleteMapping("/api/member/withdrawMember/{memberId}")
     public ResponseEntity<ApiResponse<Map<String, Object>>> withdrawMember(@PathVariable Long memberId){
-        memberService.delete(memberId);
-        return ResponseEntity.ok().body(new ApiResponse<>(1, "탈퇴 성공", null));
+        try {
+            memberService.deleteMember(memberId);
+            return ResponseEntity.ok().body(new ApiResponse<>(1, "회원탈퇴 성공", null));
+        } catch (RuntimeException ex){
+            return ResponseEntity.ok().body(new ApiResponse<>(0, "회원탈퇴 실패", null));
+        }
+    }
+
+    @PostMapping("/api/member/findId")
+    public SingleMessageSentResponse sendMmsByResourcePath(@RequestBody String phoneNumber) throws IOException {
+
+        ThreadLocalRandom rand = ThreadLocalRandom.current();
+        StringBuilder authNum = new StringBuilder();
+        int numDigits = 6;
+
+        for (int i = 0; i < numDigits; i++) {
+            authNum.append(rand.nextInt(10));
+        }
+
+        Message message = new Message();
+        // 발신번호 및 수신번호는 반드시 01012345678 형태로 입력되어야 합니다.
+        message.setFrom("01051636609");
+        message.setTo(phoneNumber);
+        message.setText("[TEST] 인증번호["+ authNum +"]를 입력해주세요.");
+
+
+        // 여러 건 메시지 발송일 경우 send many 예제와 동일하게 구성하여 발송할 수 있습니다.
+        SingleMessageSentResponse response = this.messageService.sendOne(new SingleMessageSendingRequest(message));
+        System.out.println(response);
+
+        return response;
     }
 
 
