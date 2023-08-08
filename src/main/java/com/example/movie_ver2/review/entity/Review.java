@@ -1,5 +1,6 @@
 package com.example.movie_ver2.review.entity;
 
+import com.example.movie_ver2.member.entity.Member;
 import com.example.movie_ver2.review.dto.RequestReviewDto;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -23,8 +24,10 @@ public class Review {
     @Column(name = "review_id", nullable = false)
     private Long id;
 
-    @Column(name= "member_id", updatable = false)
-    private Long member;     //manytoone Member, joincolumn    Member class에서는 onetomany(mappedby="member")List<Review>
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name= "member_id", updatable = false, nullable = false)
+    private Member member;     //manytoone Member, joincolumn    Member class에서는 onetomany(mappedby="member")List<Review>
 
     @Column(name= "movie_id", updatable = false)
     private Long movie;      //manytoone Movie, joincolumn
@@ -44,7 +47,7 @@ public class Review {
     private LocalDateTime mod_date;
 
     @Builder
-    public Review(Long member, Long movie, Integer rating, String content) {
+    public Review(Member member, Long movie, Integer rating, String content) {
         this.member = member;
         this.movie = movie;
         this.rating = rating;

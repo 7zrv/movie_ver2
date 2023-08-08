@@ -1,9 +1,12 @@
 package com.example.movie_ver2.review.service;
 
+import com.example.movie_ver2.member.entity.Member;
+import com.example.movie_ver2.member.repository.MemberRepository;
 import com.example.movie_ver2.review.dto.RequestReviewDto;
 import com.example.movie_ver2.review.entity.Review;
 import com.example.movie_ver2.review.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,10 +17,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ReviewService {
     private final ReviewRepository reviewRepository;
+    private final MemberRepository memberRepository;
 
     @Transactional
     public Review saveReview(Long memberId, Long movieId, RequestReviewDto requestDto) {
-        Long member = memberId;  //Member memberRepository.getReferenceById(requestDto.getMemberId())
+        Member member = memberRepository.getReferenceById(memberId);
                                                 //          EntityNotFoundException("해당 멤버는 존재하지 않습니다."));
         Long movie = movieId;
         return reviewRepository.save(requestDto.toEntity(member, movie));
