@@ -33,7 +33,6 @@ import java.util.concurrent.ThreadLocalRandom;
 public class MemberApiController {
 
     private final MemberService memberService;
-    private final DefaultMessageService messageService;
 
     @PostMapping("/api/member/signupMember")
     public ResponseEntity<ApiResponse<Map<String, Object>>> signupMember(@RequestBody @Valid SignupMemberRequestDto requestDto, Errors errors){
@@ -123,30 +122,30 @@ public class MemberApiController {
         }
     }
 
-    @PostMapping("/api/member/findId")
-    public SingleMessageSentResponse sendMmsByResourcePath(@RequestBody String phoneNumber) throws IOException {
-
-        ThreadLocalRandom rand = ThreadLocalRandom.current();
-        StringBuilder authNum = new StringBuilder();
-        int numDigits = 6;
-
-        for (int i = 0; i < numDigits; i++) {
-            authNum.append(rand.nextInt(10));
-        }
-
-        Message message = new Message();
-        // 발신번호 및 수신번호는 반드시 01012345678 형태로 입력되어야 합니다.
-        message.setFrom("01051636609");
-        message.setTo(phoneNumber);
-        message.setText("[TEST] 인증번호["+ authNum +"]를 입력해주세요.");
-
-
-        // 여러 건 메시지 발송일 경우 send many 예제와 동일하게 구성하여 발송할 수 있습니다.
-        SingleMessageSentResponse response = this.messageService.sendOne(new SingleMessageSendingRequest(message));
-        System.out.println(response);
-
-        return response;
-    }
+//    @PostMapping("/api/member/findId")
+//    public SingleMessageSentResponse sendMmsByResourcePath(@RequestBody String phoneNumber) throws IOException {
+//
+//        ThreadLocalRandom rand = ThreadLocalRandom.current();
+//        StringBuilder authNum = new StringBuilder();
+//        int numDigits = 6;
+//
+//        for (int i = 0; i < numDigits; i++) {
+//            authNum.append(rand.nextInt(10));
+//        }
+//
+//        Message message = new Message();
+//        // 발신번호 및 수신번호는 반드시 01012345678 형태로 입력되어야 합니다.
+//        message.setFrom("01051636609");
+//        message.setTo(phoneNumber);
+//        message.setText("[TEST] 인증번호["+ authNum +"]를 입력해주세요.");
+//
+//
+//        // 여러 건 메시지 발송일 경우 send many 예제와 동일하게 구성하여 발송할 수 있습니다.
+//        SingleMessageSentResponse response = this.messageService.sendOne(new SingleMessageSendingRequest(message));
+//        System.out.println(response);
+//
+//        return response;
+//    }
 
 
 }
