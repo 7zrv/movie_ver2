@@ -2,6 +2,7 @@ package com.example.movie_ver2.review.service;
 
 import com.example.movie_ver2.member.entity.Member;
 import com.example.movie_ver2.member.repository.MemberRepository;
+import com.example.movie_ver2.review.dto.MyReviewDto;
 import com.example.movie_ver2.review.dto.RequestReviewDto;
 import com.example.movie_ver2.review.entity.Review;
 import com.example.movie_ver2.review.repository.ReviewRepository;
@@ -10,6 +11,7 @@ import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.Collections;
 import java.util.List;
 
@@ -45,9 +47,8 @@ public class ReviewService {
 
 
     public Review getReviewById(Long id) {
-        Review review = reviewRepository.findById(id)
+        return reviewRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 리뷰는 존재하지 않습니다."));
-        return review;
     }
 
 
@@ -59,14 +60,15 @@ public class ReviewService {
 
 
     public List<Review> getReviewsByMember(Long memberId) {
-        //memberRepository.findById(memberId).orElseThrow(() -> new IllegalArgumentException("해당 멤버는 존재하지 않습니다."));
-        List<Review> reviews= reviewRepository.findByMember(memberId);
+        Member member = memberRepository.findById(memberId).orElseThrow(() -> new IllegalArgumentException("해당 멤버는 존재하지 않습니다."));
+        List<Review> reviews= reviewRepository.findByMember(member);
         return reviews != null ? reviews : Collections.emptyList();
     }
 
     public Review getReviewByMovieAndMember(Long movieId, Long memberId) {
         //memberRepository.findById(memberId).orElseThrow(() -> new IllegalArgumentException("해당 멤버는 존재하지 않습니다."));
         //movieRepository.findById(movieId).orElseThrow(() -> new IllegalArgumentException("해당 영화는 존재하지 않습니다."));
-        return reviewRepository.findByMovieAndMember(movieId, memberId);
+        Member member = memberRepository.getReferenceById(memberId);
+        return reviewRepository.findByMovieAndMember(movieId, member);
     }
 }

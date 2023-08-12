@@ -2,6 +2,7 @@ package com.example.movie_ver2.review.entity;
 
 import com.example.movie_ver2.member.entity.Member;
 import com.example.movie_ver2.review.dto.RequestReviewDto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -24,7 +25,7 @@ public class Review {
     @Column(name = "review_id", nullable = false)
     private Long id;
 
-
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name= "member_id", updatable = false, nullable = false)
     private Member member;     //manytoone Member, joincolumn    Member class에서는 onetomany(mappedby="member")List<Review>

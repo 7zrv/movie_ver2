@@ -1,11 +1,11 @@
 package com.example.movie_ver2.review.controller;
 
+import com.example.movie_ver2.review.dto.MyReviewDto;
 import com.example.movie_ver2.review.dto.RequestReviewDto;
 import com.example.movie_ver2.review.dto.ResultJson;
 import com.example.movie_ver2.review.entity.Review;
 import com.example.movie_ver2.review.service.ReviewService;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
