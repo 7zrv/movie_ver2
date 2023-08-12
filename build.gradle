@@ -30,6 +30,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'net.nurigo:sdk:4.3.0'
 
+    implementation group: 'io.awspring.cloud', name: 'spring-cloud-starter-aws', version: '2.4.4'
+
     implementation 'org.jetbrains:annotations:23.0.0'
     testImplementation 'org.projectlombok:lombok:1.18.22'
     compileOnly 'org.projectlombok:lombok'
@@ -42,4 +44,12 @@ dependencies {
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+task copyPrivate(type: Copy) {
+    copy {
+        from './movie_sub'
+        include "*.yml"
+        into 'src/main/resources'
+    }
 }
