@@ -4,7 +4,6 @@ spring:
 
     url: jdbc:mariadb://${rds_end_point}/movie
     username: ${rds_user_name}
-    #insert password
     password: ${rds_secret_key}
 
   jpa:
@@ -29,8 +28,6 @@ cloud:
     credentials:
       accessKey: ${storage_access_key}
       secretKey: ${storage_secret_key}
-
-
 
 logging:
   level:

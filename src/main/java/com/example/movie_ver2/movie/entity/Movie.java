@@ -13,8 +13,9 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-
+import java.util.Set;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -39,8 +40,11 @@ public class Movie {
     @Column(name = "country", nullable = false)
     private String country;
 
-    @Column(name = "genre", nullable = false)
-    private String genre;
+    @ElementCollection
+    @CollectionTable(name = "movie_genres", joinColumns = @JoinColumn(name = "movie_id"))
+    @Column(name = "genre")
+    private Set<String> genre = new HashSet<>();
+
     @Column(name = "runtime", nullable = false)
     private String runtime;
 
@@ -53,14 +57,15 @@ public class Movie {
     @Column(name = "total_ratings", nullable = false)
     private int totalRatings;
 
-    @Column(name = "content", nullable = false)
+    @Column(name = "content", nullable = false, length = 500)
     private String content;
 
-    @Column(name = "poster_img_path")
+    @Column(name = "poster_img_path", length = 500)
     private String posterImgPath;
 
     @ElementCollection
     @CollectionTable(name = "preview_images", joinColumns = @JoinColumn(name = "movie_id"))
+    @Column(name = "preview_image_path", length = 500)
     private List<String> previewImgPath = new ArrayList<>();
 
     @Column(name = "opening_date")
@@ -68,14 +73,14 @@ public class Movie {
 
     @CreatedDate
     @Column(name = "create_at")
-    private LocalDateTime createAt;
+    private LocalDateTime createdAt;
 
     @LastModifiedDate
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
     @Builder
-    public Movie(String title, String director, String cast, String country, String genre, String runtime, String age, String content, String posterImgPath, List<String> previewImgPath, LocalDate openingDate) {
+    public Movie(String title, String director, String cast, String country, Set<String> genre, String runtime, String age, String content, String posterImgPath, List<String> previewImgPath, LocalDate openingDate) {
 
         this.title = title;
         this.director = director;

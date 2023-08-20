@@ -7,13 +7,17 @@ import com.example.movie_ver2.movie.entity.Movie;
 import com.example.movie_ver2.movie.repository.MovieRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @RequiredArgsConstructor
 @Service
@@ -25,13 +29,15 @@ public class MovieService {
     @Value("${cloud.aws.s3.bucket}")
     private String bucketName;
 
-    public Movie saveMovieInfo(MovieUploadRequestDto requestDto, MultipartFile posterImg, List<MultipartFile> previewImgs) throws IOException {
+    //영화정보 저장
+    public Movie saveMovieInfo(MovieUploadRequestDto requestDto, MultipartFile posterImg, List<MultipartFile> previewImgs) throws IOException{
+
         requestDto.setPosterImgPath(uploadToS3(posterImg));
         requestDto.setPreviewImgPath(uploadToS3(previewImgs));
-
         return movieRepository.save(requestDto.toEntity());
     }
 
+    //영화 이미지 s3 업로드
     public String uploadToS3(MultipartFile multipartFile) throws IOException {
         String key = UUID.randomUUID() + "_" + multipartFile.getOriginalFilename();
 
@@ -43,9 +49,7 @@ public class MovieService {
         return amazonS3Client.getUrl(bucketName, key).toString();
     }
 
-
-
-    public List<String> uploadToS3(List<MultipartFile> multipartFile) throws IOException {
+    public List<String> uploadToS3(List<MultipartFile> multipartFile){
 
         List<String> imgUrlList = new ArrayList<>();
 
@@ -60,12 +64,35 @@ public class MovieService {
                 throw new RuntimeException(e);
             }
 
-            imgUrlList.add(key);
+            imgUrlList.add(amazonS3Client.getUrl(bucketName, key).toString());
         });
         return imgUrlList;
     }
 
 
+    //영화 정보 페이징 조회
+    public List<Movie> getMovies(int pageNum, int pageSize, String criteria) {
 
+        Pageable pageable = PageRequest.of(pageNum, pageSize, Sort.by(Sort.Direction.DESC, criteria));
 
+        Page<Movie> page = movieRepository.findAll(pageable);
+
+        return page.getContent();
+    }
+
+    //영화 정보 단건조회
+    public Movie getMovie(Long movieId) throws NoSuchElementException{
+
+        Optional<Movie> optionalMovie = movieRepository.findById(movieId);
+
+        return optionalMovie.orElseThrow(NoSuchElementException::new);
+    }
+
+    public List<Movie> getMoviesByGenre(String genre) {
+        List<Movie> movies = movieRepository.findByGenreContaining(genre);
+        if (movies.isEmpty()) {
+            throw new NoSuchElementException();
+        }
+        return movies;
+    }
 }

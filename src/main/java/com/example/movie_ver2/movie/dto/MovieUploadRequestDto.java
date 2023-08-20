@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -18,7 +19,7 @@ public class MovieUploadRequestDto {
     private String director;
     private String cast;
     private String country;
-    private String genre;
+    private Set<String> genre;
     private String runtime;
     private String age;
     private String content;

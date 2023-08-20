@@ -6,14 +6,13 @@ import com.example.movie_ver2.movie.dto.MovieUploadRequestDto;
 import com.example.movie_ver2.movie.entity.Movie;
 import com.example.movie_ver2.movie.service.MovieService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 
 @RequiredArgsConstructor
@@ -23,12 +22,52 @@ public class MovieApiController {
     private final MovieService movieService;
 
     @PostMapping("/api/movie/uploadMovieInfo")
-    public ResponseEntity<ApiResponse<?>> uploadMovieInfo(@RequestPart (value = "requestDto") MovieUploadRequestDto requestDto,
-                                                          @RequestPart (value= "posterImage", required = false) MultipartFile posterImg,
-                                                          @RequestPart (value= "previewImages", required = false) List<MultipartFile> previewImgs) throws IOException {
-        Movie movie = movieService.saveMovieInfo(requestDto, posterImg, previewImgs);
-
-        return ResponseEntity.ok(new ApiResponse<>(1, "조회 성공", movie));
+    public ResponseEntity<ApiResponse<?>> uploadMovieInfo(@RequestPart(value = "requestDto") MovieUploadRequestDto requestDto,
+                                                          @RequestPart(value = "posterImage", required = false) MultipartFile posterImg,
+                                                          @RequestPart(value = "previewImages", required = false) List<MultipartFile> previewImgs) {
+        try {
+            Movie movie = movieService.saveMovieInfo(requestDto, posterImg, previewImgs);
+            return ResponseEntity.ok(new ApiResponse<>(1, "영화 정보 등록 성공", movie));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ApiResponse<>(0, "예기치 않은 오류 발생", null));
+        }
     }
+
+    @GetMapping("/api/movie/getAllMovieInfo")
+    public ResponseEntity<ApiResponse<?>> getAllMovieInfo(@RequestParam(required = false, defaultValue = "0", value = "page") int pageNum,
+                                                          @RequestParam(required = false, defaultValue = "5", value = "pageSize") int pageSize,
+                                                          @RequestParam(required = false, defaultValue = "createdAt", value = "criteria") String criteria){
+
+        try {
+            List<Movie> movies = movieService.getMovies(pageNum, pageSize, criteria);
+            return ResponseEntity.ok(new ApiResponse<>(1, "영화 목록 조회 성공", movies));
+        }catch (RuntimeException e){
+            return ResponseEntity.ok(new ApiResponse<>(1, "영화 정보 조회 실패", null));
+        }
+
+    }
+
+    @GetMapping("/api/movie/getDetailMovieInfo/{movieId}")
+    public ResponseEntity<ApiResponse<?>> getDetailMovieInfo(@PathVariable Long movieId){
+
+        try {
+            Movie movie = movieService.getMovie(movieId);
+            return ResponseEntity.ok(new ApiResponse<>(1, "영화 상세정보 조회 성공", movie));
+        }catch (NoSuchElementException e){
+            return ResponseEntity.ok(new ApiResponse<>(0, "영화 상세정보 조회 실패", null));
+        }
+
+    }
+
+    @GetMapping("/api/movie/getMovieInfoByGenre")
+    public ResponseEntity<ApiResponse<?>> getMovieInfoByGenre(@RequestParam String genre){
+
+       List<Movie> movies = movieService.getMoviesByGenre(genre);
+
+       return ResponseEntity.ok(new ApiResponse<>(1, "영화 장르별 조회 성공", movies));
+    }
+
+
 
 }
