@@ -1,6 +1,7 @@
 package com.example.movie_ver2.review.entity;
 
 import com.example.movie_ver2.member.entity.Member;
+import com.example.movie_ver2.movie.entity.Movie;
 import com.example.movie_ver2.review.dto.RequestReviewDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;
@@ -30,8 +31,9 @@ public class Review {
     @JoinColumn(name= "member_id", updatable = false, nullable = false)
     private Member member;     //manytoone Member, joincolumn    Member class에서는 onetomany(mappedby="member")List<Review>
 
-    @Column(name= "movie_id", updatable = false)
-    private Long movie;      //manytoone Movie, joincolumn
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name= "movie_id", updatable = false, nullable = false)
+    private Movie movie;      //manytoone Movie, joincolumn
 
     @Column(name = "rating", nullable = false)
     private Integer rating;
@@ -48,7 +50,7 @@ public class Review {
     private LocalDateTime mod_date;
 
     @Builder
-    public Review(Member member, Long movie, Integer rating, String content) {
+    public Review(Member member, Movie movie, Integer rating, String content) {
         this.member = member;
         this.movie = movie;
         this.rating = rating;
