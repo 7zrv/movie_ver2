@@ -1,0 +1,101 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #F6F1EB;
+}
+
+h1 {
+    text-align: center;
+    margin: 20px;
+}
+
+.kind_of_list {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    margin: 0 auto; /* 가운데 정렬을 위해 추가 */
+}
+
+
+.movie-list {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 20px;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 10px;
+}
+
+.movie-card {
+    width: 200px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-right: 20px;
+    position: relative;
+}
+
+
+.movie-card .detail-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-decoration: none; /* 버튼 스타일이므로 링크 효과 제거 */
+    cursor: pointer;
+    transition: opacity 0.3s;
+}
+
+.movie-card:hover .detail-button {
+    opacity: 1;
+}
+
+
+.movie-poster {
+    width: 100%;
+    max-width: 100%;
+    max-height: 200px;
+    object-fit: cover;
+    margin-bottom: 10px;
+    border-radius: 10px;
+}
+
+.genre-movies {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.genre-movies select,
+.genre-movies button {
+    margin: 10px;
+}
+
+.genre-movie-list {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 20px;
+    justify-content: center; /* 변경: 중앙으로 정렬 */
+    align-items: flex-start;
+    padding: 10px;
+}
+
+.genre-movie-group {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 20px;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 10px;
+}

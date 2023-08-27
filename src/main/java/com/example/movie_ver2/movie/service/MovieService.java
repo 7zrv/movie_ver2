@@ -2,6 +2,7 @@ package com.example.movie_ver2.movie.service;
 
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.example.movie_ver2.movie.dto.MovieUpdateRequestDto;
 import com.example.movie_ver2.movie.dto.MovieUploadRequestDto;
 import com.example.movie_ver2.movie.entity.Movie;
 import com.example.movie_ver2.movie.repository.MovieRepository;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.*;
 
@@ -88,11 +90,30 @@ public class MovieService {
         return optionalMovie.orElseThrow(NoSuchElementException::new);
     }
 
+    //장르별 영화 정보 조회
     public List<Movie> getMoviesByGenre(String genre) {
+
         List<Movie> movies = movieRepository.findByGenreContaining(genre);
+
         if (movies.isEmpty()) {
             throw new NoSuchElementException();
         }
         return movies;
+    }
+
+
+    //영화정보 업데이트
+    @Transactional
+    public Movie updateMovieInfo(Long movieId, MovieUpdateRequestDto requestDto){
+
+        Movie movie = movieRepository.findById(movieId).orElseThrow(NoSuchElementException::new);
+
+        movie.updateMovie(requestDto);
+
+        return movie;
+    }
+
+    public void deleteMovie(Long movieId) {
+        movieRepository.deleteById(movieId);
     }
 }

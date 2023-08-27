@@ -1,5 +1,6 @@
 package com.example.movie_ver2.movie.entity;
 
+import com.example.movie_ver2.movie.dto.MovieUpdateRequestDto;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -98,6 +99,18 @@ public class Movie {
 
     }
 
+    public void updateMovie(MovieUpdateRequestDto requestDto){
+        this.title = requestDto.getTitle();
+        this.director = requestDto.getDirector();
+        this.cast = requestDto.getCast();
+        this.country = requestDto.getCountry();
+        this.genre = requestDto.getGenre();
+        this.runtime = requestDto.getRuntime();
+        this.age = requestDto.getAge();
+        this.content = requestDto.getContent();
+
+        this.openingDate = requestDto.getOpeningDate();
+    }
 
 }
 

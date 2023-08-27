@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Chart</title>
+    <link rel="stylesheet" th:href="@{/css/movieList.css}" />
+</head>
+<body>
+
+<h1>메인 페이지</h1>
+
+<h2 class="kind_of_list">최신 영화</h2>
+<!-- 영화 목록 -->
+<div class="movie-list">
+
+
+    <div th:each="movie : ${movies}" class="movie-card">
+        <img th:src="${movie.posterImgPath}" alt="Movie Poster" class="movie-poster">
+        <a th:href="@{'/movieDetail/' + ${movie.id}}" class="detail-button">상세보기</a>
+        <p th:text="${movie.openingDate}">0000-00-00</p>
+        <p th:text="${movie.title}">Movie Title</p>
+        <p th:text="${movie.country}">Country</p>
+    </div>
+</div>
+
+<!-- 장르별 영화 목록 -->
+<div class="genre-movies">
+    <h2 class="kind_of_list">장르별 영화</h2>
+    <br>
+    <form id="genreForm">
+        <label for="genre">Select Genre:</label>
+        <select id="genre" name="genre">
+            <option value="액션">액션</option>
+            <option value="드라마">드라마</option>
+            <option value="스릴러">스릴러</option>
+            <option value="가족">가족</option>
+            <option value="애니메이션">애니메이션</option>
+            <option value="코미디">코미디</option>
+            <option value="범죄">범죄</option>
+            <option value="멜로">멜로</option>
+        </select>
+        <button type="submit">Show Movies</button>
+    </form>
+    <div id="genreMovies" class="genre-movies-list"></div>
+</div>
+
+<!-- 장르별 영화 목록 출력 -->
+<div class="genre-movie-list">
+    <div th:each="genre : ${genres}" class="genre-movie-group">
+        <h3 th:text="${genre}">Genre</h3>
+        <div th:each="movie : ${genreMovies[genre]}" class="movie-card">
+            <img th:src="${movie.posterImgPath}" alt="Movie Poster" class="movie-poster">
+            <a th:href="@{'/movieDetail/' + ${movie.id}}" class="detail-button">상세보기</a>
+            <p th:text="${movie.openingDate}">0000-00-00</p>
+            <p th:text="${movie.title}">Movie Title</p>
+            <p th:text="${movie.country}">Country</p>
+        </div>
+    </div>
+</div>
+
+<script src="/js/movie_genre_list.js"></script>
+</body>
+</html>

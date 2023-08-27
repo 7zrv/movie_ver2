@@ -2,6 +2,7 @@ package com.example.movie_ver2.movie.controller;
 
 
 import com.example.movie_ver2.movie.dto.ApiResponse;
+import com.example.movie_ver2.movie.dto.MovieUpdateRequestDto;
 import com.example.movie_ver2.movie.dto.MovieUploadRequestDto;
 import com.example.movie_ver2.movie.entity.Movie;
 import com.example.movie_ver2.movie.service.MovieService;
@@ -25,6 +26,7 @@ public class MovieApiController {
     public ResponseEntity<ApiResponse<?>> uploadMovieInfo(@RequestPart(value = "requestDto") MovieUploadRequestDto requestDto,
                                                           @RequestPart(value = "posterImage", required = false) MultipartFile posterImg,
                                                           @RequestPart(value = "previewImages", required = false) List<MultipartFile> previewImgs) {
+
         try {
             Movie movie = movieService.saveMovieInfo(requestDto, posterImg, previewImgs);
             return ResponseEntity.ok(new ApiResponse<>(1, "영화 정보 등록 성공", movie));
@@ -32,18 +34,19 @@ public class MovieApiController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(new ApiResponse<>(0, "예기치 않은 오류 발생", null));
         }
+
     }
 
     @GetMapping("/api/movie/getAllMovieInfo")
     public ResponseEntity<ApiResponse<?>> getAllMovieInfo(@RequestParam(required = false, defaultValue = "0", value = "page") int pageNum,
                                                           @RequestParam(required = false, defaultValue = "5", value = "pageSize") int pageSize,
-                                                          @RequestParam(required = false, defaultValue = "createdAt", value = "criteria") String criteria){
+                                                          @RequestParam(required = false, defaultValue = "openingDate", value = "criteria") String criteria){
 
         try {
             List<Movie> movies = movieService.getMovies(pageNum, pageSize, criteria);
             return ResponseEntity.ok(new ApiResponse<>(1, "영화 목록 조회 성공", movies));
         }catch (RuntimeException e){
-            return ResponseEntity.ok(new ApiResponse<>(1, "영화 정보 조회 실패", null));
+            return ResponseEntity.ok(new ApiResponse<>(0, "영화 정보 조회 실패", null));
         }
 
     }
@@ -55,7 +58,7 @@ public class MovieApiController {
             Movie movie = movieService.getMovie(movieId);
             return ResponseEntity.ok(new ApiResponse<>(1, "영화 상세정보 조회 성공", movie));
         }catch (NoSuchElementException e){
-            return ResponseEntity.ok(new ApiResponse<>(0, "영화 상세정보 조회 실패", null));
+            return ResponseEntity.ok(new ApiResponse<>(0, "영화 상세정보 조회 실패", movieId));
         }
 
     }
@@ -63,11 +66,35 @@ public class MovieApiController {
     @GetMapping("/api/movie/getMovieInfoByGenre")
     public ResponseEntity<ApiResponse<?>> getMovieInfoByGenre(@RequestParam String genre){
 
-       List<Movie> movies = movieService.getMoviesByGenre(genre);
+        try {
+            List<Movie> movies = movieService.getMoviesByGenre(genre);
+            return ResponseEntity.ok(new ApiResponse<>(1, "영화 장르별 조회 성공", movies));
+        } catch (NoSuchElementException e){
+            return ResponseEntity.ok(new ApiResponse<>(0, "영화 조회 실패", genre));
+        }
 
-       return ResponseEntity.ok(new ApiResponse<>(1, "영화 장르별 조회 성공", movies));
     }
 
+    @PatchMapping("/api/movie/updateMovieInfo/{movieId}")
+    public ResponseEntity<ApiResponse<?>> updateMovieInfo(@PathVariable Long movieId,
+                                                          @RequestBody MovieUpdateRequestDto requestDto){
+
+        try {
+            Movie movie = movieService.updateMovieInfo(movieId, requestDto);
+            return ResponseEntity.ok(new ApiResponse<>(1, "영화 업데이트 성공", movie));
+        } catch (NoSuchElementException e){
+            return ResponseEntity.ok(new ApiResponse<>(0, "영화 업데이트 실패", null));
+        }
+
+    }
+
+    @DeleteMapping("/api/movie/deleteMovieInfo/{movieId}")
+    public ResponseEntity<ApiResponse<?>> deleteMovieInfo(@PathVariable Long movieId){
+
+        movieService.deleteMovie(movieId);
+
+        return ResponseEntity.ok(new ApiResponse<>(1, "영화 삭제 성공", movieId));
+    }
 
 
 }
