@@ -12,6 +12,6 @@ public class memberController {
     public String showSignupPage(){
 
 
-        return "signupPage";
+        return "memberHtml/signupPage";
     }
 }
