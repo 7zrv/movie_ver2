@@ -1,11 +1,12 @@
 package com.example.movie_ver2.member.controller;
 
 
+import com.example.movie_ver2.member.dto.ApiResponse;
 import com.example.movie_ver2.member.dto.ModifyPasswordRequestDto;
 import com.example.movie_ver2.member.dto.ModifyPhoneNumberDto;
 import com.example.movie_ver2.member.dto.SignupMemberRequestDto;
 import com.example.movie_ver2.member.entity.Member;
-import com.example.movie_ver2.member.dto.ApiResponse;
+
 import com.example.movie_ver2.member.exception.DuplicateEmailException;
 import com.example.movie_ver2.member.exception.NoSuchMemberException;
 import com.example.movie_ver2.member.service.MemberService;
