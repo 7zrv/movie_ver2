@@ -1,0 +1,39 @@
+spring:
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+
+    url: jdbc:mariadb://${rds_end_point}/movie
+    username: ${rds_user_name}
+    password: ${rds_secret_key}
+
+  jpa:
+    properties:
+      hibernate:
+        format_sql: "true"
+        highlight_sql: "true"
+    hibernate:
+      ddl-auto: update
+
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
+
+cloud:
+  aws:
+    s3:
+      bucket: ${storage_name}
+    stack.auto: false
+    region.static: ap-northeast-2
+    credentials:
+      accessKey: ${storage_access_key}
+      secretKey: ${storage_secret_key}
+
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql: DEBUG #trace

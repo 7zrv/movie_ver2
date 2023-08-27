@@ -1,6 +1,8 @@
 package com.example.movie_ver2.member.entity;
 
 
+import com.example.movie_ver2.core.enums.MemberRole;
+import com.example.movie_ver2.core.enums.Sex;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,7 +15,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import static com.example.movie_ver2.member.entity.MemberRole.BASIC;
+import static com.example.movie_ver2.core.enums.MemberRole.BASIC;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter

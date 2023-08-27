@@ -1,4 +1,4 @@
-package com.example.movie_ver2.member.entity;
+package com.example.movie_ver2.core.enums;
 
 
 import lombok.RequiredArgsConstructor;

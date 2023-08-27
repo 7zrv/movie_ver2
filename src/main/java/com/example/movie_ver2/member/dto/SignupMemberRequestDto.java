@@ -1,10 +1,8 @@
 package com.example.movie_ver2.member.dto;
 
 import com.example.movie_ver2.member.entity.Member;
-import com.example.movie_ver2.member.entity.Sex;
-import lombok.AllArgsConstructor;
+import com.example.movie_ver2.core.enums.Sex;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -23,9 +21,7 @@ public class SignupMemberRequestDto {
     @Size(min = 6, max = 20, message = "비밀번호는 6자 이상 20자 이하여야합니다.")
     private String password;
 
-
     @NotBlank(message = "휴대폰 번호를 입력해주세요.")
-
     private String phoneNumber;
 
     @NotBlank(message = "생년월일 ex) 1990-00-00 을 입력해주세요.")

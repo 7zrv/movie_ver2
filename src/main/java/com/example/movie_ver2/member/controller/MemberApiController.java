@@ -35,40 +35,32 @@ public class MemberApiController {
     private final MemberService memberService;
 
     @PostMapping("/api/member/signupMember")
-    public ResponseEntity<ApiResponse<Map<String, Object>>> signupMember(@RequestBody @Valid SignupMemberRequestDto requestDto, Errors errors){
-
-        if (errors.hasErrors()) {
-            return ResponseEntity.badRequest().body(new ApiResponse<>(0, "회원 가입 실패", null));
-        }
+    public ResponseEntity<ApiResponse<?>> signupMember(@RequestBody @Valid SignupMemberRequestDto requestDto, Errors errors){
 
         try {
             Member savedMember = memberService.save(requestDto);
             return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse<>(1, "회원 가입 성공", Map.of("member", savedMember)));
         } catch (DuplicateEmailException ex) {
-            Map<String, Object> errorData = new HashMap<>();
-            errorData.put("errCode", "duplicate_email");
-            errorData.put("errMsg",ex.getMessage());
-            return ResponseEntity.badRequest().body(new ApiResponse<>(0, "중복된 이메일", errorData));
+
+            return ResponseEntity.badRequest().body(new ApiResponse<>(0, "중복된 이메일", null));
         }
     }
 
     @GetMapping("/api/member/getMyInfo/{memberId}")
-    public ResponseEntity<ApiResponse<Map<String, Object>>> getMyInfo(@PathVariable Long memberId) {
+    public ResponseEntity<ApiResponse<?>> getMyInfo(@PathVariable Long memberId) {
         try {
             Member foundMember = memberService.findById(memberId);
             Map<String, Object> responseData = new HashMap<>();
             responseData.put("member", foundMember);
             return ResponseEntity.ok().body(new ApiResponse<>(1, "회원 정보 조회 성공", responseData));
         } catch (NoSuchMemberException ex) {
-            Map<String, Object> errorData = new HashMap<>();
-            errorData.put("errCode", "member_not_found");
-            errorData.put("errMsg", ex.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse<>(0, "회원 정보 조회 실패", errorData));
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse<>(0, "회원 정보 조회 실패", null));
         }
     }
 
     @PatchMapping("/api/member/ModifyMyPassword/{memberId}")
-    public ResponseEntity<ApiResponse<Map<String, Object>>> modifyMyPassword(@PathVariable Long memberId,
+    public ResponseEntity<ApiResponse<?>> modifyMyPassword(@PathVariable Long memberId,
                                                                              @RequestBody @Valid ModifyPasswordRequestDto requestDto,
                                                                              Errors errors){
 
@@ -91,7 +83,7 @@ public class MemberApiController {
     }
 
     @PatchMapping("/api/member/ModifyMyPhoneNumber/{memberId}")
-    public ResponseEntity<ApiResponse<Map<String, Object>>> modifyMyPhoneNumber(@PathVariable Long memberId,
+    public ResponseEntity<ApiResponse<?>> modifyMyPhoneNumber(@PathVariable Long memberId,
                                                                              @RequestBody @Valid ModifyPhoneNumberDto requestDto,
                                                                              Errors errors){
         if (errors.hasErrors()) {
@@ -113,7 +105,7 @@ public class MemberApiController {
     }
 
     @DeleteMapping("/api/member/withdrawMember/{memberId}")
-    public ResponseEntity<ApiResponse<Map<String, Object>>> withdrawMember(@PathVariable Long memberId){
+    public ResponseEntity<ApiResponse<?>> withdrawMember(@PathVariable Long memberId){
         try {
             memberService.deleteMember(memberId);
             return ResponseEntity.ok().body(new ApiResponse<>(1, "회원탈퇴 성공", null));
