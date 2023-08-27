@@ -1,7 +1,8 @@
 package com.example.movie_ver2.movie.controller;
 
 
-import com.example.movie_ver2.movie.dto.ApiResponse;
+
+import com.example.movie_ver2.core.apiResponse.ApiResponse;
 import com.example.movie_ver2.movie.dto.MovieUpdateRequestDto;
 import com.example.movie_ver2.movie.dto.MovieUploadRequestDto;
 import com.example.movie_ver2.movie.entity.Movie;

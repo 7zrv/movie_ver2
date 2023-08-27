@@ -1,7 +1,7 @@
 package com.example.movie_ver2.member.controller;
 
 
-import com.example.movie_ver2.member.dto.ApiResponse;
+import com.example.movie_ver2.core.apiResponse.ApiResponse;
 import com.example.movie_ver2.member.dto.ModifyPasswordRequestDto;
 import com.example.movie_ver2.member.dto.ModifyPhoneNumberDto;
 import com.example.movie_ver2.member.dto.SignupMemberRequestDto;
@@ -10,23 +10,15 @@ import com.example.movie_ver2.member.entity.Member;
 import com.example.movie_ver2.member.exception.DuplicateEmailException;
 import com.example.movie_ver2.member.exception.NoSuchMemberException;
 import com.example.movie_ver2.member.service.MemberService;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import net.nurigo.sdk.message.model.Message;
-import net.nurigo.sdk.message.request.SingleMessageSendingRequest;
-import net.nurigo.sdk.message.response.SingleMessageSentResponse;
-import net.nurigo.sdk.message.service.DefaultMessageService;
-import net.nurigo.sdk.message.service.MessageService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ThreadLocalRandom;
 
 
 @RequiredArgsConstructor

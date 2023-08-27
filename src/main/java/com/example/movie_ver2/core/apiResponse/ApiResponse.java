@@ -1,4 +1,4 @@
-package com.example.movie_ver2.movie.dto;
+package com.example.movie_ver2.core.apiResponse;
 
 
 import lombok.Getter;
@@ -7,13 +7,15 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ApiResponse<T> {
-    private Integer code;
+    private int code;
     private String message;
     private T data;
 
-    public ApiResponse(Integer code, String message, T data) {
+    public ApiResponse(int code, String message, T data) {
         this.code = code;
         this.message = message;
         this.data = data;
     }
+
 }
+
