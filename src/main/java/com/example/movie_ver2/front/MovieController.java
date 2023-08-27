@@ -23,7 +23,7 @@ public class MovieController {
         List<Movie> movies = movieService.getMovies(0, 5 , "openingDate");
         model.addAttribute("movies", movies);
 
-        return "movie/movie";
+        return "movieHtml/movie";
     }
 
     @GetMapping("/movieDetail/{movieId}")
@@ -33,7 +33,7 @@ public class MovieController {
 
         model.addAttribute("movie", movie);
 
-        return "movie/movieDetailPage";
+        return "movieHtml/movieDetailPage";
     }
 
 
