@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/review.css">
+    <title>My Review</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<script src="/js/reviewApi.js"></script>
+<script>
+    $(document).ready(function() {
+        const memberId = 5;
+        getMyReviewList(memberId);
+    });
+</script>
+
+<div class="movie-reviews">
+    <h2 class="section-title">리뷰 및 평점</h2>
+    <ul class="review-box" id="allReview">
+    </ul>
+</div>
+
+</body>
+</html>

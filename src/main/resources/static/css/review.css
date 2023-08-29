@@ -1,0 +1,63 @@
+
+/**리뷰 시작**/
+.movie-reviews {
+    margin : auto 80px;
+    /**max-width:1000px;**/
+    justify-content: center;
+}
+
+.review-box {
+    list-style: none;
+    padding:0;
+    border: 1.5px solid #e8ebee;
+}
+
+.myBtn {
+    padding: 0px 10px;
+    float: right;
+    color: black;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+#myReview {
+    display: none;
+}
+
+.review-none, .my-review-none {
+    text-align: center;
+}
+
+.review-box li {
+    border-radius: 6px;
+    padding:10px;
+    border: 1.5px solid #e8ebee;
+    margin: 10px
+}
+
+.rating-control {
+    display: flex;
+    justify-content: space-between;
+    width:100%
+}
+
+
+
+/*별점*/
+.rating-box {
+    display:flex;
+}
+
+.rating-star {
+    position: relative;
+    color: #ddd;
+}
+
+.rating-star span {
+    width: 0;
+    color: #ffc107;
+    position: absolute;
+    left: 0;
+    right: 0;
+    overflow: hidden;
+}
