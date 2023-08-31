@@ -1,4 +1,4 @@
-package com.example.movie_ver2.front.memberFrontend;
+package com.example.movie_ver2.front;
 
 
 import org.springframework.stereotype.Controller;

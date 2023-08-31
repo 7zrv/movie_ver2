@@ -51,20 +51,20 @@ public class ReviewApiController {
         }
     }
 
-    @GetMapping("/createReview/{memberId}/{movieId}")
-    public ResponseEntity<ResultJson<?>> getCreateReview(@PathVariable Long memberId, @PathVariable Long movieId) {     //movieDto
-        try{
-            if(reviewService.checkExist(memberId, movieId)){
-                throw new IllegalArgumentException("해당 영화에 대한 회원님의 리뷰가 이미 존재합니다.");
-            }
-            MovieRatingDto movieDto = reviewService.getMovieRating(movieId);
-            return ResponseEntity.ok(new ResultJson<>(200, "조회 성공", movieDto));
-
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(new ResultJson<>(404, "조회 실패", e.getMessage()));
-        }
-    }
+//    @GetMapping("/createReview/{memberId}/{movieId}")
+//    public ResponseEntity<ResultJson<?>> getCreateReview(@PathVariable Long memberId, @PathVariable Long movieId) {     //movieDto
+//        try{
+//            if(reviewService.checkExist(memberId, movieId)){
+//                throw new IllegalArgumentException("해당 영화에 대한 회원님의 리뷰가 이미 존재합니다.");
+//            }
+//            MovieRatingDto movieDto = reviewService.getMovieRating(movieId);
+//            return ResponseEntity.ok(new ResultJson<>(200, "조회 성공", movieDto));
+//
+//        } catch (IllegalArgumentException e) {
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+//                    .body(new ResultJson<>(404, "조회 실패", e.getMessage()));
+//        }
+//    }
 
     @GetMapping("/modifyReview/{memberId}/{reviewId}")
     public ResponseEntity<ResultJson<?>> getModifyReview(@PathVariable Long memberId, @PathVariable Long reviewId) {
