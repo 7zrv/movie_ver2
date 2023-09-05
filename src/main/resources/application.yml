@@ -25,6 +25,7 @@ cloud:
       bucket: ${storage_name}
     stack.auto: false
     region.static: ap-northeast-2
+
     credentials:
       accessKey: ${storage_access_key}
       secretKey: ${storage_secret_key}
