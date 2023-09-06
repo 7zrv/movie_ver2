@@ -28,7 +28,6 @@ jobs:
         with:
           java-version: '11'
           distribution: 'temurin'
-
       - uses: ankane/setup-mariadb@v1
 
       - name: Grant execute permission for gradlew
