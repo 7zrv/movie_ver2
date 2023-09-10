@@ -23,21 +23,21 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+        
       - name: Set up JDK 11
         uses: actions/setup-java@v3
         with:
           java-version: '11'
           distribution: 'temurin'
-      - uses: ankane/setup-mariadb@v1
 
       - name: env setting
-        run : | 
-          echo "rds_end_point : ${{secrets.RDS_END_POINT}}"
-          echo "rds_secret_key : ${{secrets.RDS_SECRET_KEY}}"
-          echo "rds_user_name : ${{secrets.RDS_USER_NAME}}"
-          echo "storage_access_key : ${{secrets.STORAGE_ACCESS_KEY}}"
-          echo "storage_name : ${{secrets.STORAGE_NAME}}"
-          echo "storage_secret_key : ${{secrets.STORAGE_SECRET_KEY}}"
+        env : 
+          rds_end_point : ${{secrets.RDS_END_POINT}}
+          rds_secret_key : ${{secrets.RDS_SECRET_KEY}}
+          rds_user_name : ${{secrets.RDS_USER_NAME}}
+          storage_access_key : ${{secrets.STORAGE_ACCESS_KEY}}
+          storage_name : ${{secrets.STORAGE_NAME}}
+          storage_secret_key : ${{secrets.STORAGE_SECRET_KEY}}
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
