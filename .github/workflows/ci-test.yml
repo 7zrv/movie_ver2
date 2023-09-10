@@ -30,8 +30,26 @@ jobs:
           distribution: 'temurin'
       - uses: ankane/setup-mariadb@v1
 
+      - name: Generate Environment Variables File for Production
+        run: |
+          echo "RDS_END_POINT=$RDS_END_POINT" >> .env.production
+          echo "RDS_SECRET_KEY=$RDS_SECRET_KEY" >> .env.production
+          echo "RDS_USER_NAME=$RDS_USER_NAME" >> .env.production
+          echo "STORAGE_ACCESS_KEY=$STORAGE_ACCESS_KEY" >> .env.production
+          echo "STORAGE_NAME=$STORAGE_NAME" >> .env.production
+          echo "STORAGE_SECRET_KEY=$STORAGE_SECRET_KEY" >> .env.production
+          
+        env:
+          RDS_END_POINT:  $RDS_END_POINT
+          RDS_SECRET_KEY:  $RDS_SECRET_KEY
+          RDS_USER_NAME:  $RDS_USER_NAME
+          STORAGE_ACCESS_KEY:  $STORAGE_ACCESS_KEY
+          STORAGE_NAME:  $STORAGE_NAME
+          STORAGE_SECRET_KEY:  $secrets.STORAGE_SECRET_KEY
+          
+
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
       - name: Build with Gradle
-        run: ./gradlew clean build -x test
+        run: ./gradlew clean build
