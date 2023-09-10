@@ -30,8 +30,17 @@ jobs:
           distribution: 'temurin'
       - uses: ankane/setup-mariadb@v1
 
+      - name: env setting
+        run : | 
+          echo "rds_end_point : ${{secrets.RDS_END_POINT}}"
+          echo "rds_secret_key : ${{secrets.RDS_SECRET_KEY}}"
+          echo "rds_user_name : ${{secrets.RDS_USER_NAME}}"
+          echo "storage_access_key : ${{secrets.STORAGE_ACCESS_KEY}}"
+          echo "storage_name : ${{secrets.STORAGE_NAME}}"
+          echo "storage_secret_key : ${{secrets.STORAGE_SECRET_KEY}}"
+
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
       - name: Build with Gradle
-        run: ./gradlew clean build -x test
+        run: ./gradlew clean build
