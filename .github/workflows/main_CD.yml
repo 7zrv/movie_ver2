@@ -20,6 +20,14 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    
+    env:
+        rds_end_point : ${{secrets.RDS_END_POINT}}
+        rds_secret_key : ${{secrets.RDS_SECRET_KEY}}
+        rds_user_name : ${{secrets.RDS_USER_NAME}}
+        storage_access_key : ${{secrets.STORAGE_ACCESS_KEY}}
+        storage_name : ${{secrets.STORAGE_NAME}}
+        storage_secret_key : ${{secrets.STORAGE_SECRET_KEY}}
 
     steps:
     - uses: actions/checkout@v3
@@ -37,13 +45,7 @@ jobs:
         echo "storage_access_key=$storage_access_key" >> .env
         echo "storage_name=$storage_name" >> .env
         echo "storage_secret_key=$storage_secret_key" >> .env
-      env:
-        rds_end_point : ${{secrets.RDS_END_POINT}}
-        rds_secret_key : ${{secrets.RDS_SECRET_KEY}}
-        rds_user_name : ${{secrets.RDS_USER_NAME}}
-        storage_access_key : ${{secrets.STORAGE_ACCESS_KEY}}
-        storage_name : ${{secrets.STORAGE_NAME}}
-        storage_secret_key : ${{secrets.STORAGE_SECRET_KEY}}
+      
           
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
