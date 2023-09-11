@@ -72,5 +72,5 @@ jobs:
           docker tag 7zrv/movie_main:${GITHUB_SHA::7} movie_main
           docker stop server
           docker rm -f server
-          docker run -d --name server -p 8080:8080 --env-file .env movie_main
+          docker run -d --name server -p 8080:8080 --env-file env.txt movie_main
 
