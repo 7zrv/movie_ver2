@@ -39,11 +39,9 @@ public class ScreenMovieService {
         Theater theater = theaterRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 영화관은 존재하지 않습니다."));
 
-        List<Long> movieId = requestDto.getMovieId();
-        List<ScreenMovies> screenMovies = movieRepository.findAllById(movieId).stream()
-                .map((Movie movie) -> RequestScreenMovieDto.toEntity(movie, theater))
-                .collect(Collectors.toList());
-        screenMovieRepository.deleteAll(screenMovies);
+        List<Movie> movies = movieRepository.findAllById(requestDto.getMovieId());
+
+        screenMovieRepository.deleteAllByMovieInAndTheater(movies, theater);
     }
 
     public List<ScreenMovieDto> getALl() {
