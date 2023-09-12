@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface TheaterRepository extends JpaRepository<Theater, Long> {
     Boolean existsByArea(String area);
-    List<Theater> findByAddressLike(String local);
+    List<Theater> findByAddressStartingWith(String local);
 }

@@ -53,13 +53,9 @@ public class TheaterService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 영화관은 존재하지 않습니다.")));
     }
 
-    public TheaterInfoDto getScreenMoviesByTheater(Long id) {
-        return TheaterInfoDto.of(theaterRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 영화관은 존재하지 않습니다.")));
-    }
 
     public List<TheaterAreaDto> getTheatersByLocal(String local) {
-        return theaterRepository.findByAddressLike(local+"%").stream()
+        return theaterRepository.findByAddressStartingWith(local).stream()
                 .map(TheaterAreaDto::of)
                 .collect(Collectors.toList());
     }
