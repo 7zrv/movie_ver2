@@ -11,7 +11,7 @@ import javax.persistence.*;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-@Table(name = "screen_movies")
+@Table(name = "screen_movies", uniqueConstraints = {@UniqueConstraint(columnNames = {"theater_id", "movie_id"})})
 @Entity
 public class ScreenMovies {
     @Id
