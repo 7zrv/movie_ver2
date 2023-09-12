@@ -1,5 +1,6 @@
 package com.example.movie_ver2.theater.entity;
 
+import com.example.movie_ver2.movie.entity.Movie;
 import com.example.movie_ver2.screenMovie.entity.ScreenMovies;
 import com.example.movie_ver2.theater.dto.RequestTheaterDto;
 import lombok.AccessLevel;
@@ -13,8 +14,9 @@ import org.springframework.util.StringUtils;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -44,8 +46,8 @@ public class Theater {
     private Integer seats;      //총 좌석수
 
     //상영 영화 목록
-    @OneToMany(mappedBy = "theater")
-    private Set<ScreenMovies> screenMovies = new HashSet<>();
+    @OneToMany(mappedBy = "theater", fetch = FetchType.LAZY)
+    private List<ScreenMovies> screenMovies = new ArrayList<>();
 
     @Column(name="reg_date", updatable = false, nullable = false)
     @CreatedDate
@@ -74,10 +76,6 @@ public class Theater {
         if(StringUtils.hasText(requestDto.getNumber())){
             this.number = requestDto.getNumber();
         }
-    }
-
-    public void addScreenMovie(Set<ScreenMovies> screenMovies) {
-        this.screenMovies.addAll(screenMovies);
     }
 
 }

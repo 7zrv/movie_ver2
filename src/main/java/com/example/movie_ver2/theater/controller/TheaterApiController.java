@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -19,6 +20,8 @@ import java.util.List;
 public class TheaterApiController {
 
     private final TheaterService theaterService;
+
+    //영화 개봉시 영화관 지점 선택하여 한번에 상영영화 추가 api 고려
 
     @GetMapping("/getAllTheater")
     public ResponseEntity<ResultJson<?>> getAllTheater() {
@@ -61,7 +64,7 @@ public class TheaterApiController {
     }
 
     @PostMapping("/createTheater")
-    public ResponseEntity<ResultJson<?>> createTheater(@RequestBody RequestTheaterDto theaterDto) {
+    public ResponseEntity<ResultJson<?>> createTheater(@Valid @RequestBody RequestTheaterDto theaterDto) {
         try{
             if(theaterService.checkDuplicate(theaterDto.getArea())){
                 throw new IllegalArgumentException("동일한 지점의 영화관이 이미 존재합니다.\n다시 입력해주세요.");
