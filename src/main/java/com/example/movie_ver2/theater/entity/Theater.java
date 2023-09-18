@@ -1,6 +1,5 @@
 package com.example.movie_ver2.theater.entity;
 
-import com.example.movie_ver2.movie.entity.Movie;
 import com.example.movie_ver2.screenMovie.entity.ScreenMovies;
 import com.example.movie_ver2.theater.dto.RequestTheaterDto;
 import lombok.AccessLevel;

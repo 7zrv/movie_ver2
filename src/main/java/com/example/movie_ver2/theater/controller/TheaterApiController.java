@@ -9,11 +9,15 @@ import com.example.movie_ver2.theater.service.TheaterService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.List;
 
+@Validated
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/theater")
@@ -50,9 +54,9 @@ public class TheaterApiController {
 
 
     @GetMapping("/getLocalTheaters")
-    public ResponseEntity<ResultJson<?>> getLocalTheaters() {
+    public ResponseEntity<ResultJson<?>> getLocalTheaters(@RequestParam("local") @NotBlank @Size(min=2, max=2, message = "두 글자로 입력헤주세요") String local) {
         try{
-            List<TheaterAreaDto> theaterDtos = theaterService.getTheatersByLocal("강원");
+            List<TheaterAreaDto> theaterDtos = theaterService.getTheatersByLocal(local);
             if(theaterDtos.isEmpty()){
                 return ResponseEntity.ok(new ResultJson<>(200, "조회 성공", "해당 지역에 등록된 영화관이 존재하지 않습니다."));
             }
