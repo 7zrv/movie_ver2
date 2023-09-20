@@ -11,6 +11,10 @@ java {
     sourceCompatibility = '11'
 }
 
+jar {
+    enabled = false  //jar파일을 하나만 만듬
+}
+
 configurations {
     compileOnly {
         extendsFrom annotationProcessor
@@ -45,7 +49,6 @@ dependencies {
 
     implementation group: 'org.bgee.log4jdbc-log4j2', name: 'log4jdbc-log4j2-jdbc4.1', version: '1.16'
 
-
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
@@ -63,6 +66,3 @@ task copyPrivate(type: Copy) {
     }
 }
 
-jar {
-    enabled = false
-}
