@@ -1,5 +1,6 @@
 package com.example.movie_ver2.hall.entity;
 
+import com.example.movie_ver2.hall.dto.RequestHallDto;
 import com.example.movie_ver2.theater.entity.Theater;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -8,6 +9,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.util.StringUtils;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -26,8 +28,8 @@ public class Hall {
     @Column(name = "hall_name", nullable = false)
     private String name;
 
-    @Column(name = "hall_floor", nullable = false)
-    private Integer floor;      //상영관 위치
+    @Column(name = "hall_floor")
+    private Integer floor;      //상영관 위치(B1층)
 
     @Column(name = "hall_seats")
     private Integer seats;      //보유 좌석수
@@ -52,4 +54,15 @@ public class Hall {
         this.theater = theater;
     }
 
+    public void update(RequestHallDto requestDto){
+        if(StringUtils.hasText(requestDto.getName())){
+            this.name = requestDto.getName();
+        }
+        if(requestDto.getFloor() != null){
+            this.floor = requestDto.getFloor();
+        }
+        if(requestDto.getSeats() != null){
+            this.seats = requestDto.getSeats();
+        }
+    }
 }
