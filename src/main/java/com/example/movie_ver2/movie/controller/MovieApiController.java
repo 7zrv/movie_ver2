@@ -36,6 +36,7 @@ public class MovieApiController {
                     .body(new ApiResponse<>(0, "예기치 않은 오류 발생", null));
         }
 
+
     }
 
     @GetMapping("/api/movie/getAllMovieInfo")
