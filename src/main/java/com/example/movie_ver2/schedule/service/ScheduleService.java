@@ -11,11 +11,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class ScheduleService {
 
-    ScheduleRepository scheduleRepository;
+    private final ScheduleRepository scheduleRepository;
 
     public Schedule saveSchedule(CreateScheduleRequestDto requestDto) {
         return scheduleRepository.save(requestDto.toEntity());
     }
+
+
 
 
 }

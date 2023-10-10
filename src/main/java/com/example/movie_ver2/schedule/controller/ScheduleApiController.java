@@ -10,11 +10,9 @@ import com.example.movie_ver2.schedule.service.ScheduleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.Map;
 
 
@@ -25,7 +23,7 @@ public class ScheduleApiController {
     private final ScheduleService scheduleService;
 
     @PostMapping("/api/schedule/createSchedule")
-    public ResponseEntity<ApiResponse<?>> createSchedule(CreateScheduleRequestDto requestDto){
+    public ResponseEntity<ApiResponse<?>> createSchedule(@RequestBody CreateScheduleRequestDto requestDto){
 
         try {
             Schedule savedSchedule = scheduleService.saveSchedule(requestDto);
@@ -33,17 +31,21 @@ public class ScheduleApiController {
         } catch (IllegalStateException E) {
             return ResponseEntity.badRequest().body(new ApiResponse<>(0, "스케줄 등록 실패", null));
         }
+
     }
 
-//    @GetMapping("/api/schedule/findScheduleByScreen/{screenroomId}")
-//    public ResponseEntity<ApiResponse<?>> findScheduleByScreenroomId(@PathVariable Long screenroomId){
-//
-//        try {
-//            return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse<>(1, "상영일정 검색 성공", Map.of("schedule", savedSchedule)));
-//        }catch (IllegalStateException E){
-//            return ResponseEntity.badRequest().body(new ApiResponse<>(0, "상영일정 검색 성공", null));
-//        }
-//    }
+    @GetMapping("/api/schedule/findScheduleByScreen")
+    public ResponseEntity<ApiResponse<?>> findSchedule(@RequestParam Long scrId,
+                                                       @RequestParam LocalDate date
+                                                       ){
+
+        try {
+            return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse<>(1, "상영일정 검색 성공", Map.of("schedule", savedSchedule)));
+        }catch (IllegalStateException E){
+            return ResponseEntity.badRequest().body(new ApiResponse<>(0, "상영일정 검색 성공", null));
+        }
+
+    }
 
 
 

@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 
@@ -16,23 +17,21 @@ import java.time.LocalDateTime;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-@Table(name = "schedules")
 @Entity
+@EntityListeners(AuditingEntityListener.class)
+@Table(name = "schedules")
 public class Schedule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "schedule_id", nullable = false)
     private Long id;
 
-    @Column(name = "screenroom_id", nullable = false)
-    private Long scrId;
+    @ManyToOne
+    @JoinColumn(name = "hall_id", referencedColumnName = "hall_id", insertable = false, updatable = false)
+    private Hall hall;
 
     @Column(name = "movie_title", nullable = false)
     private String movieTitle;
-
-    @Column(name = "current_seat_stat")
-    private int currentSeatStat;
-
 
     @Column(name = "start_time", nullable = false)
     private LocalDateTime startTime;
@@ -49,11 +48,10 @@ public class Schedule {
     private LocalDateTime updatedAt;
 
     @Builder
-    public Schedule(Long id, Long scrId, String movieTitle, int currentSeatStat, LocalDateTime startTime, LocalDateTime endTime) {
+    public Schedule(Long id, Long scrId, String movieTitle, LocalDateTime startTime, LocalDateTime endTime) {
         this.id = id;
         this.scrId = scrId;
         this.movieTitle = movieTitle;
-        this.currentSeatStat = currentSeatStat;
         this.startTime = startTime;
         this.endTime = endTime;
     }
