@@ -34,18 +34,18 @@ public class ScheduleApiController {
 
     }
 
-    @GetMapping("/api/schedule/findScheduleByScreen")
-    public ResponseEntity<ApiResponse<?>> findSchedule(@RequestParam Long scrId,
-                                                       @RequestParam LocalDate date
-                                                       ){
-
-        try {
-            return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse<>(1, "상영일정 검색 성공", Map.of("schedule", savedSchedule)));
-        }catch (IllegalStateException E){
-            return ResponseEntity.badRequest().body(new ApiResponse<>(0, "상영일정 검색 성공", null));
-        }
-
-    }
+//    @GetMapping("/api/schedule/findScheduleByScreen")
+//    public ResponseEntity<ApiResponse<?>> findSchedule(@RequestParam Long scrId,
+//                                                       @RequestParam LocalDate date
+//                                                       ){
+//
+//        try {
+//            return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse<>(1, "상영일정 검색 성공", Map.of("schedule", savedSchedule)));
+//        }catch (IllegalStateException E){
+//            return ResponseEntity.badRequest().body(new ApiResponse<>(0, "상영일정 검색 실패", null));
+//        }
+//
+//    }
 
 
 

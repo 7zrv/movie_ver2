@@ -1,6 +1,8 @@
 package com.example.movie_ver2.schedule.entity;
 
 
+import com.example.movie_ver2.hall.entity.Hall;
+import com.example.movie_ver2.movie.entity.Movie;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -26,12 +28,13 @@ public class Schedule {
     @Column(name = "schedule_id", nullable = false)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "hall_id", referencedColumnName = "hall_id", insertable = false, updatable = false)
     private Hall hall;
 
-    @Column(name = "movie_title", nullable = false)
-    private String movieTitle;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "movie_id", referencedColumnName = "movie_id", insertable = false, updatable = false)
+    private Movie movie;
 
     @Column(name = "start_time", nullable = false)
     private LocalDateTime startTime;
@@ -48,10 +51,9 @@ public class Schedule {
     private LocalDateTime updatedAt;
 
     @Builder
-    public Schedule(Long id, Long scrId, String movieTitle, LocalDateTime startTime, LocalDateTime endTime) {
-        this.id = id;
-        this.scrId = scrId;
-        this.movieTitle = movieTitle;
+    public Schedule(Hall hall, Movie movie, LocalDateTime startTime, LocalDateTime endTime) {
+        this.hall = hall;
+        this.movie = movie;
         this.startTime = startTime;
         this.endTime = endTime;
     }
