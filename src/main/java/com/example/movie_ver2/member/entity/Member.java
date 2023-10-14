@@ -3,6 +3,7 @@ package com.example.movie_ver2.member.entity;
 
 import com.example.movie_ver2.core.enums.MemberRole;
 import com.example.movie_ver2.core.enums.Sex;
+import com.example.movie_ver2.review.entity.Review;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,6 +15,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.example.movie_ver2.core.enums.MemberRole.BASIC;
 
@@ -28,6 +31,9 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id", nullable = false)
     private Long id;
+
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+    private List<Review> reviews = new ArrayList<>();
 
     @Column(name = "email", nullable = false, unique = true)
     private String email;
