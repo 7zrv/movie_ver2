@@ -29,11 +29,11 @@ public class Schedule {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "hall_id", referencedColumnName = "hall_id", insertable = false, updatable = false)
+    @JoinColumn(name = "hall_id", referencedColumnName = "hall_id")
     private Hall hall;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "movie_id", referencedColumnName = "movie_id", insertable = false, updatable = false)
+    @JoinColumn(name = "movie_id", referencedColumnName = "movie_id")//, insertable = false, updatable = false
     private Movie movie;
 
     @Column(name = "start_time", nullable = false)

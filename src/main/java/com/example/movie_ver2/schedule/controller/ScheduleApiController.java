@@ -26,8 +26,8 @@ public class ScheduleApiController {
     public ResponseEntity<ApiResponse<?>> createSchedule(@RequestBody CreateScheduleRequestDto requestDto){
 
         try {
-            Schedule savedSchedule = scheduleService.saveSchedule(requestDto);
-            return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse<>(1, "스케줄 등록 성공", savedSchedule));
+            scheduleService.saveSchedule(requestDto);
+            return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse<>(1, "스케줄 등록 성공", null));
         } catch (IllegalStateException E) {
             return ResponseEntity.badRequest().body(new ApiResponse<>(0, "스케줄 등록 실패", null));
         }

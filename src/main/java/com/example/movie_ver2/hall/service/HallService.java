@@ -56,6 +56,7 @@ public class HallService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 상영관은 존재하지 않습니다.")));
     }
 
+
     public Hall findHallById(Long id) {
         return hallRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 상영관은 존재하지 않습니다."));

@@ -3,6 +3,7 @@ package com.example.movie_ver2.hall.entity;
 import com.example.movie_ver2.hall.dto.RequestHallDto;
 import com.example.movie_ver2.schedule.entity.Schedule;
 import com.example.movie_ver2.theater.entity.Theater;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,6 +23,7 @@ import java.util.List;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 public class Hall {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "hall_id", nullable = false)
