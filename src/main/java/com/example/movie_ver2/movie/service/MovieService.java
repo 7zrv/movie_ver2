@@ -116,4 +116,9 @@ public class MovieService {
     public void deleteMovie(Long movieId) {
         movieRepository.deleteById(movieId);
     }
+
+    public Movie findMovieById(Long id){
+
+        return movieRepository.findById(id).orElseThrow(NoSuchElementException::new);
+    }
 }

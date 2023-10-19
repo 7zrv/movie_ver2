@@ -16,15 +16,15 @@ import java.time.LocalDateTime;
 @Getter
 public class CreateScheduleRequestDto {
 
-    private Movie movie;
-    private Hall hall;
+    private Long movieId;
+    private Long hallId;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime startTime;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime endTime;
 
-    public Schedule toEntity() {
+    public Schedule toEntity(Movie movie, Hall hall) {
         return Schedule.builder()
                 .movie(movie)
                 .hall(hall)
