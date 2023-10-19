@@ -6,6 +6,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -15,6 +16,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -37,10 +39,8 @@ public class Theater {
     @Column(name = "tel_number")
     private String number;
 
-    @Column(name = "total_halls")
-    private Integer halls;      //보유 관수
-
     @Column(name = "total_seats")
+    @ColumnDefault("0")
     private Integer seats;      //총 좌석수
 
     //상영 영화 목록
@@ -60,12 +60,11 @@ public class Theater {
         this.area = area;
         this.address = address;
         this.number = number;
-        this.halls = halls;
         this.seats = seats;
     }
 
     public void update(RequestTheaterDto requestDto){
-        if(StringUtils.hasText(requestDto.getArea())){
+        if(StringUtils.hasText(requestDto.getArea()) && !(Objects.equals(this.area, requestDto.getArea()))){
             this.area = requestDto.getArea();
         }
         if(StringUtils.hasText(requestDto.getAddress())){

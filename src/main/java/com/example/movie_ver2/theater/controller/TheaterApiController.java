@@ -26,11 +26,25 @@ public class TheaterApiController {
     private final TheaterService theaterService;
 
     //영화 개봉시 영화관 지점 선택하여 한번에 상영영화 추가 api 고려
-
+/*
     @GetMapping("/getAllTheater")
     public ResponseEntity<ResultJson<?>> getAllTheater() {
         try{
-            List<TheaterAreaDto> theaterDtos = theaterService.getALl();
+            List<TheaterInfoDto> theaterDtos = theaterService.getAll();
+            if(theaterDtos.isEmpty()){
+                return ResponseEntity.ok(new ResultJson<>(200, "조회 성공", "현재 등록된 영화관이 존재하지 않습니다."));
+            }
+            return ResponseEntity.ok(new ResultJson<>(200, "조회 성공", theaterDtos));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ResultJson<>(404, "조회 실패", e.getMessage()));
+        }
+    }
+*/
+    @GetMapping("/getAllTheaterArea")
+    public ResponseEntity<ResultJson<?>> getAllTheaterArea() {
+        try{
+            List<TheaterAreaDto> theaterDtos = theaterService.getAllArea();
             if(theaterDtos.isEmpty()){
                 return ResponseEntity.ok(new ResultJson<>(200, "조회 성공", "현재 등록된 영화관이 존재하지 않습니다."));
             }
@@ -54,7 +68,7 @@ public class TheaterApiController {
 
 
     @GetMapping("/getLocalTheaters")
-    public ResponseEntity<ResultJson<?>> getLocalTheaters(@RequestParam("local") @NotBlank @Size(min=2, max=2, message = "두 글자로 입력헤주세요") String local) {
+    public ResponseEntity<ResultJson<?>> getLocalTheaters(@RequestParam("local") @NotBlank @Size(min=2, max=2, message = "두 글자로 입력해주세요") String local) {
         try{
             List<TheaterAreaDto> theaterDtos = theaterService.getTheatersByLocal(local);
             if(theaterDtos.isEmpty()){
@@ -84,7 +98,7 @@ public class TheaterApiController {
     @PatchMapping("/modifyTheater/{theaterId}")
     public ResponseEntity<ResultJson<?>> modifyTheater(@PathVariable Long theaterId, @RequestBody RequestTheaterDto theaterDto) {
         try{
-            if(theaterService.checkDuplicate(theaterDto.getArea())){
+            if(theaterService.checkDuplicateByIdNot(theaterDto.getArea(), theaterId)){
                 throw new IllegalArgumentException("동일한 지점의 영화관이 이미 존재합니다.\n다시 입력해주세요.");
             }
             theaterService.updateTheater(theaterId, theaterDto);
