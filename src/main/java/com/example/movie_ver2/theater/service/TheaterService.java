@@ -47,13 +47,13 @@ public class TheaterService {
     public boolean checkDuplicateByIdNot(String area, Long id) {
         return theaterRepository.existsByAreaAndIdNot(area, id);
     }
-    /*
+
     public List<TheaterInfoDto> getAll() {
         return theaterRepository.findAll().stream()
-                .map(TheaterInfoDto::of)
+                .map((Theater theater) -> TheaterInfoDto.of(theater, hallRepository.countByTheater(theater)))
                 .collect(Collectors.toList());
     }
-    */
+
     public List<TheaterAreaDto> getAllArea() {
         return theaterRepository.findAll().stream()
                 .map(TheaterAreaDto::of)

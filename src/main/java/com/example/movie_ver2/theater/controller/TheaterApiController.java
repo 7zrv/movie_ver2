@@ -26,7 +26,7 @@ public class TheaterApiController {
     private final TheaterService theaterService;
 
     //영화 개봉시 영화관 지점 선택하여 한번에 상영영화 추가 api 고려
-/*
+
     @GetMapping("/getAllTheater")
     public ResponseEntity<ResultJson<?>> getAllTheater() {
         try{
@@ -40,7 +40,7 @@ public class TheaterApiController {
                     .body(new ResultJson<>(404, "조회 실패", e.getMessage()));
         }
     }
-*/
+
     @GetMapping("/getAllTheaterArea")
     public ResponseEntity<ResultJson<?>> getAllTheaterArea() {
         try{
