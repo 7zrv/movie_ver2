@@ -1,5 +1,6 @@
 package com.example.movie_ver2.theater.service;
 
+import com.example.movie_ver2.hall.repository.HallRepository;
 import com.example.movie_ver2.theater.dto.RequestTheaterDto;
 import com.example.movie_ver2.theater.dto.TheaterAreaDto;
 import com.example.movie_ver2.theater.dto.TheaterInfoDto;
@@ -16,6 +17,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class TheaterService {
     private final TheaterRepository theaterRepository;
+    private final HallRepository hallRepository;
 
     @Transactional
     public Theater saveTheater(RequestTheaterDto requestDto) {
@@ -42,15 +44,27 @@ public class TheaterService {
         return theaterRepository.existsByArea(area);
     }
 
-    public List<TheaterAreaDto> getALl() {
+    public boolean checkDuplicateByIdNot(String area, Long id) {
+        return theaterRepository.existsByAreaAndIdNot(area, id);
+    }
+
+    public List<TheaterInfoDto> getAll() {
+        return theaterRepository.findAll().stream()
+                .map((Theater theater) -> TheaterInfoDto.of(theater, hallRepository.countByTheater(theater)))
+                .collect(Collectors.toList());
+    }
+
+    public List<TheaterAreaDto> getAllArea() {
         return theaterRepository.findAll().stream()
                 .map(TheaterAreaDto::of)
                 .collect(Collectors.toList());
     }
 
     public TheaterInfoDto getTheaterInfoById(Long id) {
-        return TheaterInfoDto.of(theaterRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 영화관은 존재하지 않습니다.")));
+        Theater theater = theaterRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 영화관은 존재하지 않습니다."));
+        Long countHalls = hallRepository.countByTheater(theater);
+        return TheaterInfoDto.of(theater, countHalls);
     }
 
 
