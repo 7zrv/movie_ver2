@@ -14,7 +14,7 @@ import java.util.List;
 @Repository
 public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
 
-    @Query("SELECT e FROM Schedule e WHERE e.hall.id = :hallId AND DATE(e.startTime) = :screenDate")
+    @Query("SELECT e FROM Schedule e WHERE e.hall.id = :hallId AND DATE(e.startTime) = DATE(:screenDate)")
     List<Schedule> findScheduleByHallIdAndScreenDate(@Param("hallId") Long hallId, @Param("screenDate") LocalDate screenDate);
 
 }

@@ -3,6 +3,7 @@ package com.example.movie_ver2.schedule.entity;
 
 import com.example.movie_ver2.hall.entity.Hall;
 import com.example.movie_ver2.movie.entity.Movie;
+import com.example.movie_ver2.schedule.dto.ModifyScheduleRequestDto;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -57,6 +58,12 @@ public class Schedule {
         this.movie = movie;
         this.startTime = startTime;
         this.endTime = endTime;
+    }
+
+    public void modifySchedule(ModifyScheduleRequestDto requestDto){
+        this.startTime = requestDto.getStartTime();
+        this.endTime = requestDto.getEndTime();
+
     }
 
 }
