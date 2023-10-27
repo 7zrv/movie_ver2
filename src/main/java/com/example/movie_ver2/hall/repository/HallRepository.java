@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface HallRepository extends JpaRepository<Hall, Long>  {
     boolean existsByTheaterAndName(Theater theater, String name);
+
+    Long countByTheater(Theater theater);
 }

@@ -1,6 +1,7 @@
 package com.example.movie_ver2.hall.entity;
 
 import com.example.movie_ver2.hall.dto.RequestHallDto;
+import com.example.movie_ver2.schedule.entity.Schedule;
 import com.example.movie_ver2.theater.entity.Theater;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -13,6 +14,7 @@ import org.springframework.util.StringUtils;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -37,6 +39,9 @@ public class Hall {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="theater_id", nullable = false)
     private Theater theater;
+
+    @OneToMany(mappedBy = "hall", cascade = CascadeType.PERSIST)
+    private List<Schedule> schedules;
 
     @Column(name="reg_date", updatable = false, nullable = false)
     @CreatedDate
