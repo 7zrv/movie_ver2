@@ -12,6 +12,9 @@ import com.example.movie_ver2.review.entity.Review;
 import com.example.movie_ver2.review.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.exception.ConstraintViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -80,6 +83,11 @@ public class ReviewService {
                 .collect(Collectors.toList());
     }
 
+    public Page<MovieReviewDto> getReviewsWithPageByMovie(Long movieId, Pageable pageable) {
+        Movie movie = movieRepository.findById(movieId).orElseThrow(() -> new IllegalArgumentException("해당 영화는 존재하지 않습니다."));
+        return reviewRepository.findByMovie(movie, pageable)
+                .map(MovieReviewDto::of);
+    }
 
     public List<MyReviewDto> getReviewsByMember(Long memberId) {
         Member member = memberRepository.findById(memberId).orElseThrow(() -> new IllegalArgumentException("해당 멤버는 존재하지 않습니다."));

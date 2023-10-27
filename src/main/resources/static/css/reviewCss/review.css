@@ -1,0 +1,133 @@
+/* 폰트 시작 */
+@font-face {
+    font-family: 'NanumSquareNeo-Variable';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* { font-family: 'NanumSquareNeo-Variable'; }
+/* 폰트 끝 */
+
+/**리뷰 시작**/
+.movie-reviews {
+    width: 70%;
+    margin: 0 auto;
+    /**max-width:1000px;**/
+    justify-content: center;
+}
+
+.review-box {
+    list-style: none;
+    padding:0;
+    border: 1.5px solid #e8ebee;
+}
+
+.myBtn {
+    padding: 0px 10px;
+    float: right;
+    color: black;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+#myReview {
+    display: none;
+}
+
+.review-none, .my-review-none {
+    text-align: center;
+}
+
+.review-box li {
+    border-radius: 6px;
+    padding:10px;
+    border: 1.5px solid #e8ebee;
+    margin: 10px
+}
+
+.rating-control {
+    display: flex;
+    justify-content: space-between;
+    width:100%
+}
+
+.control-button a {
+    text-decoration:none;
+    color: black;
+}
+
+
+/*별점*/
+.rating-box {
+    display:flex;
+}
+
+.rating-star {
+    position: relative;
+    color: #ddd;
+}
+
+.rating-star span {
+    width: 0;
+    color: #ffc107;
+    position: absolute;
+    left: 0;
+    right: 0;
+    overflow: hidden;
+}
+
+/*페이징*/
+.page_wrap {
+    text-align:center;
+    font-size:0;
+}
+.page_nation {
+    display:inline-block;
+}
+.page_nation .none {
+    display:none;
+}
+.page_nation a {
+    display:block;
+    margin:0 3px;
+    float:left;
+    border:1px solid #e6e6e6;
+    width:28px;
+    height:28px;
+    line-height:28px;
+    text-align:center;
+    background-color:#fff;
+    font-size:13px;
+    color:#999999;
+    text-decoration:none;
+}
+.page_nation .arrow {
+    border:1px solid #ccc;
+}
+.page_nation .pprev {
+    background:#f8f8f8 url("https://imgur.com/vyti9Ch") no-repeat center center;
+    margin-left:0;
+}
+.page_nation .prev {
+    background:#f8f8f8 url("https://imgur.com/aaO615V") no-repeat center center;
+    margin-right:7px;
+}
+.page_nation .next {
+    background:#f8f8f8 url("https://imgur.com/tVTFsRB") no-repeat center center;
+    margin-left:7px;
+}
+.page_nation .nnext {
+    background:#f8f8f8 url("https://imgur.com/Fl8M0Yx") no-repeat center center;
+    margin-right:0;
+}
+
+.page_nation a:hover {
+    background-color: #ccc
+}
+
+.page_nation a.active {
+    background-color:#42454c;
+    color:#fff;
+    border:1px solid #42454c;
+}

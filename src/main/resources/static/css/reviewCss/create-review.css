@@ -1,3 +1,20 @@
+/* 폰트 시작 */
+@font-face {
+    font-family: 'NanumSquareNeo-Variable';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* { font-family: 'NanumSquareNeo-Variable'; }
+/* 폰트 끝 */
+
+.review-box {
+    width: 70%;
+    margin: 0 auto;
+    background: #f8f8f8;
+}
+
 h3 {
     text-align:center;
     font-size:22px;
@@ -75,7 +92,7 @@ label{
 
 
 /*폼 제출 버튼*/
-button[type="submit"] {
+.submit-button button {
     margin: 5px;
     background-color: gainsboro;
     color: black;
@@ -86,7 +103,7 @@ button[type="submit"] {
     font-size: 13px;
 }
 
-button[type="submit"]:hover {
+.submit-button button:hover {
     background-color: black;
     color: white;
 }
@@ -94,5 +111,4 @@ button[type="submit"]:hover {
 .submit-button {
     display: flex;
     justify-content: flex-end;
-    background: #f8f8f8;
 }
