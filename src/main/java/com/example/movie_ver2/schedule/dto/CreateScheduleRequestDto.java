@@ -1,16 +1,14 @@
 package com.example.movie_ver2.schedule.dto;
 
 
-import com.example.movie_ver2.core.enums.Sex;
+
 import com.example.movie_ver2.hall.entity.Hall;
-import com.example.movie_ver2.member.entity.Member;
+
 import com.example.movie_ver2.movie.entity.Movie;
 import com.example.movie_ver2.schedule.entity.Schedule;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
-import lombok.Setter;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter

@@ -3,7 +3,6 @@ package com.example.movie_ver2.hall.entity;
 import com.example.movie_ver2.hall.dto.RequestHallDto;
 import com.example.movie_ver2.schedule.entity.Schedule;
 import com.example.movie_ver2.theater.entity.Theater;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -72,4 +71,5 @@ public class Hall {
             this.seats = requestDto.getSeats();
         }
     }
+
 }
