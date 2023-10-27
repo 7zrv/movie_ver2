@@ -64,28 +64,30 @@ function modifyTheater(data, theaterId) {
     });
 }
 
-function getAllTheater(){
+function getAllTheater(pageNum){
     $.ajax({
         type: 'GET',
-        url: `/api/theater/getAllTheater`,
+        url: `/api/theater/getAllTheater?page=${pageNum-1}`,
         success: function (result) {
+            let theaterHtml = ``;
             console.log(result);
-            $(result.data).each(function(){
-                $('#tableBody').append($(
-                    `<tr>
-                        <td>${this.id}</td>
-                        <td>${this.area}</td>
-                        <td>${this.address}</td>
-                        <td>${this.number}</td>
-                        <td>${this.halls}관</td>
-                        <!-- <td> -->
-                            <!-- 상영 중인 영화 목록을 반복하여 표시할 수 있습니다. -->
-                            <!-- <span th:each="movieId : " th:text=""></span> -->
-                        <!-- </td> -->
-                        <td><a href='/modify/theater/${this.id}' class="controlBtn" style="color:royalblue; border-color: royalblue;">수정</a>
-                            <a href='javascript:void(0);' onClick='theaterDelete(${this.id});' class="controlBtn" style="color:tomato; border-color: tomato">삭제</a></td>
-                    </tr>`));
+            $(result.data.content).each(function(){
+                theaterHtml += `<tr>
+                                    <td>${this.id}</td>
+                                    <td>${this.area}</td>
+                                    <td>${this.address}</td>
+                                    <td>${this.number}</td>
+                                    <td>${this.halls}관</td>
+                                    <!-- <td> -->
+                                        <!-- 상영 중인 영화 목록을 반복하여 표시할 수 있습니다. -->
+                                        <!-- <span th:each="movieId : " th:text=""></span> -->
+                                    <!-- </td> -->
+                                    <td><a href='/modify/theater/${this.id}' class="controlBtn" style="color:royalblue; border-color: royalblue;">수정</a>
+                                        <a href='javascript:void(0);' onClick='theaterDelete(${this.id});' class="controlBtn" style="color:tomato; border-color: tomato">삭제</a></td>
+                                </tr>`
             });
+            $("#tableBody").html(theaterHtml);
+            setPageNation(result.data.totalPages, pageNum, 5);
         },
         error: function (result) { // 실패시
             if (result.message == "조회 실패") {

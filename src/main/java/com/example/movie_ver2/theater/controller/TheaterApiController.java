@@ -7,6 +7,9 @@ import com.example.movie_ver2.theater.dto.TheaterInfoDto;
 import com.example.movie_ver2.theater.entity.Theater;
 import com.example.movie_ver2.theater.service.TheaterService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -28,9 +31,9 @@ public class TheaterApiController {
     //영화 개봉시 영화관 지점 선택하여 한번에 상영영화 추가 api 고려
 
     @GetMapping("/getAllTheater")
-    public ResponseEntity<ResultJson<?>> getAllTheater() {
+    public ResponseEntity<ResultJson<?>> getAllTheater(@PageableDefault(size = 10) Pageable pageable) {
         try{
-            List<TheaterInfoDto> theaterDtos = theaterService.getAll();
+            Page<TheaterInfoDto> theaterDtos = theaterService.getAll(pageable);
             if(theaterDtos.isEmpty()){
                 return ResponseEntity.ok(new ResultJson<>(200, "조회 성공", "현재 등록된 영화관이 존재하지 않습니다."));
             }

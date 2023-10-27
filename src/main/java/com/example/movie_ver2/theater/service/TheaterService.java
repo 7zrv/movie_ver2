@@ -7,6 +7,8 @@ import com.example.movie_ver2.theater.dto.TheaterInfoDto;
 import com.example.movie_ver2.theater.entity.Theater;
 import com.example.movie_ver2.theater.repository.TheaterRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -48,10 +50,9 @@ public class TheaterService {
         return theaterRepository.existsByAreaAndIdNot(area, id);
     }
 
-    public List<TheaterInfoDto> getAll() {
-        return theaterRepository.findAll().stream()
-                .map((Theater theater) -> TheaterInfoDto.of(theater, hallRepository.countByTheater(theater)))
-                .collect(Collectors.toList());
+    public Page<TheaterInfoDto> getAll(Pageable pageable) {
+        return theaterRepository.findAll(pageable)
+                .map((Theater theater) -> TheaterInfoDto.of(theater, hallRepository.countByTheater(theater)));
     }
 
     public List<TheaterAreaDto> getAllArea() {
