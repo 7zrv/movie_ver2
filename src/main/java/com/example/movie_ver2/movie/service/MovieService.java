@@ -118,6 +118,7 @@ public class MovieService {
     }
 
     public Movie findMovieById(Long id){
-        return movieRepository.findById(id).orElseThrow();
+
+        return movieRepository.findById(id).orElseThrow(NoSuchElementException::new);
     }
 }
