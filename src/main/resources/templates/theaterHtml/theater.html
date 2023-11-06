@@ -17,13 +17,23 @@
             let slice = ($(this).attr('href')).slice(-1);
             getAllTheater(parseInt(slice));
         });
+        $('#submit-button').click(function () {
+            const data={
+                "area": $("#area").val(),
+                "address": $("#address").val(),
+                "number": $("#number").val(),
+            }
+            createTheater(data);
+            modalDisplay('none');
+            resetForm();
+        });
     });
 </script>
 <!-- 극장 관리 탭 -->
 <div class="tableBox" id="theater">
     <div class="element">
         <h1 class="title">영화관 목록</h1>
-        <a href='/create/theater' class="addBtn">영화관 추가</a>
+        <button type="button" class="addBtn" onclick="modalDisplay('flex')">영화관 추가</button>
     </div>
     <table>
         <thead>
@@ -61,8 +71,63 @@
             -->
         </div>
     </div>
-    <br>
-    <br>
 </div>
+<!--영화관 등록 모달창-->
+<div class="modal">
+    <div class="modal-body">
+        <h2 class="modal-title">영화관 등록</h2>
+        <div  class="edit-form">
+            <div class="form-row">
+                <label for="area">영화관 지점:</label>
+                <input type="text" id="area" name="area">
+            </div>
+            <div class="form-row">
+                <label for="address">영화관 주소:</label>
+                <input type="text" id="address" name="address">
+            </div>
+            <div class="form-row">
+                <label for="number">영화관 번호:</label>
+                <input type="text" id="number" name="number">
+            </div>
+            <div class="submit-button">
+                <button id="submit-button">등록</button>
+                <button type="button" onclick="modalDisplay('none')">취소</button>
+                <button type="reset" onclick="resetForm()">초기화</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function resetForm(){
+        document.querySelectorAll("input[type='text']").forEach((input) => {
+            input.value = null;
+        })
+    }
+    <!--모달창js-->
+    const modal = document.querySelector('.modal');
+    function modalDisplay(value){
+        modal.style.display = value;
+    }
+    modal.addEventListener("click", e => {
+        if(e.target === modal) {
+            modal.style.display = "none";
+        }
+    })
+</script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+    window.onload = function(){
+        const addressBox = document.getElementById("address");
+        addressBox.addEventListener("click", function(){ //주소입력칸을 클릭하면
+            //카카오 지도 발생
+            new daum.Postcode({
+                oncomplete: function(data) { //선택시 입력값 세팅
+                    addressBox.value = data.address; // 주소 넣기
+                    //document.querySelector("input[name=address_detail]").focus(); //상세입력 포커싱
+                }
+            }).open();
+        });
+    }
+</script>
 </body>
 </html>

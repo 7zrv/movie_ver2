@@ -9,7 +9,6 @@
     <script src="/js/theaterScreenMovieJs/screenMovieApi.js"></script>
 </head>
 <body>
-
 <script>
     $(document).ready(function() {
         const theaterId = document.location.href.split("theater/")[1];
@@ -59,46 +58,42 @@
                 </tbody>
             </table>
         </div>
-        <script>
-            const selectAll = document.getElementById("selectAll");
-            const checkboxes = document.getElementsByName("deletedMovies");
-            const boxes = document.getElementsByName("movieBox");
-
-
-            selectAll.onclick = (event) => {
-                checkboxes.forEach((checkbox) => {
-                    checkbox.checked = selectAll.checked;
-                    if(checkbox.checked)
-                        checkbox.parentNode.parentNode.style.opacity = 0.3;
-                    else
-                        checkbox.parentNode.parentNode.style.opacity = "initial";
-                })
-            };
-
-            checkboxes.forEach((check) => {
-                check.addEventListener('change', function () {
-                    var flag = true;
-                    checkboxes.forEach((checkbox) => {
-                        if(checkbox.checked == false){
-                            flag = false;
-                            checkbox.parentNode.parentNode.style.opacity = "initial";
-                        }
-                        else{
-                            checkbox.parentNode.parentNode.style.opacity = 0.3;
-                        }
-                    })
-                    if(flag)
-                        selectAll.checked = true;
-                    else
-                        selectAll.checked = false;
-                });
-            });
-        </script>
         <div class="submit-button">
             <button id="submit-button">수정</button>
             <button type="button" onclick="history.back()">취소</button>
-            <button type="reset" onclick="">초기화</button>
+            <button type="reset" onclick="resetForm()">초기화</button>
         </div>
+        <script>
+            const selectAll = document.getElementById("selectAll");
+            const checkboxes = document.getElementsByName("delMovies");
+
+            selectAll.onclick = (event) => {
+                selectAll.parentNode.style.opacity = selectAll.checked ? 0.5 : "initial";
+
+                checkboxes.forEach((checkbox) => {
+                    checkbox.checked = selectAll.checked;
+                    checkbox.parentNode.parentNode.style.opacity = checkbox.checked ? 0.3 : "initial";
+                })
+            };
+
+            $("#tableBody").on('change','#delMovies',function(){
+                const checkedCnt = document.querySelectorAll("#delMovies:checked").length;
+
+                selectAll.checked = (checkboxes.length === checkedCnt);
+                this.parentNode.parentNode.style.opacity = this.checked ? 0.3 : "initial";
+            })
+            function resetForm(){
+                document.querySelectorAll("input[type='text']").forEach((input) => {
+                    input.value = input.getAttribute('value');
+                })
+                checkboxes.forEach((checkbox) => {
+                    checkbox.checked = false;
+                    checkbox.parentNode.parentNode.style.opacity = "initial";
+                })
+                selectAll.checked = false;
+                selectAll.parentNode.style.opacity = "initial";
+            }
+        </script>
     </div>
 </div>
 </body>

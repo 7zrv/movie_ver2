@@ -9,7 +9,7 @@ function getScreenMovieList(theaterId) {
                 $('#tableBody').append($(
                     `<tr name="movieBox">
                     <td>
-                        <input type="checkbox" name="deletedMovies" value=${this.id}>
+                        <input type="checkbox" id="delMovies" name="delMovies" value=${this.id}>
                     </td>
                     <td>${this.id}</td>
                     <td>${this.title}</td>

@@ -5,11 +5,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class TheaterController {
-
-    @GetMapping("/create/theater")
-    public String createTheater() {
-        return "theaterHtml/create-theater";
-    }
     @GetMapping("/theater")
     public String theaterList() {
         return "theaterHtml/theater";

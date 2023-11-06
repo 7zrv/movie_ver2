@@ -77,11 +77,8 @@ function getAllTheater(pageNum){
                                     <td>${this.area}</td>
                                     <td>${this.address}</td>
                                     <td>${this.number}</td>
-                                    <td>${this.halls}관</td>
-                                    <!-- <td> -->
-                                        <!-- 상영 중인 영화 목록을 반복하여 표시할 수 있습니다. -->
-                                        <!-- <span th:each="movieId : " th:text=""></span> -->
-                                    <!-- </td> -->
+                                    <td>${this.halls}관
+                                        <a href='/create/hall/${this.id}' class="addBtn">추가</a></td>
                                     <td><a href='/modify/theater/${this.id}' class="controlBtn" style="color:royalblue; border-color: royalblue;">수정</a>
                                         <a href='javascript:void(0);' onClick='theaterDelete(${this.id});' class="controlBtn" style="color:tomato; border-color: tomato">삭제</a></td>
                                 </tr>`
@@ -106,9 +103,9 @@ function getTheaterInfo(theaterId){
         url: `/api/theater/getTheaterInfo/${theaterId}`,
         success: function (result) {
             console.log(result);
-            $("#area").val(result.data.area);
-            $("#address").val(result.data.address);
-            $("#number").val(result.data.number);
+            $("#area").attr('value', result.data.area);
+            $("#address").attr('value', result.data.address);
+            $("#number").attr('value', result.data.number);
             //alert(result.message);
         },
         error: function (result) { // 실패시
