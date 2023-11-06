@@ -27,9 +27,6 @@ function createTheater(data) {
             console.log(result);
             alert(result.message);
             history.back();
-            if (result.message == "등록 실패") {
-                alert("이미 리뷰를 작성하였습니다.")
-            }
         },
         error: function (result) {
             if (result.message == "등록 실패") {
