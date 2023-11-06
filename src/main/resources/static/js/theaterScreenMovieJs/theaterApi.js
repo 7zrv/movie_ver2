@@ -26,7 +26,6 @@ function createTheater(data) {
         success: function (result) {
             console.log(result);
             alert(result.message);
-            history.back();
         },
         error: function (result) {
             if (result.message == "등록 실패") {
