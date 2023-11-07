@@ -60,3 +60,37 @@ function modifyHall(data, theaterId, hallId) {
         }
     });
 }
+
+function getHalls(theaterId){
+    $.ajax({
+        type: 'GET',
+        url: `/api/hall/getHallsByTheater/${theaterId}`,
+        success: function (result) {
+            let totalSeat = 0;
+            let hallHtml = ``;
+            console.log(result);
+            $(result.data).each(function(){
+                totalSeat += this.seats;
+                hallHtml += `<tr>
+                                    <td>${this.name}</td>
+                                    <td>${this.seats}석</td>
+                                    <td>${this.floor}층</td>
+                                    <td><a href='/modify/hall/${this.id}' class="controlBtn" style="color:royalblue; border-color: royalblue;">수정</a>
+                                        <a href='javascript:void(0);' onClick='hallDelete(${this.id});' class="controlBtn" style="color:tomato; border-color: tomato">삭제</a></td>
+                                </tr>`
+            });
+            $("#tableBody").append(hallHtml);
+            $("#totalHall").text(result.data.length);
+            $("#totalSeat").text(totalSeat);
+            console.log(totalSeat);
+        },
+        error: function (result) { // 실패시
+            if (result.message == "조회 실패") {
+                alert(result.message + "\n" + result.data);
+            }
+            else{
+                alert("error" + result);
+            }
+        }
+    });
+}
