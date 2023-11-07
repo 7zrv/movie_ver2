@@ -112,7 +112,8 @@ function getMyReviewList(memberId) {
                         </div>
                     </div>
                     <p class='review-content'>${this.content}</p>
-                    <p class='review-author'>${this.title}</p>
+                    <span class='review-author'>${this.title}</span>
+                    <span class='review-date'>${dateFormat(this.mod_date)}</span>
                 </li>`));
             });
         },
@@ -168,6 +169,20 @@ function getMovieReviewList(movieId) {
     });
 }
 */
+
+function dateFormat(date){
+    const d = new Date(date);
+    let result = d.getFullYear() + '.' + d.getMonth() + '.' + d.getDate() + ' ';
+
+    if(d.getHours() < 10)
+        result += '0';
+    result += d.getHours() + ':';
+    if(d.getMinutes() < 10)
+        result += '0';
+    result += d.getMinutes();
+    return result;
+}
+
 function getMovieReviewListWithPage(movieId, pageNum) {
     $.ajax({
         type: 'GET',
@@ -193,7 +208,8 @@ function getMovieReviewListWithPage(movieId, pageNum) {
                                         </div>
                                     </div>
                                     <p class='review-content'>${this.content}</p>
-                                    <p class='review-author'>사용자${this.member_id}</p>
+                                    <span class='review-author'>사용자${this.member_id}</span>
+                                    <span class='review-date'>${dateFormat(this.mod_date)}</span>
                                </li>`;
             });
             $("#allReview").html(reviewHtml);

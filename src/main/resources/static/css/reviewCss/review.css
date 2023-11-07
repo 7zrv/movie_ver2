@@ -62,12 +62,10 @@
 .rating-box {
     display:flex;
 }
-
 .rating-star {
     position: relative;
     color: #ddd;
 }
-
 .rating-star span {
     width: 0;
     color: #ffc107;
@@ -76,6 +74,20 @@
     right: 0;
     overflow: hidden;
 }
+.rating-value {
+    font-size: 15px;
+}
+
+/*리뷰 정보*/
+.review-author {
+    font-size: 14px;
+}
+.review-date {
+    font-size: 12px;
+    color: #828282;
+    letter-spacing: 0;
+}
+
 
 /*페이징*/
 .page_wrap {
