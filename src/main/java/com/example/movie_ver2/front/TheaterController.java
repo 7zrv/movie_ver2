@@ -11,6 +11,6 @@ public class TheaterController {
     }
     @GetMapping("/modify/theater/{theaterId}")
     public String modifyTheater() {
-        return "theaterHtml/TheaterEdit";
+        return "theaterHtml/theaterEdit";
     }
 }

@@ -73,7 +73,7 @@ function getAllTheater(pageNum){
                                     <td>${this.area}</td>
                                     <td>${this.address}</td>
                                     <td>${this.number}</td>
-                                    <td>${this.halls}관
+                                    <td><a href="/halls/${this.id}" style="color: #73685d;">${this.halls}관</a>
                                         <a href='/create/hall/${this.id}' class="addBtn">추가</a></td>
                                     <td><a href='/modify/theater/${this.id}' class="controlBtn" style="color:royalblue; border-color: royalblue;">수정</a>
                                         <a href='javascript:void(0);' onClick='theaterDelete(${this.id});' class="controlBtn" style="color:tomato; border-color: tomato">삭제</a></td>
