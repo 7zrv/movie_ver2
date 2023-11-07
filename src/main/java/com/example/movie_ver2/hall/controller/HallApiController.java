@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -18,6 +19,17 @@ import javax.validation.Valid;
 public class HallApiController {
 
     private final HallService hallService;
+
+    @GetMapping("/getHallsByTheater/{theaterId}")
+    public ResponseEntity<ResultJson<?>> getHallsByTheater(@PathVariable Long theaterId) {
+        try{
+            List<HallInfoDto> hallDto = hallService.getHallsByTheater(theaterId);
+            return ResponseEntity.ok(new ResultJson<>(200, "조회 성공", hallDto));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ResultJson<>(404, "조회 실패", e.getMessage()));
+        }
+    }
 
     @GetMapping("/getHallInfo/{hallId}")
     public ResponseEntity<ResultJson<?>> getHallInfo(@PathVariable Long hallId) {
@@ -47,7 +59,7 @@ public class HallApiController {
     @PatchMapping("/modifyHall/{theaterId}/{hallId}")
     public ResponseEntity<ResultJson<?>> modifyHall(@PathVariable Long theaterId, @PathVariable Long hallId, @Valid @RequestBody RequestHallDto hallDto) {
         try{
-            if(hallService.checkDuplicate(theaterId, hallDto.getName())){
+            if(hallService.checkDuplicateByIdNot(hallId, theaterId, hallDto.getName())){
                 throw new IllegalArgumentException("동일한 상영관명이 해당 영화관에 이미 존재합니다.\n다시 입력해주세요.");
             }
             hallService.updateHall(hallId, hallDto);
