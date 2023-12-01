@@ -61,4 +61,8 @@ public class ScheduleService {
     }
 
 
+    public Schedule findScheduleById(Long scheduleId){
+        return scheduleRepository.findById(scheduleId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 상영일정은 존재하지 않습니다."));
+    }
 }
