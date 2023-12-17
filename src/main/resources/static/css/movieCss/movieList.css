@@ -1,9 +1,4 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #F6F1EB;
-}
+
 
 h1 {
     text-align: center;
@@ -11,9 +6,9 @@ h1 {
 }
 
 .kind_of_list {
-    text-align: center;
+    text-align: left;
     display: flex;
-    justify-content: center;
+    justify-content: left;
     margin: 0 auto; /* 가운데 정렬을 위해 추가 */
 }
 
@@ -23,25 +18,21 @@ h1 {
     flex-wrap: nowrap;
     overflow-x: auto;
     gap: 20px;
-    justify-content: center;
+    justify-content: left;
     align-items: flex-start;
     padding: 10px;
 }
 
 .movie-card {
     width: 200px;
-    border: 1px solid #ccc;
     padding: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     text-align: center;
-    border-radius: 10px;
     overflow: hidden;
     margin-right: 20px;
     position: relative;
 }
 
-
-.movie-card .detail-button {
+.movie-card .on-detail-button, .movie-card .on-reserve-button {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -56,7 +47,44 @@ h1 {
     transition: opacity 0.3s;
 }
 
-.movie-card:hover .detail-button {
+
+.movie-card .on-detail-button {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    border: 1px solid white;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-decoration: none; /* 버튼 스타일이므로 링크 효과 제거 */
+    cursor: pointer;
+    transition: opacity 0.3s;
+}
+
+.movie-card .on-reserve-button {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    border: 1px solid white;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-decoration: none; /* 버튼 스타일이므로 링크 효과 제거 */
+    cursor: pointer;
+    transition: opacity 0.3s;
+}
+
+.movie-card:hover .on-detail-button{
+    opacity: 1;
+}
+
+.movie-card:hover .on-reserve-button{
     opacity: 1;
 }
 
@@ -64,10 +92,15 @@ h1 {
 .movie-poster {
     width: 100%;
     max-width: 100%;
-    max-height: 200px;
+    max-height: 350px;
     object-fit: cover;
     margin-bottom: 10px;
-    border-radius: 10px;
+    border-radius: 5px;
+}
+
+.movie-card:hover .movie-poster {
+    filter: brightness(50%);
+    transition: filter 0.1s ease-in-out;
 }
 
 .genre-movies {

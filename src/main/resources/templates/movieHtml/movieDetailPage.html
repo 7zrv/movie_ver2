@@ -3,11 +3,41 @@
 <head>
   <meta charset="UTF-8">
   <title th:text="${movie.title} + ' - 영화 정보'">영화 정보</title>
-  <link rel="stylesheet" th:href="@{/css/movieDetailPage.css}" />
+  <link rel="stylesheet" th:href="@{/css/movieCss/movieDetailPage.css}" />
+  <link rel="stylesheet" th:href="@{/css/core/navbar.css}" />
+  <link rel="stylesheet" th:href="@{/css/core/main.css}" />
 </head>
 
 <body>
-<h2 class="movie-detail-title">영화 정보</h2>
+<nav class="navbar">
+  <div class="navbar-logo">
+    <img th:src="@{/images/logo.png}" alt="Logo" onclick="window.location.href='/movie'">
+  </div>
+  <div class="navbar-links">
+
+    <a th:href="@{/login}" class="navbar-link">로그인</a>
+    <a th:href="@{/signup}" class="navbar-link">회원 가입</a>
+  </div>
+</nav>
+<nav class="bottomNav">
+  <div class="bottomNav-links">
+    <div class="bottomNav-link-wrap">
+      <a th:href="@{/reserve}" class="bottomNav-link">예매</a>
+    </div>
+    <div class="bottomNav-link-wrap">
+      <a th:href="@{/movie}" class="bottomNav-link">영화</a>
+    </div>
+    <div class="bottomNav-link-wrap">
+      <a th:href="@{/theater}" class="bottomNav-link">영화관</a>
+    </div>
+    <div class="bottomNav-link-wrap">
+      <a th:href="@{/TV}" class="bottomNav-link">TV</a>
+    </div>
+
+  </div>
+</nav>
+
+
 
 <div class="movie-detail">
   <div class="movie-image">
@@ -58,15 +88,15 @@
     </div>
   </div>
 
-  <div class="movie-preview">
-    <p class="preview-title">프리뷰 이미지</p>
-    <div class="preview-images">
-      <div th:each="preview : ${movie.previewImgPath}" class="preview-image">
-        <img th:src="@{${preview}}" alt="Preview Image">
-      </div>
+</div>
+
+<div class="movie-preview">
+  <p class="preview-title">영화 스틸컷</p>
+  <div class="preview-images">
+    <div th:each="preview : ${movie.previewImgPath}" class="preview-image">
+      <img th:src="@{${preview}}" alt="Preview Image">
     </div>
   </div>
-
 </div>
 
 </body>

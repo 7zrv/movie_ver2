@@ -11,7 +11,13 @@ public class memberController {
     @GetMapping("/signup")
     public String showSignupPage(){
 
-
         return "memberHtml/signupPage";
+    }
+
+    @GetMapping("/")
+    public String showMainPage(){
+
+
+        return "movieHtml/movie";
     }
 }

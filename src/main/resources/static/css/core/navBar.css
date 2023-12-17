@@ -1,0 +1,94 @@
+/* navbar.css */
+
+
+
+
+/* 네비게이션 바 스타일 */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid black;
+    padding: 10px 20px;
+    color: black;
+    margin-top: 20px;
+    position: relative;
+}
+
+.navbar-logo {
+    text-align: center;
+    margin-left: auto; /* 로고를 오른쪽으로 이동시켜 왼쪽 여백을 적용 */
+    margin-right: auto;
+}
+
+
+.navbar-logo img {
+    width: 200px;
+    height: auto;
+
+}
+
+.navbar-logo img:hover {
+    cursor: pointer; /* 원하는 커서 모양으로 변경 (예: pointer) */
+}
+
+/* 링크 스타일 */
+.navbar-links {
+    display: flex;
+    gap: 20px;
+    position: absolute;
+    right: 20px;
+}
+
+.navbar-link {
+    text-decoration: none;
+    color: #666d75;
+    font-weight: bold;
+}
+
+/* 호버 효과 */
+.navbar-link:hover {
+    color: black;
+}
+
+.bottomNav{
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    border-bottom: 1px solid #CCCCCC;
+    margin-bottom: 20px;
+    margin-top: 10px;
+    height: 100%;
+}
+
+.bottomNav-links{
+    display: flex;
+    justify-content: center;
+    height: 100%;
+}
+
+.bottomNav-link-wrap {
+    height: 100%;
+    margin-right: 30px;
+    position: relative;
+}
+
+.bottomNav-link {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    padding-bottom: 10px;
+}
+
+.bottomNav-link-wrap::after {
+    content: "";
+    display: block;
+    border-bottom: 3px solid #51abf3;
+    width: 100%;
+    opacity: 0;
+    transition: opacity 0.1s ease-in-out;
+}
+
+.bottomNav-link-wrap:hover::after {
+    opacity: 1; /* hover 시에 투명도를 1로 변경하여 나타나게 함 */
+}

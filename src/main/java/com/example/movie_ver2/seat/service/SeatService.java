@@ -42,7 +42,6 @@ public class SeatService {
         return convertToDtoList(seats);
     }
 
-
     private List<ShowSeatsResponseDto> convertToDtoList(List<Seat> seats) {
         return seats.stream()
                 .map(this::convertToDto)
@@ -65,9 +64,7 @@ public class SeatService {
 
         List<Seat> seats = seatRepository.findAllById(requestDto.getSeatIds());
 
-        for (Seat seat : seats) {
-            seat.setReserveAvail(false);
-        }
+        seats.forEach(seat -> seat.setReserveAvail(false));
 
         seatRepository.saveAll(seats);
     }
@@ -77,9 +74,7 @@ public class SeatService {
 
         List<Seat> seats = seatRepository.findAllById(requestDto.getSeatIds());
 
-        for (Seat seat : seats) {
-            seat.setSoldout(true);
-        }
+        seats.forEach(seat -> seat.setReserveAvail(true));
 
         seatRepository.saveAll(seats);
     }
@@ -89,10 +84,9 @@ public class SeatService {
     public void verifySeatState() {
         List<Seat> seatsToUpdate = seatRepository.findByReserveAvailFalseAndSoldoutFalse();
 
-        for (Seat seat : seatsToUpdate) {
-            seat.setReserveAvail(true);
-            seatRepository.save(seat);
-        }
+        seatsToUpdate.forEach(seat -> seat.setReserveAvail(true));
+
+        seatRepository.saveAll(seatsToUpdate);
     }
 
 
@@ -102,7 +96,6 @@ public class SeatService {
         List<Long> seatIds = requestDto.getSeatIds();
 
         seatIds.forEach(seatRepository::deleteById);
-
     }
 
 

@@ -4,22 +4,56 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Movie Chart</title>
-    <link rel="stylesheet" th:href="@{/css/movieList.css}" />
+    <link rel="stylesheet" th:href="@{/css/movieCss/movieList.css}" />
+    <link rel="stylesheet" th:href="@{/css/core/navbar.css}" />
+    <link rel="stylesheet" th:href="@{/css/core/main.css}" />
 </head>
 <body>
+<nav class="navbar">
+    <div class="navbar-logo">
+        <img th:src="@{/images/logo.png}" alt="Logo" onclick="window.location.href='/movie'">
+    </div>
+    <div class="navbar-links">
+        <a th:href="@{/login}" class="navbar-link">로그인</a>
+        <a th:href="@{/signup}" class="navbar-link">회원 가입</a>
+    </div>
+</nav>
+<nav class="bottomNav">
+    <div class="bottomNav-links">
+        <div class="bottomNav-link-wrap">
+            <a th:href="@{/reserve}" class="bottomNav-link">예매</a>
+        </div>
+        <div class="bottomNav-link-wrap">
+            <a th:href="@{/movie}" class="bottomNav-link">영화</a>
+        </div>
+        <div class="bottomNav-link-wrap">
+            <a th:href="@{/theater}" class="bottomNav-link">영화관</a>
+        </div>
+        <div class="bottomNav-link-wrap">
+            <a th:href="@{/TV}" class="bottomNav-link">TV</a>
+        </div>
+        <div class="bottomNav-link-wrap">
+            <a th:href="@{/inquery}" class="bottomNav-link">문의</a>
+        </div>
 
-<h1>메인 페이지</h1>
+    </div>
+</nav>
 
-<h2 class="kind_of_list">최신 영화</h2>
+
+
+<h2 class="kind_of_list">박스 오피스 순위</h2>
 <!-- 영화 목록 -->
 <div class="movie-list">
 
 
     <div th:each="movie : ${movies}" class="movie-card">
         <img th:src="${movie.posterImgPath}" alt="Movie Poster" class="movie-poster">
-        <a th:href="@{'/movieDetail/' + ${movie.id}}" class="detail-button">상세보기</a>
-        <p th:text="${movie.openingDate}">0000-00-00</p>
+        <div class="button-container">
+            <a th:href="@{'/movieDetail/' + ${movie.id}}" class="on-reserve-button">예매하기</a>
+            <a th:href="@{'/movieDetail/' + ${movie.id}}" class="on-detail-button">상세 보기</a>
+        </div>
         <p th:text="${movie.title}">Movie Title</p>
+        <p th:text="${movie.openingDate}">0000-00-00</p>
         <p th:text="${movie.country}">Country</p>
     </div>
 </div>

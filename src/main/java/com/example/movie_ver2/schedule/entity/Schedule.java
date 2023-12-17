@@ -35,7 +35,7 @@ public class Schedule {
     @JoinColumn(name = "hall_id", referencedColumnName = "hall_id")
     private Hall hall;
 
-    @OneToMany(mappedBy = "schedule", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "schedule")
     private List<Seat> seats;
 
     @ManyToOne(fetch = FetchType.LAZY)

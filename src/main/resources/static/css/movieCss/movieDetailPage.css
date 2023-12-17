@@ -1,59 +1,5 @@
-/* 폰트 시작 */
-@font-face {
-    font-family: 'NanumSquareNeo-Variable';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
-}
 
-* { font-family: 'NanumSquareNeo-Variable'; }
-/* 폰트 끝 */
 
-body { margin: 0; }
-a { text-decoration: none; color: black; }
-
-/* 네비게이션 바 시작 */
-.navbar {
-    position : fixed;
-    top : 0;
-    width : 100%;
-    display : flex;
-    align-items: center;
-    justify-content: center;
-    background-color: lightgray;
-    padding: 8px 12px;
-}
-
-.navbar__logo {
-    font-size: 24px;
-    color: white;
-}
-
-.navbar__logo i {
-    font-size: 26px;
-    color:black;
-}
-
-.navbar__menu {
-    display: flex;
-    list-style: none;
-    padding-left: 30px;
-}
-
-.navbar__menu li:hover {
-    background-color: gainsboro;
-    border-radius: 4px;
-}
-
-.navbar__menu li {
-    padding: 8px 12px;
-}
-
-.navbar__menu a {
-    text-decoration: none;
-    color: black;
-}
-/* 네비게이션 바 끝 */
 
 
 /** 영화 정보 시작 **/
@@ -62,7 +8,6 @@ a { text-decoration: none; color: black; }
     display : grid;
     align-items : center;
     text-align: center;
-    margin-top: 105px;
 }
 
 .movie-detail {
@@ -75,8 +20,9 @@ a { text-decoration: none; color: black; }
 
 /*영화 포스터*/
 .movie-image {
-    flex-basis: 30%;
+    flex-basis: 50%;
     margin-right: 80px;
+    border-radius: 5px;
 }
 
 .movie-image img {
@@ -202,8 +148,8 @@ a { text-decoration: none; color: black; }
 }
 
 .preview-image img {
-    max-width: 100px;
-    max-height: 150px;
+    width: 400px;
+    height: 250px;
     border-radius: 10px;
 }
 /* 프리뷰 이미지 끝 */
