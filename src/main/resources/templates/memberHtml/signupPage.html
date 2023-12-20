@@ -4,9 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" th:href="@{/css/memberCss/signupPageCss.css}" />
+    <link rel="stylesheet" th:href="@{/css/core/navbar.css}" />
     <title>회원가입</title>
 </head>
 <body>
+<nav class="navbar">
+    <div class="navbar-logo">
+        <img th:src="@{/images/logo.png}" alt="Logo" onclick="window.location.href='/movie'">
+    </div>
+    <div class="navbar-links">
+        <a th:href="@{/login}" class="navbar-link">로그인</a>
+        <a th:href="@{/signup}" class="navbar-link">회원 가입</a>
+    </div>
+</nav>
 <h1>회원가입</h1>
 <form id="signupForm">
     <label for="email">이메일:</label>

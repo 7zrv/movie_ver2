@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/memberCss/loginPageCss.css" />
+    <link rel="stylesheet" href="/css/core/navbar.css" />
+    <title>로그인</title>
+</head>
+<body>
+<nav class="navbar">
+    <div class="navbar-logo">
+        <img th:src="/images/logo.png" alt="Logo" onclick="window.location.href='/movie'">
+    </div>
+    <div class="navbar-links">
+        <a th:href="@{/signup}" class="navbar-link">회원가입</a>
+    </div>
+</nav>
+<div id="form-wrap">
+    <div id="login-findPass">
+        <div> 
+            <h3>
+                로그인
+            </h3>
+        </div>
+        <div>
+            <a th:href="@{/login}" class="navbar-link">비밀번호 찾기</a>
+        </div>
+        
+    </div>
+    
+    <form id="loginForm">
+        <input type="email" id="email" name="email" placeholder="이메일(example@movie.com)" required>
+
+        <input type="password" id="password" name="password" placeholder="비밀번호" required>
+
+        <button type="button" id="loginButton">로그인</button>
+    </form>
+</div>
+<script src="/js/loginScript.js"></script>
+</body>
+</html>

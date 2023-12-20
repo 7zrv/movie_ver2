@@ -19,7 +19,7 @@ public class MovieController {
 
     private final MovieService movieService;
 
-    @RequestMapping("/movie")
+    @RequestMapping("/")
     public String showMoviePage(Model model){
         List<Movie> movies = movieService.getMovies(0, 5 , "openingDate");
         model.addAttribute("movies", movies);
