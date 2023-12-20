@@ -61,6 +61,27 @@ function modifyHall(data, theaterId, hallId) {
     });
 }
 
+function getHallInfo(hallId){
+    $.ajax({
+        type: 'GET',
+        url: `/api/hall/getHallInfo/${hallId}`,
+        success: function (result) {
+            console.log(result);
+            $("#name").attr('value', result.data.name);
+            $("#seats").attr('value', result.data.seats);
+            $("#floor").attr('value', result.data.floor);
+        },
+        error: function (result) { // 실패시
+            if (result.message == "조회 실패") {
+                alert(result.message + "\n" + result.data);
+            }
+            else{
+                alert("error" + result);
+            }
+        }
+    });
+}
+
 function getHalls(theaterId){
     $.ajax({
         type: 'GET',
@@ -75,7 +96,7 @@ function getHalls(theaterId){
                                     <td>${this.name}</td>
                                     <td>${this.seats}석</td>
                                     <td>${this.floor}층</td>
-                                    <td><a href='/modify/hall/${this.id}' class="controlBtn" style="color:royalblue; border-color: royalblue;">수정</a>
+                                    <td><a href='/modify/hall/${theaterId}/${this.id}' class="controlBtn" style="color:royalblue; border-color: royalblue;">수정</a>
                                         <a href='javascript:void(0);' onClick='hallDelete(${this.id});' class="controlBtn" style="color:tomato; border-color: tomato">삭제</a></td>
                                 </tr>`
             });

@@ -9,7 +9,11 @@ public class HallController {
     public String hallListByTheater() {
         return "hallHtml/halls";
     }
-    @GetMapping("/modify/hall/{hallId}")
+    @GetMapping("/create/hall/{theaterId}")
+    public String createHall() {
+        return "hallHtml/create-hall";
+    }
+    @GetMapping("/modify/hall/{theaterId}/{hallId}")
     public String modifyHall() {
         return "hallHtml/hallEdit";
     }
