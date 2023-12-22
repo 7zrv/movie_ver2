@@ -1,0 +1,62 @@
+#user-info {
+    max-width: 600px;
+    margin: 40px auto; /* auto를 사용하여 수평 중앙 정렬 */
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: left; /* 텍스트를 왼쪽 정렬 */
+}
+
+#user-info h1 {
+    color: #333;
+}
+
+#user-info p {
+    margin: 10px 0;
+}
+
+/* 탭 메뉴 스타일 */
+.tab-menu {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    border-bottom: 1px solid #CCCCCC;
+}
+
+.tab-menu a {
+    text-decoration: none;
+    color: #333;
+    cursor: pointer;
+}
+
+.tab-menu-wrap{
+    height: 100%;
+    margin-right: 30px;
+    position: relative;
+    font-weight: bold;
+}
+
+.tab-menu-wrap::after {
+    content: "";
+    display: block;
+    border-bottom: 3px solid #51abf3;
+    width: 100%;
+    opacity: 0;
+    transition: opacity 0.1s ease-in-out;
+}
+
+
+.tab-menu-wrap:hover::after {
+    opacity: 1;
+}
+
+/* 탭 컨텐츠 스타일 */
+.tab-content {
+    display: none;
+}
+
+#booking, #inquiry, #manage {
+    display: block;
+}

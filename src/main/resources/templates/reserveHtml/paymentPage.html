@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>예매</title>
+    <link th:href="@{/css/core/navbar.css}" rel="stylesheet" />
+    <link th:href="@{/css/core/main.css}" rel="stylesheet" />
+    <link th:href="@{/css/reserveCss/selectScheduleCss.css}" rel="stylesheet" />
+    <link th:href="@{/css/reserveCss/paymentPageCss.css}" rel="stylesheet" />
+
+</head>
+<body>
+<nav class="navbar">
+    <div class="navbar-logo">
+        <img th:src="@{/images/logo.png}" alt="Logo" onclick="window.location.href='/movie'">
+    </div>
+    <div class="navbar-links">
+        <a th:href="@{/login}" class="navbar-link">로그인</a>
+        <a th:href="@{/signup}" class="navbar-link">회원 가입</a>
+    </div>
+</nav>
+<nav class="bottomNav">
+    <div class="bottomNav-links">
+        <div class="bottomNav-link-wrap">
+            <a th:href="@{/reserve}" class="bottomNav-link">예매</a>
+        </div>
+        <div class="bottomNav-link-wrap">
+            <a th:href="@{/movie}" class="bottomNav-link">영화</a>
+        </div>
+        <div class="bottomNav-link-wrap">
+            <a th:href="@{/theater}" class="bottomNav-link">영화관</a>
+        </div>
+        <div class="bottomNav-link-wrap">
+            <a th:href="@{/TV}" class="bottomNav-link">TV</a>
+        </div>
+        <div class="bottomNav-link-wrap">
+            <a th:href="@{/inquery}" class="bottomNav-link">문의</a>
+        </div>
+
+    </div>
+</nav>
+
+</body>
+
+<div id="ticket-wrap">
+    <div id="cur-pages">
+        <div class="cur-page">
+            <a>영화/영화관</a>
+        </div>
+        <div class="cur-page">
+            <a>인원/좌석</a>
+        </div>
+        <div class="cur-page">
+            <a>결제</a>
+        </div>
+        <div class="cur-page">
+            <a>예매확인</a>
+        </div>
+    </div>
+    <div id="payment-box-wrap">
+        <div id="reserve-info">
+            <div class="top-div-title">
+                <a>예매 정보</a>
+            </div>
+            <div id="movie-info">
+
+            </div>  
+            <div id="seat-info">
+
+            </div>
+        </div>
+
+        <div id="select-payment">
+            <div class="top-div-title">
+                <a>결제수단</a>
+            </div>
+        </div>
+
+        <div id="do-payment">
+            <div class="top-div-title">
+                <a>결제하기</a>
+            </div>
+        </div>
+    </div>
+</div>
+</html>

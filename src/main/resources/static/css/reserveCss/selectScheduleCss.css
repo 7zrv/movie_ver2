@@ -1,0 +1,117 @@
+.select-one {
+    border: 1px solid #CCCCCC;
+    box-sizing: border-box;
+    height: 6vh;
+    cursor: pointer;
+}
+
+
+#ticket-wrap {
+    display: flex;
+    margin-top: 60px;
+    height: 100vh;
+    
+}
+
+#select-box{
+    height: 100vh;
+    width: 90%;
+    display: flex;
+}
+
+#select-theater{
+    width: 30%;
+}
+
+#select-movie{
+    width: 30%;
+}
+
+#select-Schedule{
+    width: 40%;
+}
+
+#cur-pages{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 10%;
+    height: 100vh;
+    margin-top: 4px;
+}
+
+.cur-page{
+    border: 1px solid #CCCCCC;
+    box-sizing: border-box;
+    justify-content: center;
+    text-align: center; 
+    line-height: 25vh;
+}
+
+#local-theater-wrap{
+    display: flex;
+    width: 100%;
+}
+
+#local{
+    width: 50%;
+    border: 1px solid #CCCCCC;
+    box-sizing: border-box;
+
+}
+
+#theater{
+    width: 50%;
+    border: 1px solid #CCCCCC;
+    box-sizing: border-box;
+}
+
+.local-tab{
+    height: 8vh;
+}
+
+.local-tab a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%; 
+    text-decoration: none; 
+}
+
+#local-list{
+    height: 100%;
+    border: 1px solid #ccc; 
+    box-sizing: border-box;
+}
+
+#theater-list{
+    height: 100%;
+    border: 1px solid #ccc; 
+    box-sizing: border-box;
+}
+
+.select-criteria{
+    height: 8vh;
+    border: 1px solid #ccc; 
+    box-sizing: border-box;
+}
+
+#movie-list{
+    height: 100%; 
+    border: 1px solid #ccc; 
+    box-sizing: border-box;
+}
+
+#select-day{
+    height: 10vh;
+    border: 1px solid #ccc; 
+    box-sizing: border-box;
+}
+#schedule-list {
+    border: 1px solid #ccc; 
+    box-sizing: border-box;
+    height: 100%;    
+}
+
+
+

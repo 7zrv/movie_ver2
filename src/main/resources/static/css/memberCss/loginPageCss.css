@@ -1,32 +1,42 @@
-/* Reset some default styles */
-body, h1, h2, p, label, input, select, button {
-    margin: 0;
-    padding: 0;
-}
-
 body {
     font-family: 'Arial', sans-serif;
     background-color: #f4f4f4;
+    text-align: center;
 }
 
-/* Signup form styles */
-h3 {
-    text-align: center;
-    margin-top: 30px;
-}
 
 #form-wrap {
-    margin-top: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 80vh; /* 100% 높이로 설정하여 화면 전체를 사용 */   
 }
 
-#signupForm {
+#login-findPass {
     max-width: 300px;
-    margin: 20px auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%; /* 가로 폭을 100%로 설정 */
+}
+
+#login-findPass h3 {
+    margin: 0;
+}
+
+#login-findPass a {
+    text-decoration: none;
+}
+
+
+form {
+    max-width: 300px;
+    margin: 10px auto;
     padding: 20px;
     background-color: white;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
 }
 
 label {
@@ -34,8 +44,7 @@ label {
     margin-bottom: 8px;
 }
 
-input,
-select {
+input {
     width: 100%;
     padding: 10px;
     margin-bottom: 15px;

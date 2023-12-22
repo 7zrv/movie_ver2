@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" th:href="@{/css/memberCss/signupPageCss.css}" />
+    <link rel="stylesheet" th:href="@{/css/memberCss/signupPageCss.css}"/>
     <link rel="stylesheet" th:href="@{/css/core/navbar.css}" />
     <title>회원가입</title>
 </head>
@@ -17,29 +17,47 @@
         <a th:href="@{/signup}" class="navbar-link">회원 가입</a>
     </div>
 </nav>
-<h1>회원가입</h1>
+<nav class="bottomNav">
+    <div class="bottomNav-links">
+        <div class="bottomNav-link-wrap">
+            <a th:href="@{/reserve}" class="bottomNav-link">예매</a>
+        </div>
+        <div class="bottomNav-link-wrap">
+            <a th:href="@{/movie}" class="bottomNav-link">영화</a>
+        </div>
+        <div class="bottomNav-link-wrap">
+            <a th:href="@{/theater}" class="bottomNav-link">영화관</a>
+        </div>
+        <div class="bottomNav-link-wrap">
+            <a th:href="@{/TV}" class="bottomNav-link">TV</a>
+        </div>
+        <div class="bottomNav-link-wrap">
+            <a th:href="@{/inquery}" class="bottomNav-link">문의</a>
+        </div>
+
+    </div>
+</nav>
+
+
+<div id="form-wrap">
+<h3>회원가입</h3>
 <form id="signupForm">
-    <label for="email">이메일:</label>
-    <input type="email" id="email" name="email" required><br>
+    <input type="email" id="email" name="email" placeholder="이메일(example@movie.com)" required>
 
-    <label for="password">비밀번호:</label>
-    <input type="password" id="password" name="password" required><br>
+    <input type="password" id="password" name="password" placeholder="비밀번호" required>
 
-    <label for="phoneNumber">전화번호:</label>
-    <input type="text" id="phoneNumber" name="phoneNumber" required><br>
+    <input type="text" id="phoneNumber" name="phoneNumber" placeholder="전화번호(010-XXXX-XXXX)" required>
 
-    <label for="birthday">생년월일:</label>
-    <input type="date" id="birthday" name="birthday" required><br>
+    <input type="text" id="birthday" name="birthday" placeholder="생년월일(2000-05-05)" required>
 
-    <label for="sex">성별:</label>
     <select id="sex" name="sex" required>
         <option value="MALE">남성</option>
         <option value="FEMALE">여성</option>
-    </select><br>
+    </select>
 
     <button type="button" id="signupButton">가입하기</button>
 </form>
-
+</div>
 <script src="/js/signupScript.js"></script>
 </body>
 </html>
