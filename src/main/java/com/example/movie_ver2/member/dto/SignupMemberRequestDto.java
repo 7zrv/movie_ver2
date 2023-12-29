@@ -2,15 +2,21 @@ package com.example.movie_ver2.member.dto;
 
 import com.example.movie_ver2.member.entity.Member;
 import com.example.movie_ver2.core.enums.Sex;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
+import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 
 @Getter
+@Setter
 public class SignupMemberRequestDto {
 
     @NotBlank(message = "이메일을 입력해주세요.")
@@ -24,22 +30,21 @@ public class SignupMemberRequestDto {
     @NotBlank(message = "휴대폰 번호를 입력해주세요.")
     private String phoneNumber;
 
-    @NotBlank(message = "생년월일 ex) 1990-00-00 을 입력해주세요.")
-    private String birthday;
 
-    @NotBlank(message = "성별을 선택해주세요.")
-    private String sex;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate birthday;
+
+    @NotNull(message = "성별을 선택해주세요.")
+    private Sex sex;
 
     public Member toEntity() {
-        LocalDate birthdayDate = LocalDate.parse(birthday);
-        Sex sexEnum = Sex.valueOf(sex);
 
         return Member.builder()
                 .email(email)
                 .password(password)
                 .phoneNumber(phoneNumber)
-                .birthday(birthdayDate)
-                .sex(sexEnum)
+                .birthday(birthday)
+                .sex(sex)
                 .build();
     }
 }

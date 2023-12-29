@@ -60,7 +60,7 @@
     <div id="select-box">
         <div id="select-theater">
             <div class="select-one" role="presentation">
-                선택한 영화관 표시
+                <a>선택한 영화관 표시</a>
             </div>
             <div id="local-theater-wrap">
                 <div id="local">
@@ -68,7 +68,9 @@
                         <a>지역</a>
                     </div>
                     <div id="local-list">
-
+                        <div th:each="theater : ${theaters}" >
+                            <p th:text="${theater.getArea()}">Movie Title</p>
+                        </div>
                     </div> 
 
                 </div>
@@ -86,7 +88,7 @@
 
         <div id="select-movie">
             <div class="select-one" role="presentation">
-                선택한 영화 표시
+                <a>선택한 영화 표시</a>
             </div>
             <div class="select-criteria">
                 정렬 순서 선택 기능 만들거임
@@ -99,7 +101,7 @@
 
         <div id="select-Schedule">
             <div class="select-one" role="presentation">
-                선택한 시간 표시
+                <a>선택한 시간 표시</a>
             </div>
             <div id="select-day">
 

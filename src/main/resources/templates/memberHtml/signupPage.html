@@ -41,21 +41,22 @@
 
 <div id="form-wrap">
 <h3>회원가입</h3>
-<form id="signupForm">
-    <input type="email" id="email" name="email" placeholder="이메일(example@movie.com)" required>
 
-    <input type="password" id="password" name="password" placeholder="비밀번호" required>
+<form method="post" action="/signupMember" id="signupForm">
+    <label for="email"></label><input type="email" id="email" name="email" placeholder="이메일(example@movie.com)" required>
 
-    <input type="text" id="phoneNumber" name="phoneNumber" placeholder="전화번호(010-XXXX-XXXX)" required>
+    <label for="password"></label><input type="password" id="password" name="password" placeholder="비밀번호" required>
 
-    <input type="text" id="birthday" name="birthday" placeholder="생년월일(2000-05-05)" required>
+    <label for="phoneNumber"></label><input type="text" id="phoneNumber" name="phoneNumber" placeholder="전화번호(010-XXXX-XXXX)" required>
 
-    <select id="sex" name="sex" required>
+    <label for="birthday"></label><input type="date" id="birthday" name="birthday" required>
+
+    <label for="sex"></label><select id="sex" name="sex" required>
         <option value="MALE">남성</option>
         <option value="FEMALE">여성</option>
     </select>
 
-    <button type="button" id="signupButton">가입하기</button>
+    <button type="submit" id="signupButton">가입하기</button>
 </form>
 </div>
 <script src="/js/signupScript.js"></script>
