@@ -1,0 +1,52 @@
+.movieBox {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.controlBox {
+    display: flex;
+    justify-content: space-between;
+}
+
+/*전체 영화 테이블*/
+.movieTable {
+    color: #666;
+    font: 14px/24px "Open Sans", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", Sans-Serif;
+}
+.movieTable {
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+}
+.movieTable th, .movieTable td {
+    padding: 6px 15px;
+}
+.movieTable th {
+    background: #42444e;
+    color: #fff;
+    text-align: left;
+}
+.movieTable tr:first-child th:first-child {
+    border-top-left-radius: 6px;
+}
+.movieTable tr:first-child th:last-child {
+    border-top-right-radius: 6px;
+}
+.movieTable td {
+    /*border-right: 1px solid #c6c9cc;*/
+    border-bottom: 1px solid #c6c9cc;
+}
+.movieTable td:first-child {
+    border-left: 1px solid #c6c9cc;
+}
+/*
+.movieTable tr:nth-child(even) td {
+    background: #eaeaed;
+}*/
+.movieTable tr:last-child td:first-child {
+    border-bottom-left-radius: 6px;
+}
+.movieTable tr:last-child td:last-child {
+    border-bottom-right-radius: 6px;
+}
+

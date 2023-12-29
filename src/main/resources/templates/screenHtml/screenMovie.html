@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/theaterCss/theaterEdit.css">
+    <link rel="stylesheet" href="/css/core/table.css">
+    <link rel="stylesheet" href="/css/screenCss/screenMovie.css">
+    <title>상영 영화</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/js/theaterScreenMovieJs/screenMovieApi.js"></script>
+</head>
+<body>
+<script>
+    $(document).ready(function() {
+        const theaterId = document.location.href.split("screenMovies/")[1];
+        getScreenMovieList(theaterId);
+        getAllMovie(1);
+
+        $('#delBtn').click(function () {
+            let list = [];
+            $('#delMovies:checked').each(function () {
+                list.push($(this).val());
+            })
+            const data={
+                "movieId": list,
+            }
+            scMovieDelete(data, theaterId);
+        });
+
+        $('#addBtn').click(function () {
+            let list = [];
+            $('#addMovies:checked').each(function () {
+                list.push($(this).val());
+            })
+            const data={
+                "movieId": list,
+            }
+            updateScMovie(data, theaterId);
+        });
+
+        $('.page_nation').on("click", 'a', function(){
+            let slice = ($(this).attr('href')).slice(-1);
+            getAllMovie(parseInt(slice));
+        });
+    });
+
+</script>
+<div>
+    <div class="movieBox">
+        <div>
+            <h2>상영 영화 목록</h2>
+            <div class="theater-edit-form">
+                <div style="padding-bottom: .2em">
+                    <span>총 </span>
+                    <strong id="totalScreen"></strong>
+                    <span>편 </span>
+                </div>
+                <div class="tableBox">
+                    <div class="controlBox">
+                        <div class="selectAllBox"><input type="checkbox" id="selectAll">전체 선택</div>
+                        <div class="submit-button" style="margin: 0">
+                            <button id="delBtn" style="padding: 10px">선택 삭제</button>
+                        </div>
+                    </div>
+                    <table class="screenTable">
+                        <thead>
+                        <tr>
+                            <th>삭제</th>
+                            <th>제목</th>
+                            <th>개봉일</th>
+                            <th>ID</th>
+                        </tr>
+                        </thead>
+                        <tbody id="tableBody">
+                        <!-- 서버에서 받은 상영 중인 영화 목록을 반복하여 표시하고, 삭제 체크박스를 추가합니다. -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div>
+            <h2>전체 영화 목록</h2>
+            <div class="theater-edit-form">
+                <div style="padding-bottom: .2em">
+                    <span>총 </span>
+                    <strong id="totalMovie"></strong>
+                    <span>편 </span>
+                </div>
+                <div>
+                    <div class="controlBox">
+                        <div class="selectAllBox"><input type="checkbox" id="total-selectAll">전체 선택</div>
+                        <div class="submit-button" style="margin: 0">
+                            <button id="addBtn" style="padding: 10px">선택 추가</button>
+                        </div>
+                    </div>
+                    <table class="movieTable">
+                        <thead>
+                        <tr>
+                            <th>추가</th>
+                            <th>제목</th>
+                            <th>개봉일</th>
+                            <th>국가</th>
+                            <th>러닝타임</th>
+                            <th>ID</th>
+                        </tr>
+                        </thead>
+                        <tbody id="movieTbody">
+                        <!-- 서버에서 받은 상영 중인 영화 목록을 반복하여 표시하고, 삭제 체크박스를 추가합니다. -->
+                        </tbody>
+                    </table>
+                    <div class="page_wrap">
+                        <div class="page_nation">
+                            <!--
+                            <a class="arrow pprev" href="#"></a>
+                            <a class="arrow prev" href="#"></a>
+                            <a href="#" class="active">1</a>
+                            <a href="#">2</a>
+                            <a href="#">3</a>
+                            <a href="#">4</a>
+                            <a href="#">5</a>
+                            <a href="#">6</a>
+                            <a href="#">7</a>
+                            <a href="#">8</a>
+                            <a href="#">9</a>
+                            <a href="#">10</a>
+                            <a class="arrow next" href="#"></a>
+                            <a class="arrow nnext" href="#"></a>
+                            -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const selectAll = document.getElementById("selectAll");
+        const totalSelectAll = document.getElementById("total-selectAll");
+        const checkboxes = document.getElementsByName("delMovies");
+        const addCheckboxes = document.getElementsByName("addMovies");
+
+        selectAll.onclick = (event) => {
+            selectAll.parentNode.style.opacity = selectAll.checked ? 0.5 : "initial";
+
+            checkboxes.forEach((checkbox) => {
+                checkbox.checked = selectAll.checked;
+                checkbox.parentNode.parentNode.style.opacity = checkbox.checked ? 0.3 : "initial";
+            })
+        };
+
+        totalSelectAll.onclick = (event) => {
+            addCheckboxes.forEach((checkbox) => {
+                checkbox.checked = totalSelectAll.checked;
+            })
+        };
+
+        $("#tableBody").on('change','#delMovies',function(){
+            const checkedCnt = document.querySelectorAll("#delMovies:checked").length;
+
+            selectAll.checked = (checkboxes.length === checkedCnt);
+            selectAll.parentNode.style.opacity = selectAll.checked ? 0.5 : "initial";
+            this.parentNode.parentNode.style.opacity = this.checked ? 0.3 : "initial";
+        })
+
+        $("#movieTbody").on('change','#addMovies',function(){
+            const checkedCnt = document.querySelectorAll("#addMovies:checked").length;
+            totalSelectAll.checked = (addCheckboxes.length === checkedCnt);
+        })
+    </script>
+</div>
+</body>
+</html>
