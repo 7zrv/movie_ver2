@@ -26,7 +26,8 @@ function createHall(data, theaterId) {
         success: function (result) {
             console.log(result);
             alert(result.message);
-            history.back();
+            //history.back();
+            location.href = document.referrer;
         },
         error: function (result) {
             if (result.message == "등록 실패") {
@@ -48,7 +49,8 @@ function modifyHall(data, theaterId, hallId) {
         success: function (result) {
             console.log(result);
             alert(result.message);
-            history.back();
+            //history.back();
+            location.href = document.referrer;
         },
         error: function (result) {
             if (result.message == "수정 실패") {
