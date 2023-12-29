@@ -71,9 +71,10 @@ public class TheaterApiController {
 
 
     @GetMapping("/getLocalTheaters")
-    public ResponseEntity<ResultJson<?>> getLocalTheaters(@RequestParam("local") @NotBlank @Size(min=2, max=2, message = "두 글자로 입력해주세요") String local) {
+    public ResponseEntity<ResultJson<?>> getLocalTheaters(@RequestParam("local") @NotBlank @Size(min=2, max=2, message = "두 글자로 입력해주세요") String local,
+                                                          @PageableDefault(size = 10) Pageable pageable) {
         try{
-            List<TheaterAreaDto> theaterDtos = theaterService.getTheatersByLocal(local);
+            Page<TheaterInfoDto> theaterDtos = theaterService.getTheatersByLocal(local, pageable);
             if(theaterDtos.isEmpty()){
                 return ResponseEntity.ok(new ResultJson<>(200, "조회 성공", "해당 지역에 등록된 영화관이 존재하지 않습니다."));
             }

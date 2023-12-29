@@ -1,6 +1,8 @@
 package com.example.movie_ver2.theater.service;
 
 import com.example.movie_ver2.hall.repository.HallRepository;
+import com.example.movie_ver2.screenMovie.repository.ScreenMovieRepository;
+import com.example.movie_ver2.screenMovie.service.ScreenMovieService;
 import com.example.movie_ver2.theater.dto.RequestTheaterDto;
 import com.example.movie_ver2.theater.dto.TheaterAreaDto;
 import com.example.movie_ver2.theater.dto.TheaterInfoDto;
@@ -18,6 +20,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class TheaterService {
+    private final ScreenMovieRepository screenMovieRepository;
     private final TheaterRepository theaterRepository;
     private final HallRepository hallRepository;
 
@@ -52,7 +55,7 @@ public class TheaterService {
 
     public Page<TheaterInfoDto> getAll(Pageable pageable) {
         return theaterRepository.findAll(pageable)
-                .map((Theater theater) -> TheaterInfoDto.of(theater, hallRepository.countByTheater(theater)));
+                .map((Theater theater) -> TheaterInfoDto.of(theater, hallRepository.countByTheater(theater), screenMovieRepository.countByTheater(theater)));
     }
 
     public List<TheaterAreaDto> getAllArea() {
@@ -65,14 +68,14 @@ public class TheaterService {
         Theater theater = theaterRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 영화관은 존재하지 않습니다."));
         Long countHalls = hallRepository.countByTheater(theater);
-        return TheaterInfoDto.of(theater, countHalls);
+        Long countMovies = screenMovieRepository.countByTheater(theater);
+        return TheaterInfoDto.of(theater, countHalls, countMovies);
     }
 
 
-    public List<TheaterAreaDto> getTheatersByLocal(String local) {
-        return theaterRepository.findByAddressStartingWith(local).stream()
-                .map(TheaterAreaDto::of)
-                .collect(Collectors.toList());
+    public Page<TheaterInfoDto> getTheatersByLocal(String local, Pageable pageable) {
+        return theaterRepository.findByAddressStartingWith(local, pageable)
+                .map((Theater theater) -> TheaterInfoDto.of(theater, hallRepository.countByTheater(theater), screenMovieRepository.countByTheater(theater)));
     }
 
 }
