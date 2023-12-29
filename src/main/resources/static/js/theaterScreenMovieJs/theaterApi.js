@@ -47,7 +47,8 @@ function modifyTheater(data, theaterId) {
         success: function (result) {
             console.log(result);
             alert(result.message);
-            history.back();
+            //history.back();
+            location.href = document.referrer;
         },
         error: function (result) {
             if (result.message == "수정 실패") {
@@ -75,6 +76,7 @@ function getAllTheater(pageNum){
                                     <td>${this.number}</td>
                                     <td><a href="/halls/${this.id}" style="color: #73685d;">${this.halls}관</a>
                                         <a href='/create/hall/${this.id}' class="addBtn">추가</a></td>
+                                    <td><a href="/screenMovies/${this.id}" style="color: #73685d;">${this.screenMovies}편</a></td>
                                     <td><a href='/modify/theater/${this.id}' class="controlBtn" style="color:royalblue; border-color: royalblue;">수정</a>
                                         <a href='javascript:void(0);' onClick='theaterDelete(${this.id});' class="controlBtn" style="color:tomato; border-color: tomato">삭제</a></td>
                                 </tr>`
@@ -115,5 +117,43 @@ function getTheaterInfo(theaterId){
     });
 }
 
+function getLocalTheaters(local, pageNum) {
+    $.ajax({
+        type: 'GET',
+        url: `/api/theater/getLocalTheaters?page=${pageNum-1}`,
+        headers : { "content-type": "application/json;charset=UTF-8"},
+        data : {
+            local : local
+        },
+        dataType: "json",
+        success: function (result) {
+            let theaterHtml = ``;
+            console.log(result);
+            $(result.data.content).each(function(){
+                theaterHtml += `<tr>
+                                    <td>${this.id}</td>
+                                    <td>${this.area}</td>
+                                    <td>${this.address}</td>
+                                    <td>${this.number}</td>
+                                    <td><a href="/halls/${this.id}" style="color: #73685d;">${this.halls}관</a>
+                                        <a href='/create/hall/${this.id}' class="addBtn">추가</a></td>
+                                    <td><a href="/screenMovies/${this.id}" style="color: #73685d;">${this.screenMovies}편</a></td>
+                                    <td><a href='/modify/theater/${this.id}' class="controlBtn" style="color:royalblue; border-color: royalblue;">수정</a>
+                                        <a href='javascript:void(0);' onClick='theaterDelete(${this.id});' class="controlBtn" style="color:tomato; border-color: tomato">삭제</a></td>
+                                </tr>`
+            });
+            $("#tableBody").html(theaterHtml);
+            setPageNation(result.data.totalPages, pageNum, 5);
+        },
+        error: function (result) { // 실패시
+            if (result.message == "조회 실패") {
+                alert(result.message + "\n" + result.data)
+            }
+            else{
+                alert("error" + result)
+            }
+        }
+    });
+}
 
 

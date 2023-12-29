@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/css/theaterCss/theater.css">
+    <link rel="stylesheet" href="/css/core/page.css">
     <title>영화관</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="/js/theaterScreenMovieJs/theaterApi.js"></script>
@@ -15,7 +16,10 @@
         getAllTheater(1);
         $('.page_nation').on("click", 'a', function(){
             let slice = ($(this).attr('href')).slice(-1);
-            getAllTheater(parseInt(slice));
+            if($("ul.local li a.active").text() == "전체")
+                getAllTheater(parseInt(slice));
+            else
+                getLocalTheaters($("ul.local li a.active").text(), parseInt(slice));
         });
         $('#submit-button').click(function () {
             const data={
@@ -27,10 +31,42 @@
             modalDisplay('none');
             resetForm();
         });
+        $('#search-btn').click(function () {
+            //getLocalTheaters($("select[name=local] option:selected").val(), 1);
+        });
+        $("ul.local li a").click(function () {
+            if (!$(this).hasClass("active")) {
+                $("ul.local li a").removeClass();
+                $(this).addClass("active");
+                if($("ul.local li a.active").text() == "전체")
+                    getAllTheater(1);
+                else
+                    getLocalTheaters($("ul.local li a.active").text(), 1);
+            }
+        });
     });
 </script>
 <!-- 극장 관리 탭 -->
 <div class="tableBox" id="theater">
+    <div class="local-list">
+        <ul class="local">
+            <li><a class="active">전체</a></li>
+            <li><a>서울</a></li>
+            <li><a>경기</a></li>
+            <li><a>인천</a></li>
+            <li><a>강원</a></li>
+            <li><a>충청</a></li>
+            <li><a>세종</a></li>
+            <li><a>대전</a></li>
+            <li><a>전라</a></li>
+            <li><a>광주</a></li>
+            <li><a>경상</a></li>
+            <li><a>대구</a></li>
+            <li><a>부산</a></li>
+            <li><a>울산</a></li>
+            <li><a>제주</a></li>
+        </ul>
+    </div>
     <div class="element">
         <h1 class="title">영화관 목록</h1>
         <button type="button" class="addBtn" onclick="modalDisplay('flex')">영화관 추가</button>
@@ -43,7 +79,7 @@
             <th>영화관 주소</th>
             <th>영화관 번호</th>
             <th>보유 관수</th>
-            <!--<th>상영 중인 영화</th>-->
+            <th>상영 영화</th>
             <th>관리</th>
         </tr>
         </thead>
@@ -70,6 +106,14 @@
             <a class="arrow nnext" href="#"></a>
             -->
         </div>
+    </div>
+    <div class="search_box">
+        <select class="select_box">
+            <option>지점</option>
+            <option>주소</option>
+        </select>
+        <input type="text" placeholder="검색어">
+        <button type="button" id="search-btn">검색</button>
     </div>
 </div>
 <!--영화관 등록 모달창-->

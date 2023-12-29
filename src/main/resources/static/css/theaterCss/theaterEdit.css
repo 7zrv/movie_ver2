@@ -80,48 +80,23 @@ input[type="checkbox"] {
 }
 
 .selectAllBox {
+    margin-left: 5px;
     background-color: #fff;
     display: flex;
     align-items: center;
     font-size: 15px;
     width: fit-content;
-    padding: 10px 15px;
+    height: fit-content;
+    padding: 10px;
     border: 1px solid #ccc;
+    border-radius: 2px;
 }
 
-#selectAll {
+.selectAllBox input {
     margin-right: 8px;
 }
 
-table {
-    min-width: 500px;
-    border-spacing: 0 5px;
-    background-color: #efefef;
-}
 
-table th, table td {
-    padding: 15px;
-}
-
-
-table thead tr, table thead th {
-    border-top: none;
-    border-bottom: none;
-    text-align: inherit;
-}
-
-table tbody {
-    background: #f8f8f8;
-}
-
-table tbody tr {
-    border-radius: 7px;
-}
-
-table tbody td {
-    background-color: #fff;
-    border: none;
-}
 
 .submit-button {
     margin-top: 10px;
@@ -151,4 +126,12 @@ table tbody td {
 
 .submit-button button[type="reset"]:hover {
     background-color: #505050;
+}
+
+.controlBtn, .addBtn {
+    text-decoration: none;
+    border: .1em solid #73685d;
+    border-radius: .3em;
+    padding: .3em .4em;
+    color: #73685d;
 }

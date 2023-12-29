@@ -1,0 +1,29 @@
+.screenTable {
+    min-width: 500px;
+    border-spacing: 0 5px;
+    background-color: #efefef;
+}
+
+.screenTable th, .screenTable td {
+    padding: 15px;
+}
+
+
+.screenTable thead tr, .screenTable thead th {
+    border-top: none;
+    border-bottom: none;
+    text-align: inherit;
+}
+
+.screenTable tbody {
+    background: #f8f8f8;
+}
+
+.screenTable tbody tr {
+    border-radius: 7px;
+}
+
+.screenTable tbody td {
+    background-color: #fff;
+    border: none;
+}
