@@ -58,6 +58,20 @@ public class TheaterApiController {
         }
     }
 
+    @GetMapping("/getLocalTheaterArea")
+    public ResponseEntity<ResultJson<?>> getLocalTheaterArea(@RequestParam("local") @NotBlank @Size(min=2, max=2, message = "두 글자로 입력해주세요") String local) {
+        try{
+            List<TheaterAreaDto> theaterDtos = theaterService.getAreaByLocal(local);
+            if(theaterDtos.isEmpty()){
+                return ResponseEntity.ok(new ResultJson<>(200, "조회 성공", "해당 지역에 등록된 영화관이 존재하지 않습니다."));
+            }
+            return ResponseEntity.ok(new ResultJson<>(200, "조회 성공", theaterDtos));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ResultJson<>(404, "조회 실패", e.getMessage()));
+        }
+    }
+
     @GetMapping("/getTheaterInfo/{theaterId}")
     public ResponseEntity<ResultJson<?>> getTheaterInfo(@PathVariable Long theaterId) {
         try{

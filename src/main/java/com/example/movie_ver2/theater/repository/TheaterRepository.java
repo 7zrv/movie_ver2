@@ -13,5 +13,6 @@ public interface TheaterRepository extends JpaRepository<Theater, Long> {
     Boolean existsByArea(String area);
     Boolean existsByAreaAndIdNot(String area, Long id);
     Page<Theater> findByAddressStartingWith(String local, Pageable pageable);
+    List<Theater> findByAddressStartingWithOrderByArea(String local);
     Page<Theater> findAll(Pageable pageable);
 }
