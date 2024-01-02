@@ -42,24 +42,31 @@ function scMovieDelete(data, theaterId){
 }
 
 function getScreenMovieList(theaterId) {
+    let list = [];
     $.ajax({
         type: 'GET',
         url: `/api/screenMovie/getScreenMovies/${theaterId}`,
         success: function (result) { // 성공적으로 수행 시 response를 data라는 인자로 받는다.
             console.log(result);
             //alert(result.message);
+            if(typeof result.data == "string") {
+                $('#tableBody').append($(`<tr>${result.data}</tr>`));
+                $("#totalScreen").text(0);
+            }
+            else
+                $("#totalScreen").text(result.data.length);
             $(result.data).each(function(){
+                list.push(this.id);
                 $('#tableBody').append($(
                     `<tr name="movieBox">
                     <td>
-                        <input type="checkbox" id="delMovies" name="delMovies" value=${this.id}>
+                        <input type="checkbox" class="delMovies" name="delMovies" value=${this.id}>
                     </td>
                     <td>${this.title}</td>
                     <td>${this.openingDate}</td>
                     <td>${this.id}</td>
                 </tr>`));
             });
-            $("#totalScreen").text(result.data.length);
         },
         error: function (result) { // 실패시
             if (result.message == "조회 실패") {
@@ -70,19 +77,25 @@ function getScreenMovieList(theaterId) {
             }
         }
     });
+    return list;
 }
 
-function getAllMovie(pageNum){
+function getAllMovie(pageNum, list){
     $.ajax({
         type: 'GET',
         url: `/api/movie/getAllMovieInfo?page=${pageNum-1}`,
         success: function (result) {
             let movieHtml = ``;
+            let disabled = "";
             console.log(result);
             $(result.data).each(function(){
+                if(list.includes(this.id))
+                    disabled = "disabled";
+                else
+                    disabled = "";
                 movieHtml += `<tr>
                                     <td>
-                                        <input type="checkbox" id="addMovies" name="addMovies" value=${this.id}>
+                                        <input type="checkbox" class="addMovies" name="addMovies" value=${this.id} ${disabled}>
                                     </td>
                                     <td>${this.title}</td>
                                     <td>${this.openingDate}</td>

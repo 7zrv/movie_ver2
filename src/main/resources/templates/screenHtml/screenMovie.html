@@ -13,12 +13,12 @@
 <script>
     $(document).ready(function() {
         const theaterId = document.location.href.split("screenMovies/")[1];
-        getScreenMovieList(theaterId);
-        getAllMovie(1);
+        let scMvList = getScreenMovieList(theaterId);
+        getAllMovie(1, scMvList);
 
         $('#delBtn').click(function () {
             let list = [];
-            $('#delMovies:checked').each(function () {
+            $('.delMovies:checked').each(function () {
                 list.push($(this).val());
             })
             const data={
@@ -29,7 +29,7 @@
 
         $('#addBtn').click(function () {
             let list = [];
-            $('#addMovies:checked').each(function () {
+            $('.addMovies:checked').each(function () {
                 list.push($(this).val());
             })
             const data={
@@ -88,7 +88,7 @@
                 </div>
                 <div>
                     <div class="controlBox">
-                        <div class="selectAllBox"><input type="checkbox" id="total-selectAll">전체 선택</div>
+                        <div class="selectAllBox" style="margin: 5px; padding: 5px 10px"><input type="checkbox" id="total-selectAll">전체 선택</div>
                         <div class="submit-button" style="margin: 0">
                             <button id="addBtn" style="padding: 10px">선택 추가</button>
                         </div>
@@ -149,7 +149,7 @@
 
         totalSelectAll.onclick = (event) => {
             addCheckboxes.forEach((checkbox) => {
-                checkbox.checked = totalSelectAll.checked;
+                checkbox.checked = checkbox.disabled ? false : totalSelectAll.checked;
             })
         };
 

@@ -8,6 +8,12 @@
     justify-content: space-between;
 }
 
+input[type="checkbox"]:disabled{
+    color: #666;
+    opacity: .5;
+    cursor: default;
+}
+
 /*전체 영화 테이블*/
 .movieTable {
     color: #666;
