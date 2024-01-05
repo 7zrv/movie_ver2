@@ -53,13 +53,13 @@ public class ScreenMovieService {
     public List<ScreenMovieDto> getScreenMoviesByTheater(Long id) {
         Theater theater = theaterRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 영화관은 존재하지 않습니다."));
-        /*return theater.getScreenMovies().stream()
-                .map(ScreenMovies::getMovie).distinct()
-                .map(ScreenMovieDto::of)
-                .collect(Collectors.toList());*/
-        return screenMovieRepository.findByTheater(theater).stream()
+        return theater.getScreenMovies().stream()
                 .map(ScreenMovies::getMovie).distinct()
                 .map(ScreenMovieDto::of)
                 .collect(Collectors.toList());
+        /*return screenMovieRepository.findByTheater(theater).stream()
+                .map(ScreenMovies::getMovie).distinct()
+                .map(ScreenMovieDto::of)
+                .collect(Collectors.toList());*/
     }
 }
