@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -51,9 +52,23 @@ public class HallService {
         return hallRepository.existsByTheaterAndName(theater, name);
     }
 
+    public boolean checkDuplicateByIdNot(Long id, Long theaterId, String name) {
+        Theater theater = theaterRepository.findById(theaterId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 영화관은 존재하지 않습니다."));
+        return hallRepository.existsByTheaterAndNameAndIdNot(theater, name, id);
+    }
+
     public HallInfoDto getHallInfoById(Long id) {
         return HallInfoDto.of(hallRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 상영관은 존재하지 않습니다.")));
+    }
+
+    public List<HallInfoDto> getHallsByTheater(Long theaterId) {
+        Theater theater = theaterRepository.findById(theaterId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 영화관은 존재하지 않습니다."));
+        return hallRepository.findByTheater(theater).stream()
+                .map(HallInfoDto::of)
+                .collect(Collectors.toList());
     }
 
     public Hall findHallById(Long id) {
@@ -61,7 +76,7 @@ public class HallService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 상영관은 존재하지 않습니다."));
     }
 
-    public List<HallInfoDto> getHallsByTheater(Long theaterId) {
+    public List<HallInfoDto> get(Long theaterId) {
         //영화관 총 좌석 수 계산
         return null;
     }

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/theaterCss/theaterEdit.css">
+    <title>상영관</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/js/hallJs/hallApi.js"></script>
+</head>
+<body>
+<script>
+    $(document).ready(function() {
+        const theaterId = document.location.href.split("halls/")[1];
+        getHalls(theaterId);
+    });
+</script>
+<!-- 영화관 수정 폼 -->
+<div class="editForm">
+    <h2>상영관 목록</h2>
+    <div  class="theater-edit-form">
+        <div style="padding-bottom: .2em">
+            <span>총 </span>
+            <strong id="totalHall"></strong>
+            <span>관 / </span>
+            <strong id="totalSeat"></strong>
+            <span>석</span>
+        </div>
+        <div class="tableBox" style="padding-top: 0;">
+            <table>
+                <thead>
+                <tr>
+                    <th>상영관명</th>
+                    <th>보유 좌석수</th>
+                    <th>상영관 위치</th>
+                    <th>관리</th>
+                </tr>
+                </thead>
+                <tbody id="tableBody">
+                <!-- 서버에서 받은 상영 중인 영화 목록을 반복하여 표시하고, 삭제 체크박스를 추가합니다. -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+

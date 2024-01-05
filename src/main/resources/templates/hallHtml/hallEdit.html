@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/theaterCss/theaterEdit.css">
+    <title>상영관</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/js/hallJs/hallApi.js"></script>
+</head>
+<body>
+<script>
+    $(document).ready(function() {
+        const theaterId = document.location.href.split("hall/")[1].charAt(0);
+        const hallId = document.location.href.slice(-1);
+
+        getHallInfo(hallId);
+
+        $('#submit-button').click(function () {
+            const data={
+                "name": $("#name").val(),
+                "seats": $("#seats").val(),
+                "floor": $("#floor").val(),
+            }
+            modifyHall(data, theaterId, hallId);
+        });
+    });
+</script>
+<div class="editForm">
+    <h2>상영관 수정</h2>
+    <div  class="theater-edit-form">
+        <div class="form-row" style="display:block; text-align: end;">
+            <label for="name">상영관명:</label>
+            <input type="text" id="name" name="name">
+        </div>
+        <div class="form-row" style="display:block; text-align: end;">
+            <label for="seats">좌석수:</label>
+            <input type="text" id="seats" name="seats">
+        </div>
+        <div class="form-row" style="display:block; text-align: end;">
+            <label for="floor">상영관 위치:</label>
+            <input type="text" id="floor" name="floor">
+        </div>
+        <div class="submit-button">
+            <button id="submit-button">수정</button>
+            <button type="button" onclick="history.back()">취소</button>
+            <button type="reset" onclick="resetForm()">초기화</button>
+        </div>
+    </div>
+</div>
+</body>
+</html>
