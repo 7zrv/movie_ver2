@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/theaterCss/theaterEdit.css">
+    <link rel="stylesheet" href="/css/core/table.css">
+    <title>영화관 수정</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/js/theaterScreenMovieJs/theaterApi.js"></script>
+    <script src="/js/theaterScreenMovieJs/screenMovieApi.js"></script>
+</head>
+<body>
+<script>
+    $(document).ready(function() {
+        const theaterId = document.location.href.split("theater/")[1];
+
+        getTheaterInfo(theaterId);
+        getScreenMovieList(theaterId);
+
+        $('#submit-button').click(function () {
+            const data={
+                "area": $("#area").val(),
+                "address": $("#address").val(),
+                "number": $("#number").val(),
+            }
+            modifyTheater(data, theaterId);
+        });
+    });
+</script>
+<!-- 영화관 수정 폼 -->
+<div class="editForm">
+    <h2>영화관 수정</h2>
+    <div  class="theater-edit-form">
+        <div class="form-row">
+            <label for="area">영화관 지점:</label>
+            <input type="text" id="area" name="area">
+        </div>
+        <div class="form-row">
+            <label for="address">영화관 주소:</label>
+            <input type="text" id="address" name="address">
+        </div>
+        <div class="form-row">
+            <label for="number">영화관 번호:</label>
+            <input type="text" id="number" name="number">
+        </div>
+        <h3>상영 영화 목록</h3>
+        <div class="tableBox">
+            <div class="selectAllBox"><input type="checkbox" id="selectAll">전체 선택</div>
+            <table class="screenTable">
+                <thead>
+                <tr>
+                    <th>삭제</th>
+                    <th>영화 ID</th>
+                    <th>영화 제목</th>
+                </tr>
+                </thead>
+                <tbody id="tableBody">
+                <!-- 서버에서 받은 상영 중인 영화 목록을 반복하여 표시하고, 삭제 체크박스를 추가합니다. -->
+                </tbody>
+            </table>
+        </div>
+        <div class="submit-button">
+            <button id="submit-button">수정</button>
+            <button type="button" onclick="history.back()">취소</button>
+            <button type="reset" onclick="resetForm()">초기화</button>
+        </div>
+        <script>
+            const selectAll = document.getElementById("selectAll");
+            const checkboxes = document.getElementsByName("delMovies");
+
+            selectAll.onclick = (event) => {
+                selectAll.parentNode.style.opacity = selectAll.checked ? 0.5 : "initial";
+
+                checkboxes.forEach((checkbox) => {
+                    checkbox.checked = selectAll.checked;
+                    checkbox.parentNode.parentNode.style.opacity = checkbox.checked ? 0.3 : "initial";
+                })
+            };
+
+            $("#tableBody").on('change','#delMovies',function(){
+                const checkedCnt = document.querySelectorAll("#delMovies:checked").length;
+
+                selectAll.checked = (checkboxes.length === checkedCnt);
+                this.parentNode.parentNode.style.opacity = this.checked ? 0.3 : "initial";
+            })
+            function resetForm(){
+                document.querySelectorAll("input[type='text']").forEach((input) => {
+                    input.value = input.getAttribute('value');
+                })
+                checkboxes.forEach((checkbox) => {
+                    checkbox.checked = false;
+                    checkbox.parentNode.parentNode.style.opacity = "initial";
+                })
+                selectAll.checked = false;
+                selectAll.parentNode.style.opacity = "initial";
+            }
+        </script>
+    </div>
+</div>
+</body>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+    window.onload = function(){
+        const addressBox = document.getElementById("address");
+        addressBox.addEventListener("click", function(){ //주소입력칸을 클릭하면
+            //카카오 지도 발생
+            new daum.Postcode({
+                oncomplete: function(data) { //선택시 입력값 세팅
+                    addressBox.value = data.address; // 주소 넣기
+                    //document.querySelector("input[name=address_detail]").focus(); //상세입력 포커싱
+                }
+            }).open();
+        });
+    }
+</script>
+</html>
+

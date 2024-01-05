@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/theaterCss/theater.css">
+    <link rel="stylesheet" href="/css/core/page.css">
+    <title>영화관</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/js/theaterScreenMovieJs/theaterApi.js"></script>
+    <script src="/js/theaterScreenMovieJs/screenMovieApi.js"></script>
+    <script src="/js/page.js"></script>
+</head>
+<body>
+<script>
+    $(document).ready(function() {
+        getAllTheater(1);
+        $('.page_nation').on("click", 'a', function(){
+            let slice = ($(this).attr('href')).slice(-1);
+            if($("ul.local li a.active").text() == "전체")
+                getAllTheater(parseInt(slice));
+            else
+                getLocalTheaters($("ul.local li a.active").text(), parseInt(slice));
+        });
+        $('#submit-button').click(function () {
+            const data={
+                "area": $("#area").val(),
+                "address": $("#address").val(),
+                "number": $("#number").val(),
+            }
+            createTheater(data);
+            modalDisplay('none');
+            resetForm();
+        });
+        $('#search-btn').click(function () {
+            //getLocalTheaters($("select[name=local] option:selected").val(), 1);
+        });
+        $("ul.local li a").click(function () {
+            if (!$(this).hasClass("active")) {
+                $("ul.local li a").removeClass();
+                $(this).addClass("active");
+                if($("ul.local li a.active").text() == "전체")
+                    getAllTheater(1);
+                else
+                    getLocalTheaters($("ul.local li a.active").text(), 1);
+            }
+        });
+    });
+</script>
+<!-- 극장 관리 탭 -->
+<div class="tableBox" id="theater">
+    <div class="local-list">
+        <ul class="local">
+            <li><a class="active">전체</a></li>
+            <li><a>서울</a></li>
+            <li><a>경기</a></li>
+            <li><a>인천</a></li>
+            <li><a>강원</a></li>
+            <li><a>충청</a></li>
+            <li><a>세종</a></li>
+            <li><a>대전</a></li>
+            <li><a>전라</a></li>
+            <li><a>광주</a></li>
+            <li><a>경상</a></li>
+            <li><a>대구</a></li>
+            <li><a>부산</a></li>
+            <li><a>울산</a></li>
+            <li><a>제주</a></li>
+        </ul>
+    </div>
+    <div class="element">
+        <h1 class="title">영화관 목록</h1>
+        <button type="button" class="addBtn" onclick="modalDisplay('flex')">영화관 추가</button>
+    </div>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>영화관 지점</th>
+            <th>영화관 주소</th>
+            <th>영화관 번호</th>
+            <th>보유 관수</th>
+            <th>상영 영화</th>
+            <th>관리</th>
+        </tr>
+        </thead>
+        <tbody id="tableBody">
+        <!-- 서버에서 받은 데이터를 반복하여 테이블에 표시할 수 있습니다. -->
+        </tbody>
+    </table>
+    <div class="page_wrap">
+        <div class="page_nation">
+            <!--
+            <a class="arrow pprev" href="#"></a>
+            <a class="arrow prev" href="#"></a>
+            <a href="#" class="active">1</a>
+            <a href="#">2</a>
+            <a href="#">3</a>
+            <a href="#">4</a>
+            <a href="#">5</a>
+            <a href="#">6</a>
+            <a href="#">7</a>
+            <a href="#">8</a>
+            <a href="#">9</a>
+            <a href="#">10</a>
+            <a class="arrow next" href="#"></a>
+            <a class="arrow nnext" href="#"></a>
+            -->
+        </div>
+    </div>
+    <div class="search_box">
+        <select class="select_box">
+            <option>지점</option>
+            <option>주소</option>
+        </select>
+        <input type="text" placeholder="검색어">
+        <button type="button" id="search-btn">검색</button>
+    </div>
+</div>
+<!--영화관 등록 모달창-->
+<div class="modal">
+    <div class="modal-body">
+        <h2 class="modal-title">영화관 등록</h2>
+        <div  class="edit-form">
+            <div class="form-row">
+                <label for="area">영화관 지점:</label>
+                <input type="text" id="area" name="area">
+            </div>
+            <div class="form-row">
+                <label for="address">영화관 주소:</label>
+                <input type="text" id="address" name="address">
+            </div>
+            <div class="form-row">
+                <label for="number">영화관 번호:</label>
+                <input type="text" id="number" name="number">
+            </div>
+            <div class="submit-button">
+                <button id="submit-button">등록</button>
+                <button type="button" onclick="modalDisplay('none')">취소</button>
+                <button type="reset" onclick="resetForm()">초기화</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function resetForm(){
+        document.querySelectorAll("input[type='text']").forEach((input) => {
+            input.value = null;
+        })
+    }
+    <!--모달창js-->
+    const modal = document.querySelector('.modal');
+    function modalDisplay(value){
+        modal.style.display = value;
+    }
+    modal.addEventListener("click", e => {
+        if(e.target === modal) {
+            modal.style.display = "none";
+        }
+    })
+</script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+    window.onload = function(){
+        const addressBox = document.getElementById("address");
+        addressBox.addEventListener("click", function(){ //주소입력칸을 클릭하면
+            //카카오 지도 발생
+            new daum.Postcode({
+                oncomplete: function(data) { //선택시 입력값 세팅
+                    addressBox.value = data.address; // 주소 넣기
+                    //document.querySelector("input[name=address_detail]").focus(); //상세입력 포커싱
+                }
+            }).open();
+        });
+    }
+</script>
+</body>
+</html>

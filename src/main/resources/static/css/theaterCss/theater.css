@@ -1,0 +1,202 @@
+/* 스타일을 추가하여 페이지를 보기 좋게 정리할 수 있습니다. */
+@font-face {
+    font-family: 'NanumSquareNeo-Variable';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* { font-family: 'NanumSquareNeo-Variable'; }
+/* 폰트 끝 */
+
+body {
+    padding:1.5em;
+    background: #f5f5f5
+}
+
+/*영화관 지역별*/
+.local-list {
+    position: relative;
+    width: 100%;
+}
+
+.local {
+    border-bottom: 1px solid #a39485;
+    list-style-type: none;
+    padding: 0;
+    margin: 0 0 30px;
+}
+
+.local li{
+    display: inline-block;
+    margin-left: 30px;
+}
+
+.local li a {
+    position: relative;
+    display: block;
+    line-height: 60px;
+    padding: 0 5px;
+}
+
+.local li a:hover {
+    cursor: pointer;
+    opacity: 0.5;
+    border-bottom: 3px solid #a39485;
+}
+
+.local li a.active {
+    border-bottom: 3px solid #a39485;
+}
+
+/*영화관 테이블*/
+.tableBox {
+    width: 70%;
+    margin: 0 auto;
+}
+
+.element{
+    display: flex;
+    margin: 0.4em;
+    justify-content: space-between;
+    align-items: end;
+}
+
+.title{
+    margin: 0;
+}
+
+.addBtn {
+    font-size: .9em;
+    cursor: pointer;
+}
+
+table {
+    border: 1px #a39485 solid;
+    font-size: .9em;
+    box-shadow: 0 2px 5px rgba(0,0,0,.25);
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+th {
+    text-align: left;
+}
+
+thead {
+    font-weight: bold;
+    color: #fff;
+    background: #73685d;
+}
+
+td, th {
+    padding: 1em 1em;
+    vertical-align: middle;
+}
+
+td {
+    border-bottom: 1px solid rgba(0,0,0,.1);
+    background: #fff;
+}
+
+.controlBtn, .addBtn {
+    text-decoration: none;
+    border: .1em solid #73685d;
+    border-radius: .3em;
+    padding: .4em .7em;
+    color: #73685d;
+}
+
+/*영화관 등록 모달창*/
+.modal{
+    position:absolute;
+    display:none;
+    justify-content: center;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-body{
+    position:absolute;
+    top:30%;
+    width:fit-content;
+    height:fit-content;
+    padding:20px;
+    text-align: center;
+    background-color: #fff;
+    border-radius:10px;
+    box-shadow:0 2px 3px 0 rgba(34,36,38,0.15);
+    transform:translateY(-50%);
+}
+
+.modal-title {
+    display: inline-block;
+    margin: 0 0 20px;
+}
+
+.edit-form {
+    width: fit-content;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.form-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.form-row label {
+    min-width: 70px;
+    text-align: right;
+    margin-right: 10px;
+}
+
+input[type="text"] {
+    max-width: 430px;
+    padding: 8px;
+    margin-right: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+#address {
+    width: 430px;
+}
+
+.submit-button {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+.submit-button button {
+    margin: 5px;
+    background-color: #fff;
+    color: black;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.submit-button button:hover {
+    background-color: #ddd;
+}
+
+.submit-button button[type="reset"] {
+    background-color: #282828;
+    color: white;
+}
+
+.submit-button button[type="reset"]:hover {
+    background-color: #505050;
+}
