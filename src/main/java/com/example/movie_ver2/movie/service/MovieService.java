@@ -2,6 +2,8 @@ package com.example.movie_ver2.movie.service;
 
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.example.movie_ver2.movie.dto.GetMovieRequestDto;
+import com.example.movie_ver2.movie.dto.GetMovieResponseDto;
 import com.example.movie_ver2.movie.dto.MovieUpdateRequestDto;
 import com.example.movie_ver2.movie.dto.MovieUploadRequestDto;
 import com.example.movie_ver2.movie.entity.Movie;
@@ -73,13 +75,15 @@ public class MovieService {
 
 
     //영화 정보 페이징 조회
-    public List<Movie> getMovies(int pageNum, int pageSize, String criteria) {
 
-        Pageable pageable = PageRequest.of(pageNum, pageSize, Sort.by(Sort.Direction.DESC, criteria));
+    @Transactional
+    public Page<GetMovieResponseDto> getMovies(GetMovieRequestDto requestDto) {
 
-        Page<Movie> page = movieRepository.findAll(pageable);
+        Pageable pageable = PageRequest.of(requestDto.getPageNum(), requestDto.getPageSize(), Sort.by(Sort.Direction.DESC, requestDto.getCriteria()));
 
-        return page.getContent();
+        Page<GetMovieResponseDto> page = movieRepository.findAll(pageable).map(GetMovieResponseDto::from);
+
+        return page;
     }
 
     //영화 정보 단건조회

@@ -1,9 +1,12 @@
 package com.example.movie_ver2.front;
 
 
+import com.example.movie_ver2.movie.dto.GetMovieRequestDto;
+import com.example.movie_ver2.movie.dto.GetMovieResponseDto;
 import com.example.movie_ver2.movie.entity.Movie;
 import com.example.movie_ver2.movie.service.MovieService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,8 +23,9 @@ public class MovieController {
     private final MovieService movieService;
 
     @RequestMapping("/")
-    public String showMoviePage(Model model){
-        List<Movie> movies = movieService.getMovies(0, 5 , "openingDate");
+    public String showMoviePage(Model model, GetMovieRequestDto requestDto){
+
+        Page<GetMovieResponseDto> movies = movieService.getMovies(requestDto);
         model.addAttribute("movies", movies);
 
         return "movieHtml/movie";

@@ -68,6 +68,16 @@
                         <a>지역</a>
                     </div>
                     <div id="local-list">
+                        <div class="local_element"></div>
+                        <div class="local_element"></div>
+                        <div class="local_element"></div>
+                        <div class="local_element"></div>
+                        <div class="local_element"></div>
+                        <div class="local_element"></div>
+                        <div class="local_element"></div>
+                        <div class="local_element"></div>
+
+
                         <div th:each="theater : ${theaters}" >
                             <p th:text="${theater.getArea()}">Movie Title</p>
                         </div>
@@ -94,7 +104,9 @@
                 정렬 순서 선택 기능 만들거임
             </div>
             <div id="movie-list">
-                
+                <div th:each="screenMovie : ${screenMovies}" >
+                    <p th:text="${screenMovie.getTitle()}">Movie Title</p>
+                </div>
             </div>
 
         </div>

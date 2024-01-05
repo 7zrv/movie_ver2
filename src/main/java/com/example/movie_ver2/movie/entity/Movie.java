@@ -108,7 +108,6 @@ public class Movie {
         this.runtime = requestDto.getRuntime();
         this.age = requestDto.getAge();
         this.content = requestDto.getContent();
-
         this.openingDate = requestDto.getOpeningDate();
     }
 

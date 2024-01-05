@@ -3,11 +3,14 @@ package com.example.movie_ver2.movie.controller;
 
 
 import com.example.movie_ver2.core.apiResponse.ApiResponse;
+import com.example.movie_ver2.movie.dto.GetMovieRequestDto;
+import com.example.movie_ver2.movie.dto.GetMovieResponseDto;
 import com.example.movie_ver2.movie.dto.MovieUpdateRequestDto;
 import com.example.movie_ver2.movie.dto.MovieUploadRequestDto;
 import com.example.movie_ver2.movie.entity.Movie;
 import com.example.movie_ver2.movie.service.MovieService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -40,12 +43,10 @@ public class MovieApiController {
     }
 
     @GetMapping("/api/movie/getAllMovieInfo")
-    public ResponseEntity<ApiResponse<?>> getAllMovieInfo(@RequestParam(required = false, defaultValue = "0", value = "page") int pageNum,
-                                                          @RequestParam(required = false, defaultValue = "5", value = "pageSize") int pageSize,
-                                                          @RequestParam(required = false, defaultValue = "openingDate", value = "criteria") String criteria){
+    public ResponseEntity<ApiResponse<?>> getAllMovieInfo(GetMovieRequestDto requestDto){
 
         try {
-            List<Movie> movies = movieService.getMovies(pageNum, pageSize, criteria);
+            Page<GetMovieResponseDto> movies = movieService.getMovies(requestDto);
             return ResponseEntity.ok(new ApiResponse<>(1, "영화 목록 조회 성공", movies));
         }catch (RuntimeException e){
             return ResponseEntity.ok(new ApiResponse<>(0, "영화 정보 조회 실패", null));
