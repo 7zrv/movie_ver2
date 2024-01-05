@@ -60,6 +60,7 @@
 
 #local-theater-wrap{
     display: flex;
+    height: 100vh;
     width: 100%;
 }
 
@@ -67,7 +68,6 @@
     width: 50%;
     border: 1px solid #CCCCCC;
     box-sizing: border-box;
-
 }
 
 #theater{
@@ -92,6 +92,20 @@
     height: 100%;
     border: 1px solid #ccc;
     box-sizing: border-box;
+}
+
+.local_element{
+    border: 1px solid #CCCCCC;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.local_element a{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-decoration: none;
 }
 
 #theater-list{
@@ -122,6 +136,7 @@
     box-sizing: border-box;
     height: 100%;
 }
+
 
 
 
