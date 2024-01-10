@@ -81,7 +81,7 @@
                             <a>전라</a>
                         </div>
                         <div class="local_element">
-                            <a>충천</a>
+                            <a>충청</a>
                         </div>
                         <div class="local_element">
                             <a>경상</a>
@@ -112,8 +112,8 @@
                 정렬 순서 선택 기능 만들거임
             </div>
             <div id="movie-list">
-                <div th:each="screenMovie : ${screenMovies}" >
-                    <p th:text="${screenMovie.getTitle()}">Movie Title</p>
+                <div th:each="screenMovie : ${screenMovies}" class="screenMovies">
+                    <a th:text="${screenMovie.getTitle()}"></a>
                 </div>
             </div>
 

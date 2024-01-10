@@ -41,10 +41,11 @@ public class Movie {
     @Column(name = "country", nullable = false)
     private String country;
 
-    @ElementCollection
+    @ElementCollection(targetClass = String.class)
     @CollectionTable(name = "movie_genres", joinColumns = @JoinColumn(name = "movie_id"))
-    @Column(name = "genre")
+    @Column(name = "genre", columnDefinition = "VARCHAR(255) default 'Unknown'")
     private Set<String> genre = new HashSet<>();
+
 
     @Column(name = "runtime", nullable = false)
     private String runtime;
