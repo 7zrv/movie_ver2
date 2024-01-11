@@ -57,7 +57,7 @@ public class Movie {
     @Column(name = "total_ratings", nullable = false)
     private int totalRatings;
 
-    @Column(name = "content", nullable = false, length = 500)
+    @Column(name = "content", nullable = false, length = 5000)
     private String content;
 
     @Column(name = "poster_img_path", length = 500)
