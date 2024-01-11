@@ -19,7 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-
+//@Slf4j
 @RequiredArgsConstructor
 @RestController
 public class MovieApiController {
@@ -31,12 +31,14 @@ public class MovieApiController {
                                                           @RequestPart(value = "posterImage", required = false) MultipartFile posterImg,
                                                           @RequestPart(value = "previewImages", required = false) List<MultipartFile> previewImgs) {
 
+        //log.info("제목 : {}, 등급 : {}, 이미지 : {}", requestDto.getTitle(), requestDto.getAge(), posterImg);
         try {
             Movie movie = movieService.saveMovieInfo(requestDto, posterImg, previewImgs);
             return ResponseEntity.ok(new ApiResponse<>(1, "영화 정보 등록 성공", movie));
         } catch (Exception e) {
+            //e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ApiResponse<>(0, "예기치 않은 오류 발생", null));
+                    .body(new ApiResponse<>(0, "예기치 않은 오류 발생", e.getMessage()));
         }
 
 

@@ -35,9 +35,10 @@ public class MovieService {
 
     //영화정보 저장
     public Movie saveMovieInfo(MovieUploadRequestDto requestDto, MultipartFile posterImg, List<MultipartFile> previewImgs) throws IOException{
-
-        requestDto.setPosterImgPath(uploadToS3(posterImg));
-        requestDto.setPreviewImgPath(uploadToS3(previewImgs));
+        if(posterImg != null)
+            requestDto.setPosterImgPath(uploadToS3(posterImg));
+        if(previewImgs != null)
+            requestDto.setPreviewImgPath(uploadToS3(previewImgs));
         return movieRepository.save(requestDto.toEntity());
     }
 
