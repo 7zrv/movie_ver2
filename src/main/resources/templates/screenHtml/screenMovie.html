@@ -153,17 +153,17 @@
             })
         };
 
-        $("#tableBody").on('change','#delMovies',function(){
-            const checkedCnt = document.querySelectorAll("#delMovies:checked").length;
+        $("#tableBody").on('change','.delMovies',function(){
+            const checkedCnt = document.querySelectorAll(".delMovies:checked").length;
 
             selectAll.checked = (checkboxes.length === checkedCnt);
             selectAll.parentNode.style.opacity = selectAll.checked ? 0.5 : "initial";
             this.parentNode.parentNode.style.opacity = this.checked ? 0.3 : "initial";
         })
 
-        $("#movieTbody").on('change','#addMovies',function(){
-            const checkedCnt = document.querySelectorAll("#addMovies:checked").length;
-            totalSelectAll.checked = (addCheckboxes.length === checkedCnt);
+        $("#movieTbody").on('change','.addMovies',function(){
+            const checkedCnt = document.querySelectorAll(".addMovies:checked").length;
+            totalSelectAll.checked = (addCheckboxes.length - $("input[name='addMovies']:disabled").length === checkedCnt);
         })
     </script>
 </div>

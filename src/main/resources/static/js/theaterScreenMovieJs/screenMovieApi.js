@@ -58,14 +58,14 @@ function getScreenMovieList(theaterId) {
             $(result.data).each(function(){
                 list.push(this.id);
                 $('#tableBody').append($(
-                    `<tr name="movieBox">
-                    <td>
-                        <input type="checkbox" class="delMovies" name="delMovies" value=${this.id}>
-                    </td>
-                    <td>${this.title}</td>
-                    <td>${this.openingDate}</td>
-                    <td>${this.id}</td>
-                </tr>`));
+                    `<tr>
+                        <td>
+                            <input type="checkbox" class="delMovies" name="delMovies" value=${this.id}>
+                        </td>
+                        <td>${this.title}</td>
+                        <td>${this.openingDate}</td>
+                        <td>${this.id}</td>
+                    </tr>`));
             });
         },
         error: function (result) { // 실패시
@@ -88,7 +88,7 @@ function getAllMovie(pageNum, list){
             let movieHtml = ``;
             let disabled = "";
             console.log(result);
-            $(result.data).each(function(){
+            $(result.data.content).each(function(){
                 if(list.includes(this.id))
                     disabled = "disabled";
                 else
@@ -105,7 +105,7 @@ function getAllMovie(pageNum, list){
                                 </tr>`
             });
             $("#movieTbody").html(movieHtml);
-            $("#totalMovie").text(result.data.length);
+            $("#totalMovie").text(result.data.content.length);
             //setPageNation(result.data.totalPages, pageNum, 5);
         },
         error: function (result) { // 실패시

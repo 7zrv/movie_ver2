@@ -77,8 +77,8 @@
                 })
             };
 
-            $("#tableBody").on('change','#delMovies',function(){
-                const checkedCnt = document.querySelectorAll("#delMovies:checked").length;
+            $("#tableBody").on('change','.delMovies',function(){
+                const checkedCnt = document.querySelectorAll(".delMovies:checked").length;
 
                 selectAll.checked = (checkboxes.length === checkedCnt);
                 this.parentNode.parentNode.style.opacity = this.checked ? 0.3 : "initial";

@@ -30,7 +30,8 @@ h2 {
 
 .form-row {
     display: flex;
-    align-items: center;
+    /*align-items: center;*/
+    align-items: baseline;
     margin-bottom: 10px;
 }
 
