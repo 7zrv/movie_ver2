@@ -65,7 +65,6 @@ public class Movie {
 
     @ElementCollection
     @CollectionTable(name = "preview_images", joinColumns = @JoinColumn(name = "movie_id"))
-    @Column(name = "preview_image_path", length = 500)
     private List<String> previewImgPath = new ArrayList<>();
 
     @Column(name = "opening_date")
