@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/theaterCss/theaterEdit.css">
+    <title>영화 수정</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/js/movieApi.js"></script>
+</head>
+<body>
+<script>
+    $(document).ready(function() {
+        const movieId = document.location.href.split("movie/")[1];
+        const movieForm = document.getElementById("movieForm");
+        const submitBtn = document.getElementById("submit-button");
+        let fileList = [];
+
+        getUpdateMovieInfo(movieId);
+
+        let i = $("li").length;
+        $("#addField").on("click", function(e){
+            e.preventDefault();
+            $("#genreList").append($(`<li class="genre-row" style="margin-bottom:5px;">
+                                        <input type="text" id="genre${i}" name="genre">
+                                        <button name="delField" onclick="this.parentNode.parentNode.removeChild(this.parentNode);">-</button>
+                                      </li>`));
+            i++;
+        });
+
+        $("#previewImages").on("change", function(e){
+            fileList = [];
+            let files = e.target.files;
+            let fileArr = Array.prototype.slice.call(files);
+            fileArr.forEach(function(f) {
+                fileList.push(f);
+            });
+        });
+
+        $("button[type=reset]").on("click", function() {
+            fileList = [];
+            $('form').each(function() {this.reset();});
+            //console.log(fileList);
+        });
+
+        submitBtn.addEventListener("click", function(event) {
+            event.preventDefault();
+            updateMovie(movieForm, movieId);
+        });
+    });
+</script>
+<div class="editForm">
+    <h2>영화 등록</h2>
+    <div  class="theater-edit-form">
+        <!--<form id="movieForm" name="movie" enctype="multipart/form-data" onsubmit="" multiple>-->
+        <form id="movieForm" enctype="multipart/form-data">
+            <div class="form-row">
+                <label for="title">제목:</label>
+                <input type="text" id="title" name="title">
+            </div>
+            <div class="form-row">
+                <label for="director">감독:</label>
+                <input type="text" id="director" name="director">
+            </div>
+            <div class="form-row">
+                <label for="cast">출연배우:</label>
+                <input type="text" id="cast" name="cast">
+            </div>
+            <div class="form-row">
+                <label for="country">국가:</label>
+                <input type="text" id="country" name="country">
+            </div>
+            <div class="form-row">
+                <label for="genre">장르:</label>
+                <ul id="genreList" style="list-style: none; padding:0; margin:0;">
+                    <li class="genre-row" style="margin-bottom:5px;">
+                        <input type="text" id="genre" name="genre">
+                        <button id="addField">+</button>
+                    </li>
+                </ul>
+            </div>
+            <div class="form-row">
+                <label for="runtime">러닝타임:</label>
+                <input type="number" id="runtime" name="runtime">
+                <span class="input-unit">분</span>
+            </div>
+            <div class="form-row">
+                <label for="age">관람등급:</label>
+                <select id="age" name="age" required>
+                    <option value="전체 관람가">전체 관람가</option>
+                    <option value="12세 이상 관람가">12세 이상 관람가</option>
+                    <option value="15세 이상 관람가">15세 이상 관람가</option>
+                    <option value="청소년 관람불가">청소년 관람불가</option>
+                </select>
+            </div>
+            <div class="form-row">
+                <label for="openingDate">개봉일:</label>
+                <input type="date" id="openingDate" name="openingDate">
+            </div>
+            <div class="form-row">
+                <label for="content">줄거리:</label><br>
+                <textarea id="content" name="content"></textarea>
+            </div>
+        </form>
+        <form id="imgForm" name="movie" method="post" enctype="multipart/form-data" onsubmit="">
+            <div class="form-row">
+                <label for="posterImage" class="form-label">영화 포스터 업로드</label>
+                <input type="file" class="form-control" id="posterImage" name="posterImage" accept="image/*">
+            </div>
+            <div class="form-row">
+                <label for="previewImages" class="form-label">영화 프리뷰 업로드</label>
+                <input type="file" class="form-control" id="previewImages" name="previewImages" accept="image/*" multiple>
+            </div>
+        </form>
+        <div class="submit-button">
+            <button type="submit" id="submit-button">등록</button>
+            <button type="button" onclick="history.back()">취소</button>
+            <button type="reset">초기화</button>
+        </div>
+    </div>
+</div>
+</body>
+</html>
