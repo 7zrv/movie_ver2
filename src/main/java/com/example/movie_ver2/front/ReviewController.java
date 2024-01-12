@@ -8,21 +8,21 @@ public class ReviewController {
 
     @GetMapping("/create/review")
     public String createReview() {
-        return "create-review";
+        return "reviewHtml/create-review";
     }
 
     @GetMapping("/modify/review/{reviewId}")
     public String modifyReview() {
-        return "modify-review";
+        return "reviewHtml/modify-review";
     }
 
     @GetMapping("/my/review")
     public String myReviewList() {
-        return "my-review";
+        return "reviewHtml/my-review";
     }
 
     @GetMapping("/movie/review")
     public String reviewList() {
-        return "movie-review";
+        return "reviewHtml/movie-review";
     }
 }

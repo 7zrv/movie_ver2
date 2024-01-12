@@ -4,6 +4,10 @@ import com.example.movie_ver2.review.dto.*;
 import com.example.movie_ver2.review.entity.Review;
 import com.example.movie_ver2.review.service.ReviewService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -51,20 +55,34 @@ public class ReviewApiController {
         }
     }
 
-//    @GetMapping("/createReview/{memberId}/{movieId}")
-//    public ResponseEntity<ResultJson<?>> getCreateReview(@PathVariable Long memberId, @PathVariable Long movieId) {     //movieDto
-//        try{
-//            if(reviewService.checkExist(memberId, movieId)){
-//                throw new IllegalArgumentException("해당 영화에 대한 회원님의 리뷰가 이미 존재합니다.");
-//            }
-//            MovieRatingDto movieDto = reviewService.getMovieRating(movieId);
-//            return ResponseEntity.ok(new ResultJson<>(200, "조회 성공", movieDto));
-//
-//        } catch (IllegalArgumentException e) {
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-//                    .body(new ResultJson<>(404, "조회 실패", e.getMessage()));
-//        }
-//    }
+    @GetMapping("/getMovieReviewWithPage/{movieId}")
+    public ResponseEntity<ResultJson<?>> getMovieReviewWithPage(@PathVariable Long movieId, @PageableDefault(size = 10) Pageable pageable) {
+        try{
+            Page<MovieReviewDto> reviewsDto = reviewService.getReviewsWithPageByMovie(movieId, pageable);
+            if(reviewsDto.isEmpty()){
+                return ResponseEntity.ok(new ResultJson<>(200, "조회 성공", "해당 영화에 등록된 리뷰가 아직 존재하지 않습니다."));
+            }
+            return ResponseEntity.ok(new ResultJson<>(200, "조회 성공", reviewsDto));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ResultJson<>(404, "조회 실패", e.getMessage()));
+        }
+    }
+
+    @GetMapping("/createReview/{memberId}/{movieId}")
+    public ResponseEntity<ResultJson<?>> getCreateReview(@PathVariable Long memberId, @PathVariable Long movieId) {     //movieDto
+        try{
+            if(reviewService.checkExist(memberId, movieId)){
+                throw new IllegalArgumentException("해당 영화에 대한 회원님의 리뷰가 이미 존재합니다.");
+            }
+            MovieRatingDto movieDto = reviewService.getMovieRating(movieId);
+            return ResponseEntity.ok(new ResultJson<>(200, "조회 성공", movieDto));
+
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ResultJson<>(404, "조회 실패", e.getMessage()));
+        }
+    }
 
     @GetMapping("/modifyReview/{memberId}/{reviewId}")
     public ResponseEntity<ResultJson<?>> getModifyReview(@PathVariable Long memberId, @PathVariable Long reviewId) {
