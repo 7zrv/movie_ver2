@@ -26,7 +26,8 @@ function createReview(data, memberId, movieId) {
         success: function (result) {
             console.log(result);
             alert(result.message);
-            history.back();
+            //history.back();
+            location.href = document.referrer;
             if (result.message == "등록 실패") {
                 alert("이미 리뷰를 작성하였습니다.")
             }
@@ -51,7 +52,8 @@ function modifyReview(data, memberId, reviewId) {
         success: function (result) {
             console.log(result);
             alert(result.message);
-            history.back();
+            //history.back();
+            location.href = document.referrer;
         },
         error: function (result) {
             if (result.message == "수정 실패") {
@@ -172,8 +174,7 @@ function getMovieReviewList(movieId) {
 
 function dateFormat(date){
     const d = new Date(date);
-    let result = d.getFullYear() + '.' + d.getMonth() + '.' + d.getDate() + ' ';
-
+    let result = d.getFullYear() + '.' + ("0"+(d.getMonth()+1).toString()).slice(-2) + '.' + ("0"+(d.getDate()).toString()).slice(-2) + ' ';
     if(d.getHours() < 10)
         result += '0';
     result += d.getHours() + ':';
@@ -212,8 +213,13 @@ function getMovieReviewListWithPage(movieId, pageNum) {
                                     <span class='review-date'>${dateFormat(this.mod_date)}</span>
                                </li>`;
             });
+            if(result.data === "해당 영화에 등록된 리뷰가 아직 존재하지 않습니다."){
+                reviewHtml += `<p class="review-none">${result.data}</p>`
+            }
+            else{
+                setPageNation(result.data.totalPages, pageNum, 10);
+            }
             $("#allReview").html(reviewHtml);
-            setPageNation(result.data.totalPages, pageNum, 10);
         },
         error: function (result) { // 실패시
             if (result.message == "조회 실패") {
