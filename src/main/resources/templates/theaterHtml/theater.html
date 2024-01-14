@@ -9,14 +9,22 @@
     <script src="/js/theaterScreenMovieJs/theaterApi.js"></script>
     <script src="/js/theaterScreenMovieJs/screenMovieApi.js"></script>
     <script src="/js/page.js"></script>
+    <style>
+        .page_nation a:hover {
+            background-color: #d9d6cf;
+        }
+        .page_nation a.active {
+            background-color:#73685d;
+        }
+    </style>
 </head>
 <body>
 <script>
     $(document).ready(function() {
         getAllTheater(1);
         $('.page_nation').on("click", 'a', function(){
-            let slice = ($(this).attr('href')).slice(-1);
-            if($("ul.local li a.active").text() == "전체")
+            let slice = ($(this).attr('href')).split("#")[1];
+            if($("ul.local li a.active").text() === "전체")
                 getAllTheater(parseInt(slice));
             else
                 getLocalTheaters($("ul.local li a.active").text(), parseInt(slice));
@@ -38,7 +46,7 @@
             if (!$(this).hasClass("active")) {
                 $("ul.local li a").removeClass();
                 $(this).addClass("active");
-                if($("ul.local li a.active").text() == "전체")
+                if($("ul.local li a.active").text() === "전체")
                     getAllTheater(1);
                 else
                     getLocalTheaters($("ul.local li a.active").text(), 1);
@@ -97,11 +105,6 @@
             <a href="#">3</a>
             <a href="#">4</a>
             <a href="#">5</a>
-            <a href="#">6</a>
-            <a href="#">7</a>
-            <a href="#">8</a>
-            <a href="#">9</a>
-            <a href="#">10</a>
             <a class="arrow next" href="#"></a>
             <a class="arrow nnext" href="#"></a>
             -->

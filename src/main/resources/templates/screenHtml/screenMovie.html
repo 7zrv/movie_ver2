@@ -5,9 +5,11 @@
     <link rel="stylesheet" href="/css/theaterCss/theaterEdit.css">
     <link rel="stylesheet" href="/css/core/table.css">
     <link rel="stylesheet" href="/css/screenCss/screenMovie.css">
+    <link rel="stylesheet" href="/css/core/page.css">
     <title>상영 영화</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="/js/theaterScreenMovieJs/screenMovieApi.js"></script>
+    <script src="/js/page.js"></script>
 </head>
 <body>
 <script>
@@ -39,8 +41,9 @@
         });
 
         $('.page_nation').on("click", 'a', function(){
-            let slice = ($(this).attr('href')).slice(-1);
-            getAllMovie(parseInt(slice));
+            let slice = ($(this).attr('href')).split("#")[1];
+            getAllMovie(parseInt(slice), scMvList);
+            $("#total-selectAll").prop("checked", false);
         });
     });
 
@@ -78,6 +81,7 @@
                 </div>
             </div>
         </div>
+        <div class='v-line'></div>
         <div>
             <h2>전체 영화 목록</h2>
             <div class="theater-edit-form">
@@ -118,11 +122,6 @@
                             <a href="#">3</a>
                             <a href="#">4</a>
                             <a href="#">5</a>
-                            <a href="#">6</a>
-                            <a href="#">7</a>
-                            <a href="#">8</a>
-                            <a href="#">9</a>
-                            <a href="#">10</a>
                             <a class="arrow next" href="#"></a>
                             <a class="arrow nnext" href="#"></a>
                             -->

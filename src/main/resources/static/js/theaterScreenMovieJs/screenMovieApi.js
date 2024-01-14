@@ -83,7 +83,7 @@ function getScreenMovieList(theaterId) {
 function getAllMovie(pageNum, list){
     $.ajax({
         type: 'GET',
-        url: `/api/movie/getAllMovieInfo?page=${pageNum-1}`,
+        url: `/api/movie/getAllMovieInfo?pageNum=${pageNum-1}`,
         success: function (result) {
             let movieHtml = ``;
             let disabled = "";
@@ -106,7 +106,7 @@ function getAllMovie(pageNum, list){
             });
             $("#movieTbody").html(movieHtml);
             $("#totalMovie").text(result.data.content.length);
-            //setPageNation(result.data.totalPages, pageNum, 5);
+            setPageNation(result.data.totalPages, pageNum, 5);
         },
         error: function (result) { // 실패시
             if (result.message == "조회 실패") {

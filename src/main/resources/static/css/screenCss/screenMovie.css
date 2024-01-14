@@ -14,6 +14,10 @@ input[type="checkbox"]:disabled{
     cursor: default;
 }
 
+.v-line {
+    border-left : thin solid #ddd;
+}
+
 /*전체 영화 테이블*/
 .movieTable {
     color: #666;
