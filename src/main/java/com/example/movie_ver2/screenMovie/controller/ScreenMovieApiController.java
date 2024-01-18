@@ -2,6 +2,7 @@ package com.example.movie_ver2.screenMovie.controller;
 
 import com.example.movie_ver2.screenMovie.dto.RequestScreenMovieDto;
 import com.example.movie_ver2.screenMovie.dto.ScreenMovieDto;
+import com.example.movie_ver2.screenMovie.dto.TheaterDto;
 import com.example.movie_ver2.screenMovie.service.ScreenMovieService;
 import com.example.movie_ver2.theater.dto.ResultJson;
 import lombok.RequiredArgsConstructor;
@@ -41,6 +42,20 @@ public class ScreenMovieApiController {
                 return ResponseEntity.ok(new ResultJson<>(200, "조회 성공", "해당 영화관은 현재 상영 중인 영화가 없습니다."));
             }
             return ResponseEntity.ok(new ResultJson<>(200, "조회 성공", screenMovieDtos));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ResultJson<>(404, "조회 실패", e.getMessage()));
+        }
+    }
+
+    @GetMapping("/getTheaters/{movieId}")
+    public ResponseEntity<ResultJson<?>> getTheaters(@PathVariable Long movieId) {
+        try{
+            List<TheaterDto> theaterDtos = screenMovieService.getTheatersByScMovie(movieId);
+            if(theaterDtos.isEmpty()){
+                return ResponseEntity.ok(new ResultJson<>(200, "조회 성공", "해당 영화를 상영하는 영화관은 현재 없습니다."));
+            }
+            return ResponseEntity.ok(new ResultJson<>(200, "조회 성공", theaterDtos));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(new ResultJson<>(404, "조회 실패", e.getMessage()));

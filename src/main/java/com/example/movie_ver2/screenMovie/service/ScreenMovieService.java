@@ -4,6 +4,7 @@ import com.example.movie_ver2.movie.entity.Movie;
 import com.example.movie_ver2.movie.repository.MovieRepository;
 import com.example.movie_ver2.screenMovie.dto.RequestScreenMovieDto;
 import com.example.movie_ver2.screenMovie.dto.ScreenMovieDto;
+import com.example.movie_ver2.screenMovie.dto.TheaterDto;
 import com.example.movie_ver2.screenMovie.entity.ScreenMovies;
 import com.example.movie_ver2.screenMovie.repository.ScreenMovieRepository;
 import com.example.movie_ver2.theater.entity.Theater;
@@ -61,5 +62,14 @@ public class ScreenMovieService {
                 .map(ScreenMovies::getMovie).distinct()
                 .map(ScreenMovieDto::of)
                 .collect(Collectors.toList());*/
+    }
+
+    public List<TheaterDto> getTheatersByScMovie(Long id) {
+        Movie movie = movieRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 영화는 존재하지 않습니다."));
+        return screenMovieRepository.findByMovie(movie).stream()
+                .map(ScreenMovies::getTheater).distinct()
+                .map(TheaterDto::of)
+                .collect(Collectors.toList());
     }
 }
