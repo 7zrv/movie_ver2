@@ -11,10 +11,10 @@
 
 /**리뷰 시작**/
 .movie-reviews {
-    width: 70%;
+    width: 50%;
     margin: 0 auto;
+    min-width: 800px;
     /**max-width:1000px;**/
-    justify-content: center;
 }
 
 .review-box {

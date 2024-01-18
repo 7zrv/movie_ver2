@@ -5,7 +5,6 @@ import com.example.movie_ver2.review.entity.Review;
 import com.example.movie_ver2.review.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
@@ -30,7 +29,7 @@ public class ReviewApiController {
         try{
             List<MyReviewDto> reviewsDto = reviewService.getReviewsByMember(memberId);
             if(reviewsDto.isEmpty()){
-                return ResponseEntity.ok(new ResultJson<>(200, "조회 성공", "해당 멤버에 등록된 리뷰가 아직 존재하지 않습니다."));
+                return ResponseEntity.ok(new ResultJson<>(200, "조회 성공", "작성한 리뷰가 존재하지 않습니다."));
             }
             return ResponseEntity.ok(new ResultJson<>(200, "조회 성공", reviewsDto));
 

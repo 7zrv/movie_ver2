@@ -17,7 +17,7 @@ public class RequestReviewDto {
     @Max(value = 10)
     @Positive
     private Integer rating;
-    @Size(max = 500, min = 1)
+    @Size(max = 300, min = 1)
     private String content;
 
     public Review toEntity(Member member, Movie movie) {           //Member, Movie

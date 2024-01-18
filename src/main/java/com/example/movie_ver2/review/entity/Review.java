@@ -38,7 +38,7 @@ public class Review {
     @Column(name = "rating", nullable = false)
     private Integer rating;
 
-    @Column(name = "content", length = 500, nullable = false)
+    @Column(name = "content", length = 300, nullable = false)
     private String content;
 
     @Column(name="reg_date", updatable = false, nullable = false)

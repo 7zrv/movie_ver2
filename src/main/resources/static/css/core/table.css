@@ -1,29 +1,36 @@
-.screenTable {
+.tableBox {
+    border-radius: 4px;
+    width: fit-content;
+    background-color: #efefef;
+    padding: 10px;
+}
+
+.tableBox table{
     min-width: 500px;
     border-spacing: 0 5px;
     background-color: #efefef;
 }
 
-.screenTable th, .screenTable td {
+.tableBox table th, .tableBox table td{
     padding: 12px;
 }
 
 
-.screenTable thead tr, .screenTable thead th {
+.tableBox table thead tr, .tableBox table thead th {
     border-top: none;
     border-bottom: none;
     text-align: inherit;
 }
 
-.screenTable tbody {
+.tableBox table tbody {
     background: #f8f8f8;
 }
 
-.screenTable tbody tr {
+.tableBox table tbody tr {
     border-radius: 7px;
 }
 
-.screenTable tbody td {
+.tableBox table tbody td {
     background-color: #fff;
     border: none;
 }
