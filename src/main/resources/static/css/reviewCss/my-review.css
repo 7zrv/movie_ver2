@@ -1,0 +1,98 @@
+/* 스타일을 추가하여 페이지를 보기 좋게 정리할 수 있습니다. */
+@font-face {
+    font-family: 'NanumSquareNeo-Variable';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* { font-family: 'NanumSquareNeo-Variable'; }
+/* 폰트 끝 */
+
+.my-reviews{
+    width: 50%;
+    margin: 0 auto;
+}
+
+.review-box {
+    min-width: 800px;
+    list-style: none;
+    padding: 10px;
+    border: 1.5px solid #e8ebee;
+    font: 14px/24px "Open Sans", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", Sans-Serif;
+}
+
+.review-box li {
+    font-size: .9em;
+    box-shadow: 0 2px 5px rgba(0,0,0,.25);
+    border-collapse: collapse;
+    border-radius: .9em;
+    overflow: hidden;
+    display: flex;
+    margin-top: 10px;
+}
+
+.review-box li:first-child {
+    margin: 0;
+}
+
+.movie-poster{
+    object-fit: contain;
+    width: 20%;
+}
+
+.review-info {
+    padding: 1em;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.movie-title {
+    font-weight: 500;
+    font-size: 1.3em;
+}
+
+.title-control {
+    display: flex;
+    justify-content: space-between;
+    width:100%;
+    margin-bottom: .5em;
+}
+
+.control-button a {
+    text-decoration:none;
+    color: black;
+}
+
+.review-content {
+    margin-top: 0;
+}
+
+.review-date {
+    font-size: 12px;
+    color: #828282;
+    letter-spacing: 0;
+}
+
+
+/*별점*/
+.rating-box {
+    display:flex;
+}
+.rating-star {
+    position: relative;
+    color: #ddd;
+}
+.rating-star span {
+    width: 0;
+    color: #ffc107;
+    position: absolute;
+    left: 0;
+    right: 0;
+    overflow: hidden;
+}
+.rating-value {
+    margin-left: .2em;
+}

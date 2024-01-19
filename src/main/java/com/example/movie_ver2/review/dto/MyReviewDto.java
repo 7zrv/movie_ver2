@@ -12,14 +12,16 @@ import java.time.LocalDateTime;
 public class MyReviewDto {
     private Long id;
     private String title;
+    private String posterImgPath;
     private Integer rating;
     private String content;
     private LocalDateTime mod_date;
 
     @Builder
-    public MyReviewDto(Long id, String title, Integer rating, String content, LocalDateTime mod_date) {
+    public MyReviewDto(Long id, String title, String posterImgPath, Integer rating, String content, LocalDateTime mod_date) {
         this.id = id;
         this.title = title;
+        this.posterImgPath = posterImgPath;
         this.rating = rating;
         this.content = content;
         this.mod_date = mod_date;
@@ -29,6 +31,7 @@ public class MyReviewDto {
         return MyReviewDto.builder()
                 .id(review.getId())
                 .title(review.getMovie().getTitle())
+                .posterImgPath(review.getMovie().getPosterImgPath())
                 .rating(review.getRating())
                 .content(review.getContent())
                 .mod_date(review.getMod_date())

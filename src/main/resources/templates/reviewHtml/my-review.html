@@ -2,9 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="/css/reviewCss/review.css">
+    <link rel="stylesheet" href="/css/reviewCss/my-review.css">
     <title>My Review</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/js/reviewJs/reviewApi.js"></script>
 </head>
 <body>
 <script src="/js/reviewJs/reviewApi.js"></script>
@@ -15,8 +16,13 @@
     });
 </script>
 
-<div class="movie-reviews">
-    <h2 class="section-title">리뷰 및 평점</h2>
+<div class="my-reviews">
+    <h2 class="section-title">내가 작성한 리뷰</h2>
+    <div style="padding-bottom: .2em">
+        <span>총 </span>
+        <strong id="totalReview"></strong>
+        <span>개 </span>
+    </div>
     <ul class="review-box" id="allReview">
     </ul>
 </div>

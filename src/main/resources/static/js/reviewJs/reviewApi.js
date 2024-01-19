@@ -94,30 +94,35 @@ function getMyReviewList(memberId) {
         url: `/api/review/getMyReview/${memberId}`,
         success: function (result) {
             console.log(result);
-            alert(result.message);
             $(result.data).each(function(){
                 $('#allReview').append($(
                 `<li class="reviewList">
-                    <div class="rating-control">
-                        <div class="rating-box">
-                            <div class='rating-star'>
-                                ★★★★★
-                                <span style="width: ${this.rating * 10}%">★★★★★</span>
+                    <img src="${this.posterImgPath}" alt="Poster" class="movie-poster" onerror="this.onerror=null; this.src='https://i.imgur.com/sC1kNP1.png';"/>
+                    <div class="review-info">
+                        <div>
+                            <div class="title-control">
+                                <span class='movie-title'>${this.title}</span>
+        
+                                <!-- 현재 로그인한 유저의 ID와 review.memberId를 비교하여 조건에 따라 버튼 표시 -->
+                                <div class="control-button">
+                                    <a href='/modify/review/${this.id}' class='btn-danger'>수정</a>
+                                    <a href='javascript:void(0);' onClick='reviewDelete(${this.id});' class='btn-danger'>삭제</a>
+                                </div>
                             </div>
-                            <span class="rating-value">${this.rating}</span>
+                            <div class="rating-box">
+                                <div class='rating-star'>
+                                    ★★★★★
+                                    <span style="width: ${this.rating * 10}%">★★★★★</span>
+                                </div>
+                                <span class="rating-value">${this.rating}</span>
+                            </div>
+                            <p class='review-content'>${this.content}</p>
                         </div>
-
-                        <!-- 현재 로그인한 유저의 ID와 review.memberId를 비교하여 조건에 따라 버튼 표시 -->
-                        <div class="control-button">
-                            <a href='/modify/review/${this.id}' class='btn-danger'>수정</a>
-                            <a href='javascript:void(0);' onClick='reviewDelete(${this.id});' class='btn-danger'>삭제</a>
-                        </div>
+                        <span class='review-date'>${dateFormat(this.mod_date)}</span>
                     </div>
-                    <p class='review-content'>${this.content}</p>
-                    <span class='review-author'>${this.title}</span>
-                    <span class='review-date'>${dateFormat(this.mod_date)}</span>
                 </li>`));
             });
+            $("#totalReview").text(result.data.length);
         },
         error: function (result) { // 실패시
             if (result.message == "조회 실패") {
@@ -220,6 +225,7 @@ function getMovieReviewListWithPage(movieId, pageNum) {
                 setPageNation(result.data.totalPages, pageNum, 10);
             }
             $("#allReview").html(reviewHtml);
+            $("#total").text(`(${result.data.totalElements}명)`);
         },
         error: function (result) { // 실패시
             if (result.message == "조회 실패") {
