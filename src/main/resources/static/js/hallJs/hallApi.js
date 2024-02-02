@@ -105,7 +105,34 @@ function getHalls(theaterId){
             $("#tableBody").append(hallHtml);
             $("#totalHall").text(result.data.length);
             $("#totalSeat").text(totalSeat);
-            console.log(totalSeat);
+        },
+        error: function (result) { // 실패시
+            if (result.message == "조회 실패") {
+                alert(result.message + "\n" + result.data);
+            }
+            else{
+                alert("error" + result);
+            }
+        }
+    });
+}
+
+function getTheaterHalls(theaterId){
+    $.ajax({
+        type: 'GET',
+        url: `/api/hall/getHallsByTheater/${theaterId}`,
+        success: function (result) {
+            let hallList = ``;
+            console.log(result);
+            $(result.data).each(function(){
+                hallList +=
+                    `<li>
+                        <button type="button" onclick="$('#hallId').val(${this.id}); $('ul.hall-list li').removeClass(); $(this.parentNode).addClass('active')">
+                            <span class="name">${this.name}</span>
+                        </button>
+                    </li>`
+            });
+            $(".hall-list").html(hallList);
         },
         error: function (result) { // 실패시
             if (result.message == "조회 실패") {

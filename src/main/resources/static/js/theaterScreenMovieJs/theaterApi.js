@@ -95,6 +95,40 @@ function getAllTheater(pageNum){
     });
 }
 
+function getAllTheaterArea(){
+    $.ajax({
+        type: 'GET',
+        url: `/api/theater/getAllTheaterArea`,
+        success: function (result) {
+            console.log(result);
+            $(result.data).each(function(i, obj){
+                let areaHtml =
+                    `<li>
+                        <button type="button" onclick="$('ul.localTheater-list li').removeClass(); $(this.parentNode).addClass('active'); getTheaterHalls(${obj.id});">
+                            <span class="area">${obj.area}</span>
+                        </button>
+                    </li>`
+                $("button[name='local']").each(function (i, btn){
+                    if(obj.local === $(btn).text()){
+                        //console.log($(btn).text());
+                        $(btn).parent().children(".localTheater-container").children().append($(areaHtml));
+                    }
+                });
+                $('#localTheater-list0').append($(areaHtml));
+            });
+            $('#totalTheaterBtn').append(`(${result.data.length})`);
+        },
+        error: function (result) {
+            if (result.message === "조회 실패") {
+                alert(result.message + "\n" + result.data);
+            }
+            else{
+                alert("error" + result);
+            }
+        }
+    });
+}
+
 function getTheaterInfo(theaterId){
     $.ajax({
         type: 'GET',

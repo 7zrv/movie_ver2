@@ -41,6 +41,33 @@ function scMovieDelete(data, theaterId){
     });
 }
 
+function getAllScMovies(){
+    $.ajax({
+        type: 'GET',
+        url: `/api/screenMovie/getAllScreenMovies`,
+        success: function (result) {
+            console.log(result);
+            $(result.data).each(function(){
+                $('.scMovie-list').append($(
+                    `<li>
+                        <button type="button" onclick="$('#movieId').val(${this.id}); $('ul.scMovie-list li').removeClass(); $(this.parentNode).addClass('active')">
+                            <span class="title">${this.title}</span>
+                        </button>
+                    </li>`
+                ));
+            });
+        },
+        error: function (result) { // 실패시
+            if (result.message === "조회 실패") {
+                alert(result.message + "\n" + result.data)
+            }
+            else{
+                alert("error" + result)
+            }
+        }
+    });
+}
+
 function getScreenMovieList(theaterId) {
     let list = [];
     $.ajax({
@@ -80,6 +107,33 @@ function getScreenMovieList(theaterId) {
     return list;
 }
 
+function getTheaterList(movieId){
+    $.ajax({
+        type: 'GET',
+        url: `/api/screenMovie/getTheaters/${movieId}`,
+        success: function (result) {
+            console.log(result);
+            $(result.data).each(function(){
+                $('.theater-list').append($(
+                    `<li>
+                        <button type="button" onclick="$('ul.theater-list li').removeClass(); $(this.parentNode).addClass('active')">
+                            <span class="area">${this.area}</span>
+                        </button>
+                    </li>`
+                ));
+            });
+        },
+        error: function (result) { // 실패시
+            if (result.message === "조회 실패") {
+                alert(result.message + "\n" + result.data)
+            }
+            else{
+                alert("error" + result)
+            }
+        }
+    });
+}
+
 function getAllMovie(pageNum, list){
     $.ajax({
         type: 'GET',
@@ -105,7 +159,7 @@ function getAllMovie(pageNum, list){
                                 </tr>`
             });
             $("#movieTbody").html(movieHtml);
-            $("#totalMovie").text(result.data.content.length);
+            $("#totalMovie").text(result.data.totalElements);
             setPageNation(result.data.totalPages, pageNum, 5);
         },
         error: function (result) { // 실패시

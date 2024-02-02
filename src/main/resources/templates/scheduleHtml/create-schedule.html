@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>상영 일정</title>
+    <link rel="stylesheet" href="/css/scheduleCss/create-schedule.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/js/theaterScreenMovieJs/screenMovieApi.js"></script>
+    <script src="/js/theaterScreenMovieJs/theaterApi.js"></script>
+    <script src="/js/hallJs/hallApi.js"></script>
+</head>
+<body>
+<script>
+    //전체 상영 영화 조회(선택한 영화관에 없는 상영 영화 선택X)
+    //전체 영화관 조회, 지역별 영화관 조회(선택한 상영 영화가 없는 영화관 선택X)
+    //선택한 영화관에 있는 상영관 조회 후 상영관 선택
+    //시작 시간 선택(해당 상영관 일정 가져와서 선택 불가한 시간 선택X)
+    //끝나는 시간은 runtime으로 계산하여 자동 입력
+    $(document).ready(function() {
+        getAllScMovies();
+        getAllTheaterArea();
+        $("button[name='local']").click(function () {
+            $('ul.theater-list li').removeClass();
+            $(this.parentNode).addClass('active');
+            $('.hall-list').empty();
+        });
+    });
+</script>
+<div class="editForm">
+    <h2>일정 등록</h2>
+    <div class="schedule-box">
+        <div class="scMovie-box">
+            <p class="label">영화 선택</p>
+            <div class="scMovie-container">
+                <input type="hidden" id="movieId" name="movieId" readonly/>
+                <ul class="scMovie-list">
+                </ul>
+            </div>
+        </div>
+        <div class="theater-box">
+            <p class="label">상영관 선택</p>
+            <div class="theater-hall-box">
+                <div class="theater-container">
+                    <ul class="theater-list">
+                        <li><button type="button" name="local" id="totalTheaterBtn">전체</button>
+                            <div class="localTheater-container">
+                                <ul class="localTheater-list" id="localTheater-list0">
+
+                                </ul>
+                            </div>
+                        </li>
+                        <li><button type="button" name="local">서울</button>
+                            <div class="localTheater-container">
+                                <ul class="localTheater-list" id="localTheater-list1">
+
+                                </ul>
+                            </div>
+                        </li>
+                        <li><button type="button" name="local">경기</button>
+                            <div class="localTheater-container">
+                                <ul class="localTheater-list" id="localTheater-list2">
+
+                                </ul>
+                            </div>
+                        </li>
+                        <li><button type="button" name="local">인천</button>
+                            <div class="localTheater-container">
+                                <ul class="localTheater-list" id="localTheater-list3">
+
+                                </ul>
+                            </div>
+                        </li>
+                        <li><button type="button" name="local">강원</button>
+                            <div class="localTheater-container">
+                                <ul class="localTheater-list" id="localTheater-list4">
+
+                                </ul>
+                            </div>
+                        </li>
+                        <li><button type="button" name="local">충청</button>
+                            <div class="localTheater-container">
+                                <ul class="localTheater-list" id="localTheater-list5">
+
+                                </ul>
+                            </div>
+                        </li>
+                        <li><button type="button" name="local">세종</button>
+                            <div class="localTheater-container">
+                                <ul class="localTheater-list" id="localTheater-list6">
+
+                                </ul>
+                            </div>
+                        </li>
+                        <li><button type="button" name="local">대전</button>
+                            <div class="localTheater-container">
+                                <ul class="localTheater-list" id="localTheater-list7">
+
+                                </ul>
+                            </div>
+                        </li>
+                        <li><button type="button" name="local">전라</button>
+                            <div class="localTheater-container">
+                                <ul class="localTheater-list" id="localTheater-list8">
+
+                                </ul>
+                            </div>
+                        </li>
+                        <li><button type="button" name="local">광주</button>
+                            <div class="localTheater-container">
+                                <ul class="localTheater-list" id="localTheater-list9">
+
+                                </ul>
+                            </div>
+                        </li>
+                        <li><button type="button" name="local">경상</button>
+                            <div class="localTheater-container">
+                                <ul class="localTheater-list" id="localTheater-list10">
+
+                                </ul>
+                            </div>
+                        </li>
+                        <li><button type="button" name="local">대구</button>
+                            <div class="localTheater-container">
+                                <ul class="localTheater-list" id="localTheater-list11">
+
+                                </ul>
+                            </div>
+                        </li>
+                        <li><button type="button" name="local">부산</button>
+                            <div class="localTheater-container">
+                                <ul class="localTheater-list" id="localTheater-list12">
+
+                                </ul>
+                            </div>
+                        </li>
+                        <li><button type="button" name="local">울산</button>
+                            <div class="localTheater-container">
+                                <ul class="localTheater-list" id="localTheater-list13">
+
+                                </ul>
+                            </div>
+                        </li>
+                        <li><button type="button" name="local">제주</button>
+                            <div class="localTheater-container">
+                                <ul class="localTheater-list" id="localTheater-list14">
+
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="hall-container" style="width: 150px;">
+                    <ul class="hall-list">
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="time-box">
+            <p class="label">시간 선택</p>
+            <div></div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
