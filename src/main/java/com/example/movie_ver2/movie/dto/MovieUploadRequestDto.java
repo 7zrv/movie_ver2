@@ -20,7 +20,7 @@ public class MovieUploadRequestDto {
     private String cast;
     private String country;
     private Set<String> genre;
-    private String runtime;
+    private Integer runtime;
     private String age;
     private String content;
     private String posterImgPath;

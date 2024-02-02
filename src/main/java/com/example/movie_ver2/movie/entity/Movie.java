@@ -46,7 +46,7 @@ public class Movie {
     private Set<String> genre = new HashSet<>();
 
     @Column(name = "runtime", nullable = false)
-    private String runtime;
+    private Integer runtime;
 
     @Column(name = "age", nullable = false)
     private String age;
@@ -79,7 +79,7 @@ public class Movie {
     private LocalDateTime updatedAt;
 
     @Builder
-    public Movie(String title, String director, String cast, String country, Set<String> genre, String runtime, String age, String content, String posterImgPath, List<String> previewImgPath, LocalDate openingDate) {
+    public Movie(String title, String director, String cast, String country, Set<String> genre, Integer runtime, String age, String content, String posterImgPath, List<String> previewImgPath, LocalDate openingDate) {
 
         this.title = title;
         this.director = director;

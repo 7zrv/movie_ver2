@@ -22,7 +22,7 @@ public class MovieController {
 
     private final MovieService movieService;
 
-    @RequestMapping("/")
+    @RequestMapping(value = {"/", "/movie"})
     public String showMoviePage(Model model, GetMovieRequestDto requestDto){
 
         Page<GetMovieResponseDto> movies = movieService.getMovies(requestDto);

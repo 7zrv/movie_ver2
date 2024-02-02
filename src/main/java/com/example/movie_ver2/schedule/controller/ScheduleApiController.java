@@ -35,7 +35,7 @@ public class ScheduleApiController {
 
     }
 
-    @GetMapping("/api/schedule/findScheduleByScreen")
+    @GetMapping("/api/schedule/findScheduleByHall")
     public ResponseEntity<ApiResponse<?>> searchSchedule(SearchScheduleRequestDto requestDto){
 
         try {

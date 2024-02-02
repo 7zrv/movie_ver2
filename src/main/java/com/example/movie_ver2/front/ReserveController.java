@@ -24,8 +24,10 @@ public class ReserveController {
     @GetMapping("/reserve")
     public String showReservePage(Model model){
 
-        //List<TheaterAreaDto> theaters = theaterService.getAll();
-        //model.addAttribute("theaters", theaters);
+        List<TheaterAreaDto> theaters = theaterService.getAllArea();
+        model.addAttribute("theaters", theaters);
+
+        System.out.println(theaters);
 
         List<ScreenMovieDto> screenMovies = screenMovieService.getALl();
         model.addAttribute("screenMovies", screenMovies);

@@ -19,7 +19,7 @@ public class GetMovieResponseDto {
     private final String cast;
     private final String country;
     private final Set<String> genre;
-    private final String runtime;
+    private final Integer runtime;
     private final String age;
     private final double sumOfRating;
     private final int totalRatings;
