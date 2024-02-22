@@ -6,10 +6,7 @@ import com.example.movie_ver2.hall.repository.HallRepository;
 import com.example.movie_ver2.hall.service.HallService;
 import com.example.movie_ver2.movie.entity.Movie;
 import com.example.movie_ver2.movie.service.MovieService;
-import com.example.movie_ver2.schedule.dto.CreateScheduleRequestDto;
-import com.example.movie_ver2.schedule.dto.ModifyScheduleRequestDto;
-import com.example.movie_ver2.schedule.dto.SearchScheduleRequestDto;
-import com.example.movie_ver2.schedule.dto.SearchScheduleResponseDto;
+import com.example.movie_ver2.schedule.dto.*;
 import com.example.movie_ver2.schedule.entity.Schedule;
 import com.example.movie_ver2.schedule.repository.ScheduleRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +14,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -36,18 +35,31 @@ public class ScheduleService {
     }
 
 
-    public List<SearchScheduleResponseDto> searchSchedules(SearchScheduleRequestDto requestDto) {
+    public List<SearchSchedulesResponseDto> searchSchedules(SearchScheduleRequestDto requestDto) {
         List<Schedule> schedules = scheduleRepository.findScheduleByHallIdAndScreenDate(requestDto.getHallId(), requestDto.getScreenDate());
 
-        List<SearchScheduleResponseDto> responseDtos = new ArrayList<>();
+        List<SearchSchedulesResponseDto> responseDtos = new ArrayList<>();
         for (Schedule schedule : schedules) {
-            SearchScheduleResponseDto responseDto = new SearchScheduleResponseDto();
+            SearchSchedulesResponseDto responseDto = new SearchSchedulesResponseDto();
             responseDto.setStartTime(schedule.getStartTime());
             responseDtos.add(responseDto);
         }
 
         return responseDtos;
     }
+
+    public SearchScheduleResponseDto searchSchedule(Long scheduleId) {
+
+        return scheduleRepository.findById(scheduleId)
+                .map(SearchScheduleResponseDto::of)
+                .orElseThrow(() -> new NoSuchElementException("Schedule not found for id: " + scheduleId));
+
+    }
+
+
+
+
+
 
     public void modifySchedule(ModifyScheduleRequestDto requestDto){
         Schedule schedule = scheduleRepository.findById(requestDto.getScheduleId()).orElseThrow(IllegalArgumentException::new);
@@ -65,4 +77,6 @@ public class ScheduleService {
         return scheduleRepository.findById(scheduleId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 상영일정은 존재하지 않습니다."));
     }
+
+
 }

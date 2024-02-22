@@ -3,11 +3,7 @@ package com.example.movie_ver2.schedule.controller;
 
 import com.example.movie_ver2.core.apiResponse.ApiResponse;
 
-import com.example.movie_ver2.schedule.dto.CreateScheduleRequestDto;
-import com.example.movie_ver2.schedule.dto.ModifyScheduleRequestDto;
-import com.example.movie_ver2.schedule.dto.SearchScheduleRequestDto;
-import com.example.movie_ver2.schedule.dto.SearchScheduleResponseDto;
-import com.example.movie_ver2.schedule.entity.Schedule;
+import com.example.movie_ver2.schedule.dto.*;
 import com.example.movie_ver2.schedule.service.ScheduleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -36,10 +32,22 @@ public class ScheduleApiController {
     }
 
     @GetMapping("/api/schedule/findScheduleByHall")
-    public ResponseEntity<ApiResponse<?>> searchSchedule(SearchScheduleRequestDto requestDto){
+    public ResponseEntity<ApiResponse<?>> searchSchedules(SearchScheduleRequestDto requestDto){
 
         try {
-            List<SearchScheduleResponseDto> scheduleInfo = scheduleService.searchSchedules(requestDto);
+            List<SearchSchedulesResponseDto> scheduleInfo = scheduleService.searchSchedules(requestDto);
+            return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse<>(1, "상영일정 검색 성공", scheduleInfo));
+        }catch (IllegalStateException E){
+            return ResponseEntity.badRequest().body(new ApiResponse<>(0, "상영일정 검색 실패", null));
+        }
+
+    }
+
+    @GetMapping("/api/schedule/findScheduleByHall/{scheduleId}")
+    public ResponseEntity<ApiResponse<?>> searchSchedule(@PathVariable Long scheduleId){
+
+        try {
+            SearchScheduleResponseDto scheduleInfo = scheduleService.searchSchedule(scheduleId);
             return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse<>(1, "상영일정 검색 성공", scheduleInfo));
         }catch (IllegalStateException E){
             return ResponseEntity.badRequest().body(new ApiResponse<>(0, "상영일정 검색 실패", null));
