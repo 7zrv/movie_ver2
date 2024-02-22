@@ -50,7 +50,7 @@ function getAllScMovies(){
             $(result.data).each(function(){
                 $('.scMovie-list').append($(
                     `<li>
-                        <button type="button" onclick="$('#movieId').val(${this.id}); $('ul.scMovie-list li').removeClass(); $(this.parentNode).addClass('active')">
+                        <button type="button" id="${this.id}" onclick="$('#movieId').val(${this.id}); $('#runtime').val(${this.runtime});">
                             <span class="title">${this.title}</span>
                         </button>
                     </li>`
@@ -108,19 +108,15 @@ function getScreenMovieList(theaterId) {
 }
 
 function getTheaterList(movieId){
+    let list = [];
     $.ajax({
         type: 'GET',
         url: `/api/screenMovie/getTheaters/${movieId}`,
+        async: false,//해당 함수가 끝난 후 순차적으로 실행
         success: function (result) {
             console.log(result);
             $(result.data).each(function(){
-                $('.theater-list').append($(
-                    `<li>
-                        <button type="button" onclick="$('ul.theater-list li').removeClass(); $(this.parentNode).addClass('active')">
-                            <span class="area">${this.area}</span>
-                        </button>
-                    </li>`
-                ));
+                list.push(this.id);
             });
         },
         error: function (result) { // 실패시
@@ -130,6 +126,45 @@ function getTheaterList(movieId){
             else{
                 alert("error" + result)
             }
+        }
+    });
+    $('.localTheater-list li button').each(function () {
+        if(list.includes(parseInt(this.id))) {
+            $(this).attr("disabled", false);
+        }
+        else{
+            $(this).attr("disabled", true);
+        }
+    });
+}
+
+function getScMovieList(theaterId) {
+    let list = [];
+    $.ajax({
+        type: 'GET',
+        url: `/api/screenMovie/getScreenMovies/${theaterId}`,
+        async: false,//해당 함수가 끝난 후 순차적으로 실행
+        success: function (result) {
+            console.log(result);
+            $(result.data).each(function(){
+                list.push(this.id);
+            });
+        },
+        error: function (result) { // 실패시
+            if (result.message == "조회 실패") {
+                alert(result.message + "\n" + result.data)
+            }
+            else{
+                alert("error" + result)
+            }
+        }
+    });
+    $('.scMovie-list li button').each(function () {
+        if(list.includes(parseInt(this.id))) {
+            $(this).attr("disabled", false);
+        }
+        else{
+            $(this).attr("disabled", true);
         }
     });
 }

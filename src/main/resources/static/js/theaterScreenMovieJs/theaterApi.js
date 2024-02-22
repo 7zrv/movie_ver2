@@ -104,7 +104,7 @@ function getAllTheaterArea(){
             $(result.data).each(function(i, obj){
                 let areaHtml =
                     `<li>
-                        <button type="button" onclick="$('ul.localTheater-list li').removeClass(); $(this.parentNode).addClass('active'); getTheaterHalls(${obj.id});">
+                        <button type="button" id="${obj.id}">
                             <span class="area">${obj.area}</span>
                         </button>
                     </li>`

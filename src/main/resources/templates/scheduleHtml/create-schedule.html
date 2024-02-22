@@ -5,6 +5,7 @@
     <title>상영 일정</title>
     <link rel="stylesheet" href="/css/scheduleCss/create-schedule.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/js/scheduleJs/scheduleApi.js"></script>
     <script src="/js/theaterScreenMovieJs/screenMovieApi.js"></script>
     <script src="/js/theaterScreenMovieJs/theaterApi.js"></script>
     <script src="/js/hallJs/hallApi.js"></script>
@@ -24,141 +25,189 @@
             $(this.parentNode).addClass('active');
             $('.hall-list').empty();
         });
+        $(".scMovie-list").on("click", 'button', function(){ //선택한 상영 영화가 없는 영화관 선택X, 다시 클릭 시 active 제거
+            if (!$(this.parentNode).hasClass("active")) {
+                getTheaterList(this.id);
+                $('ul.scMovie-list li').removeClass();
+                $(this.parentNode).addClass('active');
+            }
+            else {
+                $(this.parentNode).removeClass();
+                $('.localTheater-list li button').removeAttr("disabled");
+            }
+        });
+        $(".localTheater-list").on("click", 'button', function(){ //선택한 영화관에 없는 상영 영화 선택X, 다시 클릭 시 active 제거
+            if (!$(this.parentNode).hasClass("active")) {
+                getTheaterHalls(this.id);
+                getScMovieList(this.id);
+                $('ul.localTheater-list li').removeClass();
+                $(this.parentNode).addClass('active');
+            }
+            else {
+                $(this.parentNode).removeClass();
+                $('.scMovie-list li button').removeAttr("disabled");
+                $('.hall-list').empty();
+            }
+        });
+        $('#submit-button').click(function () {
+            const data={
+                "movieId": $("#movieId").val(),
+                "hallId": $("#hallId").val(),
+                "startTime": $("#startTime").val() + ":00",
+                "endTime": $("#endTime").val() + ":00"
+            }
+            createSchedule(data);
+        });
     });
 </script>
-<div class="editForm">
+<div class="editBox">
     <h2>일정 등록</h2>
-    <div class="schedule-box">
-        <div class="scMovie-box">
-            <p class="label">영화 선택</p>
-            <div class="scMovie-container">
-                <input type="hidden" id="movieId" name="movieId" readonly/>
-                <ul class="scMovie-list">
-                </ul>
-            </div>
-        </div>
-        <div class="theater-box">
-            <p class="label">상영관 선택</p>
-            <div class="theater-hall-box">
-                <div class="theater-container">
-                    <ul class="theater-list">
-                        <li><button type="button" name="local" id="totalTheaterBtn">전체</button>
-                            <div class="localTheater-container">
-                                <ul class="localTheater-list" id="localTheater-list0">
-
-                                </ul>
-                            </div>
-                        </li>
-                        <li><button type="button" name="local">서울</button>
-                            <div class="localTheater-container">
-                                <ul class="localTheater-list" id="localTheater-list1">
-
-                                </ul>
-                            </div>
-                        </li>
-                        <li><button type="button" name="local">경기</button>
-                            <div class="localTheater-container">
-                                <ul class="localTheater-list" id="localTheater-list2">
-
-                                </ul>
-                            </div>
-                        </li>
-                        <li><button type="button" name="local">인천</button>
-                            <div class="localTheater-container">
-                                <ul class="localTheater-list" id="localTheater-list3">
-
-                                </ul>
-                            </div>
-                        </li>
-                        <li><button type="button" name="local">강원</button>
-                            <div class="localTheater-container">
-                                <ul class="localTheater-list" id="localTheater-list4">
-
-                                </ul>
-                            </div>
-                        </li>
-                        <li><button type="button" name="local">충청</button>
-                            <div class="localTheater-container">
-                                <ul class="localTheater-list" id="localTheater-list5">
-
-                                </ul>
-                            </div>
-                        </li>
-                        <li><button type="button" name="local">세종</button>
-                            <div class="localTheater-container">
-                                <ul class="localTheater-list" id="localTheater-list6">
-
-                                </ul>
-                            </div>
-                        </li>
-                        <li><button type="button" name="local">대전</button>
-                            <div class="localTheater-container">
-                                <ul class="localTheater-list" id="localTheater-list7">
-
-                                </ul>
-                            </div>
-                        </li>
-                        <li><button type="button" name="local">전라</button>
-                            <div class="localTheater-container">
-                                <ul class="localTheater-list" id="localTheater-list8">
-
-                                </ul>
-                            </div>
-                        </li>
-                        <li><button type="button" name="local">광주</button>
-                            <div class="localTheater-container">
-                                <ul class="localTheater-list" id="localTheater-list9">
-
-                                </ul>
-                            </div>
-                        </li>
-                        <li><button type="button" name="local">경상</button>
-                            <div class="localTheater-container">
-                                <ul class="localTheater-list" id="localTheater-list10">
-
-                                </ul>
-                            </div>
-                        </li>
-                        <li><button type="button" name="local">대구</button>
-                            <div class="localTheater-container">
-                                <ul class="localTheater-list" id="localTheater-list11">
-
-                                </ul>
-                            </div>
-                        </li>
-                        <li><button type="button" name="local">부산</button>
-                            <div class="localTheater-container">
-                                <ul class="localTheater-list" id="localTheater-list12">
-
-                                </ul>
-                            </div>
-                        </li>
-                        <li><button type="button" name="local">울산</button>
-                            <div class="localTheater-container">
-                                <ul class="localTheater-list" id="localTheater-list13">
-
-                                </ul>
-                            </div>
-                        </li>
-                        <li><button type="button" name="local">제주</button>
-                            <div class="localTheater-container">
-                                <ul class="localTheater-list" id="localTheater-list14">
-
-                                </ul>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <div class="hall-container" style="width: 150px;">
-                    <ul class="hall-list">
+    <div class="editForm">
+        <div class="schedule-box">
+            <div class="scMovie-box">
+                <p class="label">영화 선택</p>
+                <div class="scMovie-container">
+                    <input type="hidden" id="movieId" name="movieId" readonly/>
+                    <input type="hidden" id="runtime" name="runtime" disabled/>
+                    <ul class="scMovie-list">
 
                     </ul>
                 </div>
             </div>
+            <div class="theater-box">
+                <p class="label">상영관 선택</p>
+                <div class="theater-hall-box">
+                    <div class="theater-container">
+                        <ul class="theater-list">
+                            <li><button type="button" name="local" id="totalTheaterBtn">전체</button>
+                                <div class="localTheater-container">
+                                    <ul class="localTheater-list" id="localTheater-list0">
+
+                                    </ul>
+                                </div>
+                            </li>
+                            <li><button type="button" name="local">서울</button>
+                                <div class="localTheater-container">
+                                    <ul class="localTheater-list" id="localTheater-list1">
+
+                                    </ul>
+                                </div>
+                            </li>
+                            <li><button type="button" name="local">경기</button>
+                                <div class="localTheater-container">
+                                    <ul class="localTheater-list" id="localTheater-list2">
+
+                                    </ul>
+                                </div>
+                            </li>
+                            <li><button type="button" name="local">인천</button>
+                                <div class="localTheater-container">
+                                    <ul class="localTheater-list" id="localTheater-list3">
+
+                                    </ul>
+                                </div>
+                            </li>
+                            <li><button type="button" name="local">강원</button>
+                                <div class="localTheater-container">
+                                    <ul class="localTheater-list" id="localTheater-list4">
+
+                                    </ul>
+                                </div>
+                            </li>
+                            <li><button type="button" name="local">충청</button>
+                                <div class="localTheater-container">
+                                    <ul class="localTheater-list" id="localTheater-list5">
+
+                                    </ul>
+                                </div>
+                            </li>
+                            <li><button type="button" name="local">세종</button>
+                                <div class="localTheater-container">
+                                    <ul class="localTheater-list" id="localTheater-list6">
+
+                                    </ul>
+                                </div>
+                            </li>
+                            <li><button type="button" name="local">대전</button>
+                                <div class="localTheater-container">
+                                    <ul class="localTheater-list" id="localTheater-list7">
+
+                                    </ul>
+                                </div>
+                            </li>
+                            <li><button type="button" name="local">전라</button>
+                                <div class="localTheater-container">
+                                    <ul class="localTheater-list" id="localTheater-list8">
+
+                                    </ul>
+                                </div>
+                            </li>
+                            <li><button type="button" name="local">광주</button>
+                                <div class="localTheater-container">
+                                    <ul class="localTheater-list" id="localTheater-list9">
+
+                                    </ul>
+                                </div>
+                            </li>
+                            <li><button type="button" name="local">경상</button>
+                                <div class="localTheater-container">
+                                    <ul class="localTheater-list" id="localTheater-list10">
+
+                                    </ul>
+                                </div>
+                            </li>
+                            <li><button type="button" name="local">대구</button>
+                                <div class="localTheater-container">
+                                    <ul class="localTheater-list" id="localTheater-list11">
+
+                                    </ul>
+                                </div>
+                            </li>
+                            <li><button type="button" name="local">부산</button>
+                                <div class="localTheater-container">
+                                    <ul class="localTheater-list" id="localTheater-list12">
+
+                                    </ul>
+                                </div>
+                            </li>
+                            <li><button type="button" name="local">울산</button>
+                                <div class="localTheater-container">
+                                    <ul class="localTheater-list" id="localTheater-list13">
+
+                                    </ul>
+                                </div>
+                            </li>
+                            <li><button type="button" name="local">제주</button>
+                                <div class="localTheater-container">
+                                    <ul class="localTheater-list" id="localTheater-list14">
+
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="hall-container" style="width: 150px;">
+                        <input type="hidden" id="hallId" name="hallId" readonly/>
+                        <ul class="hall-list">
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="time-box">
+                <p class="label">시간 선택</p>
+                <div>
+                    <label for="startTime">시작 시각:</label>
+                    <input type="datetime-local" id="startTime" onchange="calTime(this.value);">
+                    <label for="endTime">종료 시각:</label>
+                    <input type="datetime-local" id="endTime">
+                </div>
+            </div>
         </div>
-        <div class="time-box">
-            <p class="label">시간 선택</p>
-            <div></div>
+        <div class="submit-button">
+            <button id="submit-button">등록</button>
+            <button type="button" onclick="history.back()">취소</button>
+            <button type="reset" onclick="resetForm()">초기화</button>
         </div>
     </div>
 </div>

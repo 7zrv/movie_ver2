@@ -7,17 +7,21 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
+import static java.lang.Integer.parseInt;
+
 @Getter
 @NoArgsConstructor
 public class ScreenMovieDto {
     private Long id;
     private String title;
+    private Integer runtime;
     private LocalDate openingDate;
 
     @Builder
-    public ScreenMovieDto(Long id, String title, LocalDate openingDate) {
+    public ScreenMovieDto(Long id, String title, Integer runtime, LocalDate openingDate) {
         this.id = id;
         this.title = title;
+        this.runtime = runtime;
         this.openingDate = openingDate;
     }
 
@@ -27,6 +31,7 @@ public class ScreenMovieDto {
         return ScreenMovieDto.builder()
                 .id(movie.getId())
                 .title(movie.getTitle())
+                .runtime(movie.getRuntime())
                 .openingDate(movie.getOpeningDate())
                 .build();
     }
