@@ -1,9 +1,6 @@
 package com.example.movie_ver2.theater.controller;
 
-import com.example.movie_ver2.theater.dto.RequestTheaterDto;
-import com.example.movie_ver2.theater.dto.ResultJson;
-import com.example.movie_ver2.theater.dto.TheaterAreaDto;
-import com.example.movie_ver2.theater.dto.TheaterInfoDto;
+import com.example.movie_ver2.theater.dto.*;
 import com.example.movie_ver2.theater.entity.Theater;
 import com.example.movie_ver2.theater.service.TheaterService;
 import lombok.RequiredArgsConstructor;
@@ -76,6 +73,17 @@ public class TheaterApiController {
     public ResponseEntity<ResultJson<?>> getTheaterInfo(@PathVariable Long theaterId) {
         try{
             TheaterInfoDto theaterDto = theaterService.getTheaterInfoById(theaterId);
+            return ResponseEntity.ok(new ResultJson<>(200, "조회 성공", theaterDto));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ResultJson<>(404, "조회 실패", e.getMessage()));
+        }
+    }
+
+    @GetMapping("/getTheaterInfoByScreenMovie/{screenMovieId}")
+    public ResponseEntity<ResultJson<?>> getTheaterByScreenMovie(@PathVariable Long screenMovieId) {
+        try{
+            List<TheaterInfoByScreenMovieResponseDto> theaterDto = theaterService.getTheaterInfoByScreenMovieId(screenMovieId);
             return ResponseEntity.ok(new ResultJson<>(200, "조회 성공", theaterDto));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)

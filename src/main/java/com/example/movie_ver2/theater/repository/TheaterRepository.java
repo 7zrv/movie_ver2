@@ -15,4 +15,6 @@ public interface TheaterRepository extends JpaRepository<Theater, Long> {
     Page<Theater> findByAddressStartingWith(String local, Pageable pageable);
     List<Theater> findByAddressStartingWithOrderByArea(String local);
     Page<Theater> findAll(Pageable pageable);
+
+    List<Theater> findByScreenMovies_Id(Long screenMovieId);
 }

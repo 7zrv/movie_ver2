@@ -2,9 +2,9 @@ package com.example.movie_ver2.theater.service;
 
 import com.example.movie_ver2.hall.repository.HallRepository;
 import com.example.movie_ver2.screenMovie.repository.ScreenMovieRepository;
-import com.example.movie_ver2.screenMovie.service.ScreenMovieService;
 import com.example.movie_ver2.theater.dto.RequestTheaterDto;
 import com.example.movie_ver2.theater.dto.TheaterAreaDto;
+import com.example.movie_ver2.theater.dto.TheaterInfoByScreenMovieResponseDto;
 import com.example.movie_ver2.theater.dto.TheaterInfoDto;
 import com.example.movie_ver2.theater.entity.Theater;
 import com.example.movie_ver2.theater.repository.TheaterRepository;
@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -83,5 +84,13 @@ public class TheaterService {
         return theaterRepository.findByAddressStartingWith(local, pageable)
                 .map((Theater theater) -> TheaterInfoDto.of(theater, hallRepository.countByTheater(theater), screenMovieRepository.countByTheater(theater)));
     }
+
+    public List<TheaterInfoByScreenMovieResponseDto> getTheaterInfoByScreenMovieId(Long screenMovieId) {
+        return theaterRepository.findByScreenMovies_Id(screenMovieId)
+                .stream()
+                .map(TheaterInfoByScreenMovieResponseDto::of)
+                .collect(Collectors.toList());
+    }
+
 
 }
